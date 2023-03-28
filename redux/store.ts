@@ -1,11 +1,23 @@
-import { configureStore } from '@reduxjs/toolkit';
-import timerReducer from './timer';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
+import timerReducer from './timer';
+
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+  whitelist: ['timer'],
+};
+
+const reducer = combineReducers({
+  timer: timerReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 const store = configureStore({
-  reducer: {
-    timer: timerReducer,
-  },
+  reducer: persistedReducer,
 });
 
 export default store;
