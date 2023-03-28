@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useAppSelector } from '../../redux/store';
 import { getBreakTime, getSessionTime } from '../../redux/timer';
 import Counter from './Counter';
 
@@ -8,18 +8,17 @@ const ClockFrame = () => {
   const sessionTime = useAppSelector(getSessionTime);
   const breakTime = useAppSelector(getBreakTime);
 
-  // states
+  // state
   const [running, setRunning] = useState<boolean>(false);
   const [timePassed, setTimePassed] = useState<number>(0);
   const [intervalId, setIntervalId] = useState<any>();
   const [mode, setMode] = useState<'session' | 'break'>('session');
 
-  // running
-
   const incrementTime = () => {
     setTimePassed((prev) => prev + 1);
   };
 
+  // run and pause
   const handleRun = () => {
     setRunning(true);
     const id = setInterval(() => {
@@ -27,21 +26,34 @@ const ClockFrame = () => {
     }, 1000);
     setIntervalId(id);
   };
-
-  const handlePause = () => {
+  const handlePause = useCallback(() => {
     setRunning(false);
     clearInterval(intervalId);
-  };
+  }, [intervalId]);
+
+  // end session and break after exceeding time
+  useEffect(() => {
+    if (mode === 'session' && timePassed === sessionTime) {
+      handlePause();
+      setMode('break');
+      setTimePassed(0);
+      // TODO add finished interval to history and display notification
+      return;
+    } else if (mode === 'break' && timePassed === breakTime) {
+      setTimePassed(0);
+      handlePause();
+      setMode('session');
+      return;
+    }
+  }, [timePassed, handlePause, mode, sessionTime, breakTime]);
 
   // changing modes
-
   const handleSetModeSession = () => {
     if (mode === 'session') return;
     setMode('session');
     setTimePassed(0);
     handlePause();
   };
-
   const handleSetModeBreak = () => {
     if (mode === 'break') return;
     setMode('break');
