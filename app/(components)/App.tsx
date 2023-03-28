@@ -15,7 +15,7 @@ const persistor = persistStore(store);
 
 const App = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [accountOpen, setAccountOpen] = useState(true);
+  const [accountOpen, setAccountOpen] = useState(false);
 
   return (
     <Provider store={store}>
