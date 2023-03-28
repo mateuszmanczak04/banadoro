@@ -18,3 +18,7 @@ input {
 .btn {
   @apply bg-red-500 p-2 w-full rounded text-white shadow hover:bg-red-400;
 }
+
+.error {
+  @apply text-red-500;
+}
