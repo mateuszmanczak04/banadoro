@@ -49,7 +49,7 @@ const LoginForm = ({ setAuthenticationStatus, close }: Props) => {
         <p>E-mail</p>
         <input
           type='email'
-          className='bg-gray-100 rounded w-full p-2'
+          className='input-text'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -58,7 +58,7 @@ const LoginForm = ({ setAuthenticationStatus, close }: Props) => {
         <p>Password</p>
         <input
           type='password'
-          className='bg-gray-100 rounded w-full p-2'
+          className='input-text'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

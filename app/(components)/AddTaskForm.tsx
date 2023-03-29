@@ -27,7 +27,7 @@ export const AddTaskForm = () => {
       <h2 className='text-3xl font-bold'>Add Task</h2>
       <input
         type='text'
-        className='w-full bg-gray-100 rounded px-4 py-2'
+        className='input-text'
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />

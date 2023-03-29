@@ -62,19 +62,19 @@ const ClockFrame = () => {
   };
 
   return (
-    <div className='w-full bg-gray-100 p-8 rounded-xl flex flex-col gap-8 items-center'>
+    <div className='w-full bg-gray-100 p-8 rounded-xl flex flex-col gap-8 items-center dark:bg-gray-800'>
       <div className='flex gap-4'>
         <button
-          className={`bg-white py-2 px-6 rounded shadow cursor-pointer border-b-4 hover:border-b-red-400  ${
-            mode === 'session' && 'border-red-500'
-          }`}
+          className={`bg-white py-2 px-6 rounded shadow cursor-pointer ${
+            mode === 'session' && 'border-red-500 border-b-4'
+          } dark:bg-gray-800 dark:hover:text-red-500`}
           onClick={handleSetModeSession}>
           Session
         </button>
         <button
-          className={`bg-white py-2 px-6 rounded shadow cursor-pointer border-b-4 hover:border-b-red-400  ${
-            mode === 'break' && 'border-red-500'
-          }`}
+          className={`bg-white py-2 px-6 rounded shadow cursor-pointe ${
+            mode === 'break' && 'border-red-500 border-b-4'
+          } dark:bg-gray-800 dark:hover:text-red-500`}
           onClick={handleSetModeBreak}>
           Break
         </button>

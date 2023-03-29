@@ -4,16 +4,18 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 import timerReducer from './timer';
 import tasksReducer from './tasks';
+import themeReducer from './theme';
 
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['timer', 'tasks'],
+  whitelist: ['timer', 'tasks', 'theme'],
 };
 
 const reducer = combineReducers({
   timer: timerReducer,
   tasks: tasksReducer,
+  theme: themeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

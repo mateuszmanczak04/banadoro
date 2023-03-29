@@ -23,7 +23,7 @@ const App = () => {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <SessionProvider>
-          <div className='font-sans bg-white flex flex-col items-center md:items-start gap-8 mb-8 pt-20 md:flex-row w-screen max-w-10/12 p-8 justify-center'>
+          <div className='font-sans flex flex-col items-center md:items-start gap-8 mb-8 pt-20 md:flex-row w-screen max-w-10/12 p-8 justify-center'>
             <TopBar
               openSettings={() => setSettingsOpen(true)}
               openAccount={() => setAccountOpen(true)}

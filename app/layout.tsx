@@ -7,7 +7,9 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       <head>
         <title>Pomodoro Timer</title>
       </head>
-      <body>{children}</body>
+      <body className='bg-white dark:bg-gray-900 text-gray-800 dark:text-white'>
+        {children}
+      </body>
     </html>
   );
 };

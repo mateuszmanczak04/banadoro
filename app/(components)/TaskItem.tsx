@@ -23,9 +23,11 @@ const TaskItem = ({ title, checked, _id }: Props) => {
 
   return (
     <div
-      className={`flex justify-between w-full py-2 px-4 ${
-        checked ? 'bg-gray-300 text-gray-600' : 'bg-gray-100 text-gray-800'
-      } rounded cursor-pointer items-center relative hover:bg-gray-200 gap-2`}
+      className={`flex justify-between w-full py-2 px-4 dark:bg-gray-800 dark:text-gray-200 ${
+        checked
+          ? 'bg-gray-300 text-gray-600 dark:bg-gray-600 dark:text-gray-400 opacity-30'
+          : 'bg-gray-100 text-gray-800'
+      } rounded cursor-pointer items-center relative hover:bg-gray-200 gap-2 `}
       onClick={handleToggle}>
       <p className='flex-1 break-all'>{title}</p>
       {checked ? (

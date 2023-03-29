@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { GrClose } from 'react-icons/gr';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import {
   getBreakTime,
@@ -7,6 +6,7 @@ import {
   setBreakTime as setStoreBreakTime,
   setSessionTime as setStoreSessionTime,
 } from '../../redux/timer';
+import ToggleDarkMode from './ToggleDarkMode';
 
 type Props = {
   close: () => void;
@@ -50,27 +50,35 @@ const SettingsModal = ({ close }: Props) => {
         className='w-full h-full bg-black bg-opacity-70'
         onClick={close}></div>
       {/* content */}
-      <div className='bg-white rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 flex flex-col gap-4 items-center w-10/12 max-w-sm'>
+      <div className='bg-white rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 flex flex-col gap-4 items-center w-10/12 max-w-sm dark:bg-gray-900'>
         <div className='w-full flex justify-end'>
-          <GrClose
-            className='w-6 h-6 cursor-pointer hover:scale-110'
-            onClick={close}
-          />
+          <svg
+            className='w-8 h-8 cursor-pointer'
+            stroke='currentColor'
+            stroke-width='2.5'
+            viewBox='0 0 24 24'
+            xmlns='http://www.w3.org/2000/svg'
+            aria-hidden='true'>
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              d='M6 18L18 6M6 6l12 12'></path>
+          </svg>
         </div>
         <h2 className='text-3xl font-bold'>Settings</h2>
-        <div className='flex gap-2 w-full items-center border p-4 rounded'>
-          <p className='w-16 flex-1'>Session duration</p>
+        <div className='flex gap-2 w-full items-center p-4 rounded dark:border-gray-700 border-2'>
+          <p className='flex-1'>Session duration</p>
           <input
-            className='bg-gray-100 px-4 py-2 rounded outline-none w-16 text-center border'
+            className='input-text flex-1'
             type='number'
             onChange={(e) => setSessionTime(e.target.value)}
             value={sessionTime}
           />
         </div>
-        <div className='flex gap-2 w-full items-center border p-4 rounded'>
-          <p className='w-16 flex-1'>Break duration</p>
+        <div className='flex gap-2 w-full items-center p-4 rounded dark:border-gray-700 border-2'>
+          <p className='flex-1'>Break duration</p>
           <input
-            className='bg-gray-100 px-4 py-2 rounded outline-none w-16 text-center border'
+            className='input-text flex-1'
             type='number'
             onChange={(e) => setBreakTime(e.target.value)}
             value={breakTime}
@@ -79,6 +87,7 @@ const SettingsModal = ({ close }: Props) => {
         <button className='btn' onClick={handleSave}>
           Save
         </button>
+        <ToggleDarkMode />
       </div>
     </div>
   );
