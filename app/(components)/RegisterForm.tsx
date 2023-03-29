@@ -1,12 +1,18 @@
 import React, { FormEvent, useState } from 'react';
 import appAxios from '../../lib/appAxios';
 import { signIn } from 'next-auth/react';
+import { useAppDispatch } from '../../redux/store';
+import { fetchAllUserTasks, uploadLocalTasks } from '../../redux/tasks';
 
 type Props = {
   setAuthenticationStatus: any;
+  close: () => void;
 };
 
-const RegisterForm = ({ setAuthenticationStatus }: Props) => {
+const RegisterForm = ({ setAuthenticationStatus, close }: Props) => {
+  // redux
+  const dispatch = useAppDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -41,8 +47,11 @@ const RegisterForm = ({ setAuthenticationStatus }: Props) => {
           return;
         }
 
+        await dispatch(uploadLocalTasks(email));
+        await dispatch(fetchAllUserTasks(email));
         setAuthenticationStatus('loggedIn');
         setLoading(false);
+        close();
       })
       .catch((err) => {
         setError(err.response.data.message);

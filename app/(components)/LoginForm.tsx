@@ -1,11 +1,17 @@
 import React, { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
+import { useAppDispatch } from '../../redux/store';
+import { fetchAllUserTasks, uploadLocalTasks } from '../../redux/tasks';
 
 type Props = {
   setAuthenticationStatus: any;
+  close: () => void;
 };
 
-const LoginForm = ({ setAuthenticationStatus }: Props) => {
+const LoginForm = ({ setAuthenticationStatus, close }: Props) => {
+  // redux
+  const dispatch = useAppDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -28,8 +34,11 @@ const LoginForm = ({ setAuthenticationStatus }: Props) => {
       return;
     }
 
+    await dispatch(uploadLocalTasks(email));
+    await dispatch(fetchAllUserTasks(email));
     setAuthenticationStatus('loggedIn');
     setLoading(false);
+    close();
   };
 
   return (

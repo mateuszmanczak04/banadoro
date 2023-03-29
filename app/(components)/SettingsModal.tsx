@@ -44,7 +44,7 @@ const SettingsModal = ({ close }: Props) => {
   };
 
   return (
-    <div className='fixed w-screen h-screen'>
+    <div className='fixed w-screen h-screen z-50 left-0 top-0'>
       {/* backdrop */}
       <div
         className='w-full h-full bg-black bg-opacity-70'

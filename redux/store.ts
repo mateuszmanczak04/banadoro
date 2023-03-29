@@ -3,15 +3,17 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 import timerReducer from './timer';
+import tasksReducer from './tasks';
 
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['timer'],
+  whitelist: ['timer', 'tasks'],
 };
 
 const reducer = combineReducers({
   timer: timerReducer,
+  tasks: tasksReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

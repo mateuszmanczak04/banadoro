@@ -25,7 +25,8 @@
     "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0",
-    "typescript": "5.0.2"
+    "typescript": "5.0.2",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

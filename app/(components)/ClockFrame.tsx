@@ -62,7 +62,7 @@ const ClockFrame = () => {
   };
 
   return (
-    <div className='w-10/12 max-w-sm bg-gray-100 p-8 rounded-xl flex flex-col gap-8 items-center'>
+    <div className='w-full bg-gray-100 p-8 rounded-xl flex flex-col gap-8 items-center'>
       <div className='flex gap-4'>
         <button
           className={`bg-white py-2 px-6 rounded shadow cursor-pointer border-b-4 hover:border-b-red-400  ${

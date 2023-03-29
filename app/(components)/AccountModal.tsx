@@ -10,7 +10,9 @@ type Props = {
 };
 
 const AccountModal = ({ close }: Props) => {
+  // session
   const { status } = useSession();
+
   const [authenticationStatus, setAuthenticationStatus] = useState<
     'login' | 'register' | 'loggedIn'
   >('login');
@@ -22,7 +24,7 @@ const AccountModal = ({ close }: Props) => {
   }, [status]);
 
   return (
-    <div className='fixed w-screen h-screen'>
+    <div className='fixed w-screen h-screen z-50 left-0 top-0'>
       {/* backdrop */}
       <div
         className='w-full h-full bg-black bg-opacity-70'
@@ -38,12 +40,20 @@ const AccountModal = ({ close }: Props) => {
         <h2 className='text-3xl font-bold'>Account</h2>
 
         {authenticationStatus === 'login' && (
-          <LoginForm setAuthenticationStatus={setAuthenticationStatus} />
+          <LoginForm
+            setAuthenticationStatus={setAuthenticationStatus}
+            close={close}
+          />
         )}
         {authenticationStatus === 'register' && (
-          <RegisterForm setAuthenticationStatus={setAuthenticationStatus} />
+          <RegisterForm
+            setAuthenticationStatus={setAuthenticationStatus}
+            close={close}
+          />
         )}
-        {authenticationStatus === 'loggedIn' && <AccountSettings />}
+        {authenticationStatus === 'loggedIn' && (
+          <AccountSettings close={close} />
+        )}
       </div>
     </div>
   );

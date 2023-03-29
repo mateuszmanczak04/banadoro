@@ -10,6 +10,8 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import AccountModal from './AccountModal';
 import { SessionProvider } from 'next-auth/react';
+import TaskList from './TaskList';
+import { AddTaskForm } from './AddTaskForm';
 
 const persistor = persistStore(store);
 
@@ -21,12 +23,18 @@ const App = () => {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <SessionProvider>
-          <div className='font-sans bg-white flex w-screen h-screen flex-col items-center justify-center'>
+          <div className='font-sans bg-white flex flex-col items-center md:items-start gap-8 mb-8 pt-20 md:flex-row w-screen max-w-10/12 p-8 justify-center'>
             <TopBar
               openSettings={() => setSettingsOpen(true)}
               openAccount={() => setAccountOpen(true)}
             />
-            <ClockFrame />
+            <div className='w-full max-w-sm flex flex-col gap-8'>
+              <ClockFrame />
+              <AddTaskForm />
+            </div>
+            <div className='w-full max-w-sm'>
+              <TaskList />
+            </div>
             {settingsOpen && (
               <SettingsModal close={() => setSettingsOpen(false)} />
             )}
