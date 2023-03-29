@@ -1,5 +1,4 @@
 import React from 'react';
-import { AiOutlineCheckSquare, AiFillCheckSquare } from 'react-icons/ai';
 import { useAppDispatch } from '../../redux/store';
 import { toggleTask } from '../../redux/tasks';
 import { useSession } from 'next-auth/react';
@@ -31,9 +30,21 @@ const TaskItem = ({ title, checked, _id }: Props) => {
       onClick={handleToggle}>
       <p className='flex-1 break-all'>{title}</p>
       {checked ? (
-        <AiFillCheckSquare className='w-6 h-6' />
+        <svg
+          className='w-6 h-6'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2.5'
+          viewBox='0 0 24 24'
+          xmlns='http://www.w3.org/2000/svg'
+          aria-hidden='true'>
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M4.5 12.75l6 6 9-13.5'></path>
+        </svg>
       ) : (
-        <AiOutlineCheckSquare className='w-6 h-6' />
+        ''
       )}
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { GrClose } from 'react-icons/gr';
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 import AccountSettings from './AccountSettings';
