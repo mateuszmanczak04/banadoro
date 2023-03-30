@@ -101,6 +101,18 @@ export const uploadLocalTasks = createAsyncThunk(
   }
 );
 
+export const deleteTask = createAsyncThunk(
+  'tasks/delete-task',
+  async (_id: string, thunkAPI: any) => {
+    try {
+      appAxios.delete('/api/tasks/delete-task/' + _id);
+      return _id;
+    } catch (err) {
+      return thunkAPI.rejectWithValue('Could not delete a task.');
+    }
+  }
+);
+
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
@@ -110,6 +122,7 @@ const tasksSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // add task
     builder.addCase(addTask.pending, (state) => {
       state.loading = true;
       state.error = '';
@@ -123,6 +136,7 @@ const tasksSlice = createSlice({
       state.loading = false;
       state.error = action.payload as string;
     });
+    // toggle task
     builder.addCase(toggleTask.pending, (state) => {
       state.loading = true;
       state.error = '';
@@ -141,6 +155,7 @@ const tasksSlice = createSlice({
       state.loading = false;
       state.error = action.payload as string;
     });
+    // fetch all user tasks
     builder.addCase(fetchAllUserTasks.pending, (state) => {
       state.loading = true;
       state.error = '';
@@ -154,6 +169,7 @@ const tasksSlice = createSlice({
       state.loading = false;
       state.error = action.payload as string;
     });
+    // upload local tasks
     builder.addCase(uploadLocalTasks.pending, (state) => {
       state.loading = true;
       state.error = '';
@@ -164,6 +180,20 @@ const tasksSlice = createSlice({
       state.error = '';
     });
     builder.addCase(uploadLocalTasks.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+    // delete task
+    builder.addCase(deleteTask.pending, (state) => {
+      state.loading = true;
+      state.error = '';
+    });
+    builder.addCase(deleteTask.fulfilled, (state, action) => {
+      state.loading = false;
+      state.tasks = state.tasks.filter((task) => task._id !== action.payload);
+      state.error = '';
+    });
+    builder.addCase(deleteTask.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
     });
