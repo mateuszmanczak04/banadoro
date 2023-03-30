@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useAppDispatch } from '../../redux/store';
 import { fetchAllUserTasks, uploadLocalTasks } from '../../redux/tasks';
+import Loading from './Loading';
 
 type Props = {
   setAuthenticationStatus: any;
@@ -36,7 +37,6 @@ const LoginForm = ({ setAuthenticationStatus, close }: Props) => {
 
     await dispatch(uploadLocalTasks(email));
     await dispatch(fetchAllUserTasks(email));
-    setAuthenticationStatus('loggedIn');
     setLoading(false);
     close();
   };
@@ -70,7 +70,7 @@ const LoginForm = ({ setAuthenticationStatus, close }: Props) => {
         Register instead
       </p>
       {error && <p className='error'>{error}</p>}
-      {loading && <p>Loading...</p>}
+      {loading && <Loading />}
     </form>
   );
 };
