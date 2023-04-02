@@ -1,12 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useAppSelector } from '../../redux/store';
-import { getBreakTime, getSessionTime } from '../../redux/timer';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import {
+  getBreakTime,
+  getSessionTime,
+  incrementUserTimeByAMinute,
+} from '../../redux/timer';
 import Counter from './Counter';
 
 const ClockFrame = () => {
   // redux
   const sessionTime = useAppSelector(getSessionTime);
   const breakTime = useAppSelector(getBreakTime);
+  const dispatch = useAppDispatch();
 
   // state
   const [running, setRunning] = useState<boolean>(false);
@@ -17,6 +22,13 @@ const ClockFrame = () => {
   const incrementTime = () => {
     setTimePassed((prev) => prev + 1);
   };
+
+  // updating total time
+  useEffect(() => {
+    if (mode === 'session' && timePassed > 0 && timePassed % 60 == 0) {
+      dispatch(incrementUserTimeByAMinute());
+    }
+  }, [timePassed, dispatch, mode]);
 
   // run and pause
   const handleRun = () => {

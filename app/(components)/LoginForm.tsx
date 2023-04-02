@@ -3,6 +3,7 @@ import { signIn } from 'next-auth/react';
 import { useAppDispatch } from '../../redux/store';
 import { fetchAllUserTasks, uploadLocalTasks } from '../../redux/tasks';
 import Loading from './Loading';
+import { fetchAllUserDays } from '../../redux/timer';
 
 type Props = {
   setAuthenticationStatus: any;
@@ -37,6 +38,7 @@ const LoginForm = ({ setAuthenticationStatus, close }: Props) => {
 
     await dispatch(uploadLocalTasks(email));
     await dispatch(fetchAllUserTasks(email));
+    await dispatch(fetchAllUserDays());
     setLoading(false);
     close();
   };

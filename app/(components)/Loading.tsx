@@ -24,7 +24,7 @@ const Loading = () => {
           gradientUnits='userSpaceOnUse'
           gradientTransform='translate(25 25.9604) rotate(75.9516) scale(25.7708)'>
           <stop />
-          <stop offset='1' stop-color='#EF4444' />
+          <stop offset='1' stopColor='#EF4444' />
         </radialGradient>
       </defs>
     </svg>
