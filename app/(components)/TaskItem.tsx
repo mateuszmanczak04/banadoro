@@ -29,7 +29,7 @@ const TaskItem = ({ title, checked, _id }: Props) => {
       className={`flex justify-between w-full py-2 px-4 dark:bg-gray-800 dark:text-gray-200 bg-gray-100 text-gray-800 rounded items-center relative h-12`}>
       <p className='flex-1 break-all'>{title}</p>
       <div className='flex gap-2 items-center'>
-        {checked ? (
+        {!checked ? (
           <div
             className='flex gap-1 bg-gray-200 rounded py-1 px-2 hover:scale-110 transition cursor-pointer dark:bg-gray-700 '
             onClick={handleToggle}>
