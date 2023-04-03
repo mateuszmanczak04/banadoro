@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import {
   getBreakTime,
@@ -26,6 +26,12 @@ const SettingsModal = ({ close }: Props) => {
     (storeBreakTime / 60).toString()
   );
 
+  const handleSave = useCallback(() => {
+    dispatch(setStoreSessionTime(parseInt(sessionTime) * 60));
+    dispatch(setStoreBreakTime(parseInt(breakTime) * 60));
+    close();
+  }, [breakTime, close, sessionTime, dispatch]);
+
   // escape detection
   useEffect(() => {
     const closeListener = (e: KeyboardEvent) => {
@@ -37,11 +43,16 @@ const SettingsModal = ({ close }: Props) => {
     return () => window.removeEventListener('keydown', closeListener);
   }, [close]);
 
-  const handleSave = () => {
-    dispatch(setStoreSessionTime(parseInt(sessionTime) * 60));
-    dispatch(setStoreBreakTime(parseInt(breakTime) * 60));
-    close();
-  };
+  // enter detection
+  useEffect(() => {
+    const closeListener = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        handleSave();
+      }
+    };
+    window.addEventListener('keydown', closeListener);
+    return () => window.removeEventListener('keydown', closeListener);
+  }, [handleSave]);
 
   return (
     <div className='fixed w-screen h-screen z-50 left-0 top-0'>

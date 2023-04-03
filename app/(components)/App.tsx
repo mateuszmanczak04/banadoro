@@ -23,6 +23,28 @@ const App = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
 
+  // tab detection - open account
+  useEffect(() => {
+    const closeListener = (e: KeyboardEvent) => {
+      if (!e.shiftKey && e.key === 'Tab' && !settingsOpen) {
+        setAccountOpen(true);
+      }
+    };
+    window.addEventListener('keydown', closeListener);
+    return () => window.removeEventListener('keydown', closeListener);
+  }, [settingsOpen]);
+
+  // escape detection - open settings
+  useEffect(() => {
+    const closeListener = (e: KeyboardEvent) => {
+      if (e.shiftKey && e.key === 'Tab' && !accountOpen) {
+        setSettingsOpen(true);
+      }
+    };
+    window.addEventListener('keydown', closeListener);
+    return () => window.removeEventListener('keydown', closeListener);
+  }, [accountOpen]);
+
   return (
     <div className='font-sans flex flex-col items-center md:items-start gap-8 mb-8 pt-20 md:flex-row w-screen max-w-10/12 p-8 justify-center'>
       <TopBar

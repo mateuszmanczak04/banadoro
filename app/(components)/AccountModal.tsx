@@ -12,6 +12,17 @@ const AccountModal = ({ close }: Props) => {
   // session
   const { status } = useSession();
 
+  // escape detection
+  useEffect(() => {
+    const closeListener = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        close();
+      }
+    };
+    window.addEventListener('keydown', closeListener);
+    return () => window.removeEventListener('keydown', closeListener);
+  }, [close]);
+
   const [authenticationStatus, setAuthenticationStatus] = useState<
     'login' | 'register' | 'loggedIn'
   >('login');
