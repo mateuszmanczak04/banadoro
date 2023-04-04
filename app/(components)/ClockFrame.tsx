@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import {
   getBreakTime,
@@ -19,6 +19,12 @@ const ClockFrame = () => {
   const [timePassed, setTimePassed] = useState<number>(0);
   const [intervalId, setIntervalId] = useState<any>();
   const [mode, setMode] = useState<'session' | 'break'>('session');
+
+  // audio notification
+  const playNotification = () => {
+    let audio = new Audio('/bell.wav');
+    audio.play();
+  };
 
   // session
   const { data: session } = useSession();
@@ -59,12 +65,13 @@ const ClockFrame = () => {
       handlePause();
       setMode('break');
       setTimePassed(0);
-      // TODO add finished interval to history and display notification
+      playNotification();
       return;
     } else if (mode === 'break' && timePassed === breakTime) {
       setTimePassed(0);
       handlePause();
       setMode('session');
+      playNotification();
       return;
     }
   }, [timePassed, handlePause, mode, sessionTime, breakTime]);
