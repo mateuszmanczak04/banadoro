@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import appAxios from '../lib/appAxios';
+import { getDateSlug } from '../lib/getDateSlug';
+import { uuid } from 'uuidv4';
 
 type InitialState = {
   sessionTime: number;
@@ -8,7 +10,13 @@ type InitialState = {
   todayTime: number;
   loading: boolean;
   error: string;
-  previousDays: {}[];
+  previousDays: Day[];
+};
+
+export type Day = {
+  totalTime: number;
+  date: string;
+  _id: string;
 };
 
 const initialState: InitialState = {
@@ -25,11 +33,7 @@ export const incrementUserTimeByAMinute = createAsyncThunk(
   'timer/increment',
   async (_, thunkAPI) => {
     try {
-      const response = await appAxios.post('/api/time/increment-user-time');
-      return {
-        totalTime: response.data.totalTime,
-        todayTime: response.data.todayTime,
-      };
+      appAxios.post('/api/time/increment-user-time');
     } catch (err) {
       return thunkAPI.rejectWithValue('Could not increment user time.');
     }
@@ -73,11 +77,28 @@ const timerSlice = createSlice({
       state.loading = true;
       state.error = '';
     });
-    builder.addCase(incrementUserTimeByAMinute.fulfilled, (state, action) => {
+    builder.addCase(incrementUserTimeByAMinute.fulfilled, (state) => {
       state.loading = false;
       state.error = '';
-      state.totalTime = action.payload.totalTime;
-      state.todayTime = action.payload.todayTime;
+      state.totalTime += 1;
+      state.todayTime += 1;
+      const todayDateSlug = getDateSlug(new Date());
+      // if current day exists in store, increment its totalTime
+      if (state.previousDays.find((day: Day) => day.date === todayDateSlug)) {
+        state.previousDays = state.previousDays.map((d: Day) => {
+          if (d.date === todayDateSlug) {
+            return { ...d, totalTime: d.totalTime + 1 };
+          }
+          return d;
+        });
+      } else {
+        // else add new day to store with totalTime 1
+        state.previousDays.push({
+          date: todayDateSlug,
+          _id: uuid(),
+          totalTime: 1,
+        });
+      }
     });
     builder.addCase(incrementUserTimeByAMinute.rejected, (state, action) => {
       state.loading = false;
@@ -108,3 +129,4 @@ export const getSessionTime = (state: any) => state.timer.sessionTime;
 export const getBreakTime = (state: any) => state.timer.breakTime;
 export const getTodayTime = (state: any) => state.timer.todayTime;
 export const getTotalTime = (state: any) => state.timer.totalTime;
+export const getPreviousDays = (state: any) => state.timer.previousDays;

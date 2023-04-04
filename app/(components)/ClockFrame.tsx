@@ -6,6 +6,7 @@ import {
   incrementUserTimeByAMinute,
 } from '../../redux/timer';
 import Counter from './Counter';
+import { useSession } from 'next-auth/react';
 
 const ClockFrame = () => {
   // redux
@@ -19,16 +20,25 @@ const ClockFrame = () => {
   const [intervalId, setIntervalId] = useState<any>();
   const [mode, setMode] = useState<'session' | 'break'>('session');
 
+  // session
+  const { data: session } = useSession();
+
   const incrementTime = () => {
     setTimePassed((prev) => prev + 1);
   };
 
   // updating total time
   useEffect(() => {
-    if (mode === 'session' && timePassed > 0 && timePassed % 60 == 0) {
+    if (
+      session &&
+      session!.user!.email &&
+      mode === 'session' &&
+      timePassed > 0 &&
+      timePassed % 60 == 0
+    ) {
       dispatch(incrementUserTimeByAMinute());
     }
-  }, [timePassed, dispatch, mode]);
+  }, [timePassed, dispatch, mode, session]);
 
   // run and pause
   const handleRun = () => {

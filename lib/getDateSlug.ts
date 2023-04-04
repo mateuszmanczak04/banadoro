@@ -1,7 +1,10 @@
 export const getDateSlug = (date: Date) => {
   let dateSlug = '';
-  dateSlug += date.getFullYear().toString();
-  dateSlug += '-' + (date.getMonth() + 1).toString();
-  dateSlug += '-' + date.getDate().toString();
+
+  const year = date.getFullYear();
+  const month = ('00' + (date.getMonth() + 1)).slice(-2);
+  const day = ('00' + date.getDate()).slice(-2);
+  dateSlug = year + '-' + month + '-' + day;
+
   return dateSlug;
 };
