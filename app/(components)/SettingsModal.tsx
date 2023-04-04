@@ -61,7 +61,7 @@ const SettingsModal = ({ close }: Props) => {
         className='w-full h-full bg-black bg-opacity-70'
         onClick={close}></div>
       {/* content */}
-      <div className='bg-white rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 flex flex-col gap-4 items-center w-10/12 max-w-sm dark:bg-gray-900'>
+      <div className='bg-white rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 flex flex-col gap-4 items-center w-10/12 max-w-sm dark:bg-gray-900 max-h-screen overflow-y-scroll'>
         <div className='w-full flex justify-end'>
           <svg
             onClick={close}

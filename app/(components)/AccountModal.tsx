@@ -34,13 +34,13 @@ const AccountModal = ({ close }: Props) => {
   }, [status]);
 
   return (
-    <div className='fixed w-screen h-screen z-50 left-0 top-0'>
+    <div className='fixed w-screen h-screen z-50 left-0 top-0 overflow-hidden'>
       {/* backdrop */}
       <div
-        className='w-full h-full bg-black bg-opacity-70'
+        className='w-screen h-screen bg-black bg-opacity-70'
         onClick={close}></div>
       {/* content */}
-      <div className='bg-white rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 flex flex-col gap-4 items-center w-10/12 max-w-5xl dark:bg-gray-900'>
+      <div className='bg-white rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 flex flex-col gap-4 items-center w-10/12 max-w-5xl dark:bg-gray-900 max-h-screen overflow-y-scroll'>
         <div className='w-full flex justify-end'>
           <svg
             onClick={close}
