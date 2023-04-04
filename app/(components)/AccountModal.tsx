@@ -43,6 +43,7 @@ const AccountModal = ({ close }: Props) => {
       <div className='bg-white rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 flex flex-col gap-4 items-center w-10/12 max-w-5xl dark:bg-gray-900'>
         <div className='w-full flex justify-end'>
           <svg
+            onClick={close}
             className='w-8 h-8 cursor-pointer'
             stroke='currentColor'
             strokeWidth='2.5'
