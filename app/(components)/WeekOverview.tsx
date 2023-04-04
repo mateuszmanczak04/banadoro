@@ -97,7 +97,7 @@ const WeekOverview = () => {
           return (
             <div
               key={getDateSlug(day)}
-              className='flex flex-col gap-4 bg-gray-100 border-2 border-gray-200 border-opacity-50 p-2 rounded w-full'>
+              className='flex flex-col gap-4 bg-gray-100 border-2 border-gray-200 border-opacity-50 p-2 rounded w-full dark:bg-gray-800 dark:border-gray-700'>
               <div className='flex gap-4 justify-between lg:flex-col items-center'>
                 <p>{getDateSlug(day)}</p>
                 {totalTime === 0 && <p className='text-gray-500'>Lazy day</p>}
