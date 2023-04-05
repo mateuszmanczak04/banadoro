@@ -10,6 +10,7 @@ import TaskList from './TaskList';
 import { AddTaskForm } from './AddTaskForm';
 import { initTheme } from '../../redux/theme';
 import { fetchAllUserDays } from '../../redux/timer';
+import RankingModal from './RankingModal';
 
 const App = () => {
   // redux
@@ -22,6 +23,7 @@ const App = () => {
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const [rankingOpen, setRankingOpen] = useState(false);
 
   // tab detection - open account
   useEffect(() => {
@@ -48,6 +50,7 @@ const App = () => {
   return (
     <div className='font-sans flex flex-col items-center md:items-start gap-8 mb-8 pt-20 md:flex-row w-screen max-w-10/12 p-8 justify-center'>
       <TopBar
+        openRanking={() => setRankingOpen(true)}
         openSettings={() => setSettingsOpen(true)}
         openAccount={() => setAccountOpen(true)}
       />
@@ -58,6 +61,7 @@ const App = () => {
       <div className='w-full max-w-sm'>
         <TaskList />
       </div>
+      {rankingOpen && <RankingModal close={() => setRankingOpen(false)} />}
       {settingsOpen && <SettingsModal close={() => setSettingsOpen(false)} />}
       {accountOpen && <AccountModal close={() => setAccountOpen(false)} />}
     </div>
