@@ -13,10 +13,12 @@ export default async function handler(
   }
 
   try {
-    const { email, password } = req.body;
+    const { email, username, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ message: 'Missing email or password.' });
+    if (!email || !username || !password) {
+      return res
+        .status(400)
+        .json({ message: 'Missing email, username or password.' });
     }
 
     if (password.length < 6) {
@@ -42,7 +44,11 @@ export default async function handler(
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await User.create({ email: email.toLowerCase(), password: hashedPassword });
+    await User.create({
+      email: email.toLowerCase(),
+      password: hashedPassword,
+      username,
+    });
 
     return res.status(200).json({ message: 'Successfully registered.' });
   } catch (error) {

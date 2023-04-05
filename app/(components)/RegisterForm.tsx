@@ -16,6 +16,7 @@ const RegisterForm = ({ setAuthenticationStatus, close }: Props) => {
   const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -34,6 +35,7 @@ const RegisterForm = ({ setAuthenticationStatus, close }: Props) => {
     appAxios
       .post('/api/auth/register', {
         email,
+        username,
         password,
       })
       .then(async (response) => {
@@ -72,6 +74,15 @@ const RegisterForm = ({ setAuthenticationStatus, close }: Props) => {
           className='input-text'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+        />
+      </label>
+      <label className='w-full'>
+        <p>Username</p>
+        <input
+          type='text'
+          className='input-text'
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
       </label>
       <label className='w-full'>

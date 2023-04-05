@@ -40,7 +40,7 @@ const TopUsers = () => {
             }`}>
             {index + 1}
           </p>
-          <p>{user.email}</p>
+          <p>{user.username}</p>
           <p>{user.totalTime} minutes</p>
         </div>
       ))}
