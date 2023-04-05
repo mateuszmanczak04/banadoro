@@ -31,7 +31,7 @@ const TopUsers = () => {
       {users.map((user: UserType, index) => (
         <div
           key={user._id}
-          className='flex flex-col gap-2 md:flex-row justify-between items-center bg-gray-100 border-2 border-gray-200 border-opacity-50 rounded p-2'>
+          className='flex flex-col gap-2 md:flex-row justify-between items-center bg-gray-100 border-2 border-gray-200 border-opacity-50 rounded p-2 dark:bg-gray-800 dark:border-gray-700'>
           <p
             className={`w-6 h-6 flex justify-center items-center rounded ${
               index === 0 && 'bg-yellow-400 text-yellow-800'
