@@ -64,7 +64,6 @@ const App = () => {
           <TaskList />
         </div>
       </div>
-      <Description />
       {rankingOpen && <RankingModal close={() => setRankingOpen(false)} />}
       {settingsOpen && <SettingsModal close={() => setSettingsOpen(false)} />}
       {accountOpen && <AccountModal close={() => setAccountOpen(false)} />}
