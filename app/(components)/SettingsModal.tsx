@@ -61,7 +61,7 @@ const SettingsModal = ({ close }: Props) => {
         className='w-full h-full bg-black bg-opacity-70'
         onClick={close}></div>
       {/* content */}
-      <div className='bg-white rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 flex flex-col gap-4 items-center w-10/12 max-w-sm dark:bg-gray-900 max-h-screen overflow-y-scroll'>
+      <div className='bg-primary-300 rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 flex flex-col gap-4 items-center w-10/12 max-w-sm dark:bg-gray-900 max-h-screen overflow-y-scroll'>
         <div className='w-full flex justify-end'>
           <svg
             onClick={close}
@@ -78,7 +78,7 @@ const SettingsModal = ({ close }: Props) => {
           </svg>
         </div>
         <h2 className='text-3xl font-bold'>Settings</h2>
-        <div className='flex gap-2 w-full items-center p-4 rounded dark:border-gray-700 border-2'>
+        <div className='flex gap-2 w-full items-center p-4 rounded border-primary-500 bg-primary-200 dark:bg-gray-800 dark:border-gray-700 border-2'>
           <p className='flex-1'>Session duration</p>
           <input
             className='input-text flex-1'
@@ -87,7 +87,7 @@ const SettingsModal = ({ close }: Props) => {
             value={sessionTime}
           />
         </div>
-        <div className='flex gap-2 w-full items-center p-4 rounded dark:border-gray-700 border-2'>
+        <div className='flex gap-2 w-full items-center p-4 rounded dark:border-gray-700 dark:bg-gray-800 border-2 border-primary-500 bg-primary-200'>
           <p className='flex-1'>Break duration</p>
           <input
             className='input-text flex-1'

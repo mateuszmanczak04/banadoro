@@ -16,7 +16,7 @@ input {
 }
 
 .btn {
-  @apply app-gradient p-2 w-full rounded text-white shadow transition hover:scale-105;
+  @apply app-gradient p-2 w-full rounded text-gray-900 shadow transition hover:scale-105;
 }
 
 .error {
@@ -24,9 +24,9 @@ input {
 }
 
 .input-text {
-  @apply bg-gray-100 rounded w-full p-2 dark:bg-gray-700 dark:text-gray-200;
+  @apply bg-white rounded w-full p-2 dark:bg-gray-700 dark:text-gray-200 border-2 border-primary-300 dark:border-gray-500;
 }
 
 .app-gradient {
-  @apply bg-gradient-to-r from-red-500 to-orange-500;
+  @apply bg-gradient-to-r from-primary-400 to-primary-500;
 }

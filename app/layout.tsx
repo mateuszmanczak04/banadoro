@@ -14,12 +14,12 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang='en'>
       <head>
-        <title>Banadoro - Pomodoro Timer</title>
+        <title>Banadoro 🍌 - Pomodoro Timer</title>
         <meta
           name='description'
           content='Turn on timer for studying, create tasks, compete with others!'></meta>
       </head>
-      <body className='bg-white dark:bg-gray-900 text-gray-800 dark:text-white'>
+      <body className='bg-primary-200 dark:bg-gray-900 text-primary-900 dark:text-white'>
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <SessionProvider>{children}</SessionProvider>

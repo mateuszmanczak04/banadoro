@@ -22,7 +22,7 @@ export const AddTaskForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-2 items-center w-full max-w-sm'
+      className='flex flex-col gap-2 items-center w-full max-w-sm bg-primary-100 p-2 rounded-xl border-2 border-primary-500  dark:border-0 dark:bg-transparent'
       onSubmit={handleSubmit}>
       <h2 className='text-3xl font-bold'>Add Task</h2>
       <input

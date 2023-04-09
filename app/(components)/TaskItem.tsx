@@ -26,12 +26,12 @@ const TaskItem = ({ title, checked, _id }: Props) => {
 
   return (
     <div
-      className={`flex justify-between w-full py-2 px-4 dark:bg-gray-800 dark:text-gray-200 bg-gray-100 text-gray-800 rounded items-center relative gap-2`}>
+      className={`flex justify-between w-full py-2 px-4 dark:bg-gray-800 dark:text-gray-200 bg-primary-100 text-gray-800 rounded items-center relative gap-2`}>
       <p className='flex-1 break-all'>{title}</p>
       <div className='flex gap-2 items-center'>
         {!checked ? (
           <div
-            className='flex gap-1 bg-gray-200 rounded py-1 px-2 hover:scale-110 transition cursor-pointer dark:bg-gray-700 '
+            className='flex gap-1 bg-primary-200 border-2 border-primary-300 dark:border-0 rounded py-1 px-2 hover:scale-110 transition cursor-pointer dark:bg-gray-700 '
             onClick={handleToggle}>
             <svg
               className='w-6 h-6'
