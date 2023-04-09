@@ -14,7 +14,10 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang='en'>
       <head>
-        <title>Pomodoro Timer</title>
+        <title>Banadoro - Pomodoro Timer</title>
+        <meta name='description' content='Free Web tutorials'>
+          Turn on timer for studying, create tasks, compete with others!
+        </meta>
       </head>
       <body className='bg-white dark:bg-gray-900 text-gray-800 dark:text-white'>
         <Provider store={store}>
