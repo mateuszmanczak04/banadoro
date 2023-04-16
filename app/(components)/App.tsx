@@ -8,10 +8,9 @@ import { useAppDispatch } from '../../redux/store';
 import AccountModal from './AccountModal';
 import TaskList from './TaskList';
 import { AddTaskForm } from './AddTaskForm';
-import { initTheme } from '../../redux/theme';
+import { initTheme } from '../../redux/settings';
 import { fetchAllUserDays } from '../../redux/timer';
 import RankingModal from './RankingModal';
-import Description from './Description';
 
 const App = () => {
   // redux

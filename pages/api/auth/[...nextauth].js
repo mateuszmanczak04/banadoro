@@ -8,7 +8,7 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const { email, password } = credentials;
 
         await dbConnect();

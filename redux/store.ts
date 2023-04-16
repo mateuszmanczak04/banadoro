@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 import timerReducer from './timer';
 import tasksReducer from './tasks';
-import themeReducer from './theme';
+import settingsReducer from './settings';
 
 const persistConfig = {
   key: 'root',
@@ -15,7 +15,7 @@ const persistConfig = {
 const reducer = combineReducers({
   timer: timerReducer,
   tasks: tasksReducer,
-  theme: themeReducer,
+  settings: settingsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

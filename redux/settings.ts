@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 type InitialState = {
-  theme: 'dark' | 'light';
+  theme: string;
+  autoStart: boolean;
 };
 
 const initialState: InitialState = {
-  theme: 'light',
+  theme: 'dark',
+  autoStart: true,
 };
 
-const themeSlice = createSlice({
-  name: 'theme',
+const settingsSlice = createSlice({
+  name: 'settings',
   initialState,
   reducers: {
     toggleTheme: (state) => {
@@ -32,9 +34,14 @@ const themeSlice = createSlice({
         document.documentElement.setAttribute('color-theme', 'light');
       }
     },
+    toggleAutoStart: (state) => {
+      state.autoStart = !state.autoStart;
+    },
   },
 });
 
-export const { toggleTheme, initTheme } = themeSlice.actions;
-export default themeSlice.reducer;
-export const getTheme = (state: any) => state.theme.theme;
+export const { toggleTheme, initTheme, toggleAutoStart } =
+  settingsSlice.actions;
+export default settingsSlice.reducer;
+export const getTheme = (state: any) => state.settings.theme;
+export const getAutoStart = (state: any) => state.settings.autoStart;

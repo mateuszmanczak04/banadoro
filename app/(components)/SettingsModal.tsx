@@ -7,6 +7,7 @@ import {
   setSessionTime as setStoreSessionTime,
 } from '../../redux/timer';
 import ToggleDarkMode from './ToggleDarkMode';
+import ToggleAutoStart from './ToggleAutoStart';
 
 type Props = {
   close: () => void;
@@ -99,6 +100,7 @@ const SettingsModal = ({ close }: Props) => {
         <button className='btn' onClick={handleSave}>
           Save
         </button>
+        <ToggleAutoStart />
         <ToggleDarkMode />
       </div>
     </div>

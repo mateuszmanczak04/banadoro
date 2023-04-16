@@ -7,12 +7,14 @@ import {
 } from '../../redux/timer';
 import Counter from './Counter';
 import { useSession } from 'next-auth/react';
+import { getAutoStart } from '../../redux/settings';
 
 const ClockFrame = () => {
   // redux
   const sessionTime = useAppSelector(getSessionTime);
   const breakTime = useAppSelector(getBreakTime);
   const dispatch = useAppDispatch();
+  const autoStart = useAppSelector(getAutoStart);
 
   // state
   const [running, setRunning] = useState<boolean>(false);
@@ -62,19 +64,19 @@ const ClockFrame = () => {
   // end session and break after exceeding time
   useEffect(() => {
     if (mode === 'session' && timePassed === sessionTime) {
-      handlePause();
+      if (!autoStart) handlePause();
       setMode('break');
       setTimePassed(0);
       playNotification();
       return;
     } else if (mode === 'break' && timePassed === breakTime) {
       setTimePassed(0);
-      handlePause();
+      if (!autoStart) handlePause();
       setMode('session');
       playNotification();
       return;
     }
-  }, [timePassed, handlePause, mode, sessionTime, breakTime]);
+  }, [timePassed, handlePause, mode, sessionTime, breakTime, autoStart]);
 
   // changing modes
   const handleSetModeSession = () => {

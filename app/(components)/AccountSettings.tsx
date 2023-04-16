@@ -25,7 +25,7 @@ const AccountSettings = ({ close }: Props) => {
 
   return (
     <div className='flex flex-col items-center gap-4 w-full'>
-      <h2 className='bg-primary-600 text-primary-900 rounded py-1 px-4'>
+      <h2 className='bg-primary-500 text-primary-900 rounded py-1 px-4'>
         {session?.user?.email}
       </h2>
       <TotalTime />

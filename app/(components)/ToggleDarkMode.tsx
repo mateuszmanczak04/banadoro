@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { getTheme, toggleTheme } from '../../redux/theme';
+import { getTheme, toggleTheme } from '../../redux/settings';
 
 const ToggleDarkMode = () => {
   // redux
