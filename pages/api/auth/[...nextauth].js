@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import dbConnect from '../../../lib/dbConnect';
 import User from '../../../models/User';
 import bcrypt from 'bcryptjs';
+import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions = {
   providers: [
@@ -31,10 +32,34 @@ export const authOptions = {
         };
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
+  },
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === 'google') {
+        await dbConnect();
+
+        const exists = await User.findOne({ email: user.email });
+
+        if (exists) {
+          return true;
+        }
+
+        await User.create({
+          email: user.email,
+          username: user.name,
+          totalTime: 0,
+        });
+      }
+      return true;
+    },
   },
 };
 

@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
     default: '',
   },
   password: {
-    required: true,
+    required: false,
     type: String,
   },
   totalTime: {

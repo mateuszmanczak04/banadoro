@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../redux/store';
 import { fetchAllUserTasks, uploadLocalTasks } from '../../redux/tasks';
 import Loading from './Loading';
 import { fetchAllUserDays } from '../../redux/timer';
+import LoginWithGoogle from './LoginWithGoogle';
 
 type Props = {
   setAuthenticationStatus: any;
@@ -45,7 +46,7 @@ const LoginForm = ({ setAuthenticationStatus, close }: Props) => {
 
   return (
     <form
-      className='flex flex-col gap-4 w-full items-center'
+      className='flex flex-col gap-4 w-full items-center max-w-md'
       onSubmit={handleSubmit}>
       <label className='w-full'>
         <p>E-mail</p>
@@ -66,6 +67,7 @@ const LoginForm = ({ setAuthenticationStatus, close }: Props) => {
         />
       </label>
       <button className='btn'>Login</button>
+      <LoginWithGoogle text='Sign In With Google' />
       <p
         className='text-gray-500 cursor-pointer'
         onClick={() => setAuthenticationStatus('register')}>

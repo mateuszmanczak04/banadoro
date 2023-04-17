@@ -19,6 +19,11 @@ input {
   @apply app-gradient p-2 w-full rounded text-gray-900 shadow transition hover:scale-105;
 }
 
+.google-button {
+  background: #4285f4;
+  @apply w-full p-2 rounded shadow cursor-pointer hover:scale-105 transition text-center;
+}
+
 .error {
   @apply text-red-500;
 }
