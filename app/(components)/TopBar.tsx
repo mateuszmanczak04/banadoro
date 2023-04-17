@@ -15,7 +15,7 @@ const TopBar = ({ openSettings, openAccount, openRanking }: Props) => {
 
   return (
     <div className='fixed top-0 flex justify-between w-full px-4 py-2 bg-primary-300 dark:bg-gray-800 dark:text-gray-200 z-10'>
-      <h1 className='sm:text-2xl text-xl font-extrabold whitespace-nowrap'>
+      <h1 className='text-2xl sm:text-3xl font-extrabold whitespace-nowrap'>
         Banadoro 🍌
       </h1>
       <div className='flex gap-6'>
