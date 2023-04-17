@@ -26,7 +26,7 @@ const TopBar = ({ openSettings, openAccount, openRanking }: Props) => {
           {width >= 640 ? 'Account' : <UserCircleIcon className='h-6 w-6' />}
         </button>
         <button onClick={openSettings}>
-          {width >= 640 ? 'Setting' : <Cog6ToothIcon className='h-6 w-6' />}
+          {width >= 640 ? 'Settings' : <Cog6ToothIcon className='h-6 w-6' />}
         </button>
       </div>
     </div>
