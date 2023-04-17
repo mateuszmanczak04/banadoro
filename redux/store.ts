@@ -9,7 +9,7 @@ import settingsReducer from './settings';
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['timer', 'tasks', 'theme'],
+  whitelist: ['timer', 'tasks', 'settings'],
 };
 
 const reducer = combineReducers({
