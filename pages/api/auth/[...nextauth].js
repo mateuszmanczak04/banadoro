@@ -53,7 +53,7 @@ export const authOptions = {
       if (account?.provider === 'google') {
         await dbConnect();
 
-        const exists = await User.findOne({ email: user.email });
+        const exists = await User.exists({ email: user.email });
 
         if (exists) {
           return true;
