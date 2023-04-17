@@ -21,7 +21,7 @@ input {
 
 .google-button {
   background: #4285f4;
-  @apply w-full p-2 rounded shadow cursor-pointer hover:scale-105 transition text-center;
+  @apply w-full p-2 rounded shadow cursor-pointer hover:scale-105 transition text-center text-white;
 }
 
 .error {
