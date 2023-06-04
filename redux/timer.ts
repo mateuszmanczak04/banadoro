@@ -44,7 +44,9 @@ export const fetchAllUserDays = createAsyncThunk(
   'timer/get-all-user-days',
   async (_, thunkAPI) => {
     try {
-      const response = await appAxios.get('/api/time/init-user-total-time');
+      const response = await appAxios.get(
+        '/api/time/get-user-total-time-and-days'
+      );
 
       return {
         days: response.data.days,
