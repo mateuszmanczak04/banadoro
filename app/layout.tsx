@@ -19,7 +19,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
           name='description'
           content='Turn on timer for studying, create tasks, compete with others!'></meta>
       </head>
-      <body className='bg-primary-300 dark:bg-gray-900 text-primary-900 dark:text-white'>
+      <body className='bg-primary-300 dark:bg-gray-900 text-primary-900 dark:text-white scrollbar-none'>
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <SessionProvider>{children}</SessionProvider>
