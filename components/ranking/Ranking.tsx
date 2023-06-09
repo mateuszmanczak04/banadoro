@@ -1,37 +1,20 @@
-'use client';
+import User, { UserType } from '@/models/User';
+import dbConnect from '@/lib/dbConnect';
 
-import { useEffect, useState } from 'react';
-import appAxios from '@/lib/appAxios';
-import Loading from '@/components/Loading';
-import { UserType } from '@/models/User';
+export const revalidate = 60;
 
-const Ranking = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+const Ranking = async () => {
+  await dbConnect();
 
-  useEffect(() => {
-    const fetchTopUsers = async () => {
-      setLoading(true);
-      setError('');
-
-      try {
-        const response = await appAxios.get('/api/ranking/get-top-users');
-        setUsers(response.data.users);
-        setLoading(false);
-      } catch (err: any) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
-    fetchTopUsers();
-  }, []);
+  const topUsers = await User.find()
+    .select({ email: true, totalTime: true, username: true })
+    .sort({ totalTime: -1 })
+    .limit(10);
 
   return (
     <div className='flex flex-col items-center gap-4 w-full'>
       <div className='flex flex-col gap-2 w-full'>
-        {users.map((user: UserType, index) => (
+        {topUsers.map((user: UserType, index) => (
           <div
             key={user._id}
             className='flex flex-col gap-2 md:flex-row justify-between items-center bg-primary-100 border-2 border-primary-600 border-opacity-50 rounded p-2 dark:bg-gray-800 dark:border-gray-700'>
@@ -47,8 +30,6 @@ const Ranking = () => {
             <p>{user.totalTime} minutes</p>
           </div>
         ))}
-        {loading && <Loading />}
-        {error && <p className='error'>{error}</p>}
       </div>
     </div>
   );
