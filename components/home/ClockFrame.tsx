@@ -9,7 +9,7 @@ import {
   getSessionTime,
   incrementUserTimeByAMinute,
 } from '@/redux/timer';
-import Counter from '@/components/Counter';
+import Counter from '@/components/home/Counter';
 
 const ClockFrame = () => {
   // redux

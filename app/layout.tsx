@@ -1,30 +1,24 @@
-'use client';
+import Layout from '@/components/Layout';
+import '@/styles/globals.css';
 
-import React, { ReactNode } from 'react';
-import '../styles/globals.css';
-import { Provider } from 'react-redux';
-import store from '../redux/store';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
-import { SessionProvider } from 'next-auth/react';
+type Props = {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+};
 
-const persistor = persistStore(store);
+export const metadata = {
+  title: 'Banadoro 🍌 - Pomodoro Timer',
+  description: 'Turn on timer for studying, create tasks, compete with others!',
+};
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const RootLayout = ({ children, modal }: Props) => {
   return (
-    <html lang='en'>
-      <head>
-        <title>Banadoro 🍌 - Pomodoro Timer</title>
-        <meta
-          name='description'
-          content='Turn on timer for studying, create tasks, compete with others!'></meta>
-      </head>
-      <body className='bg-primary-300 dark:bg-gray-900 text-primary-900 dark:text-white scrollbar-none'>
-        <Provider store={store}>
-          <PersistGate persistor={persistor}>
-            <SessionProvider>{children}</SessionProvider>
-          </PersistGate>
-        </Provider>
+    <html>
+      <body className='bg-primary-300 dark:bg-gray-900 text-primary-900 dark:text-white scrollbar-none font-sans'>
+        <Layout>
+          {children}
+          {modal}
+        </Layout>
       </body>
     </html>
   );

@@ -6,14 +6,13 @@ import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserDays } from '@/redux/timer';
 import { fetchAllUserTasks, uploadLocalTasks } from '@/redux/tasks';
 import Loading from '@/components/Loading';
-import LoginWithGoogle from '@/components/LoginWithGoogle';
+import LoginWithGoogle from '@/components/account/LoginWithGoogle';
 
 type Props = {
   setAuthenticationStatus: any;
-  close: () => void;
 };
 
-const LoginForm = ({ setAuthenticationStatus, close }: Props) => {
+const LoginForm = ({ setAuthenticationStatus }: Props) => {
   // redux
   const dispatch = useAppDispatch();
 

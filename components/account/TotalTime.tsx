@@ -2,7 +2,7 @@
 
 import { useAppSelector } from '@/redux/store';
 import { getTodayTime, getTotalTime } from '@/redux/timer';
-import WeekOverview from '@/components/WeekOverview';
+import WeekOverview from '@/components/account/WeekOverview';
 
 const TotalTime = () => {
   // redux

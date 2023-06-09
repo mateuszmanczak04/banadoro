@@ -1,0 +1,63 @@
+'use client';
+
+import { useCallback, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import {
+  getBreakTime,
+  getSessionTime,
+  setBreakTime as setStoreBreakTime,
+  setSessionTime as setStoreSessionTime,
+} from '@/redux/timer';
+import ToggleDarkMode from '@/components/settings/ToggleDarkMode';
+import ToggleAutoStart from '@/components/settings/ToggleAutoStart';
+
+const Settings = () => {
+  // redux, global time in seconds
+  const dispatch = useAppDispatch();
+  const storeSessionTime = useAppSelector(getSessionTime);
+  const storeBreakTime = useAppSelector(getBreakTime);
+
+  // local time just for settings in minutes
+  const [sessionTime, setSessionTime] = useState<string>(
+    (storeSessionTime / 60).toString()
+  );
+  const [breakTime, setBreakTime] = useState<string>(
+    (storeBreakTime / 60).toString()
+  );
+
+  const handleSave = useCallback(() => {
+    dispatch(setStoreSessionTime(parseInt(sessionTime) * 60));
+    dispatch(setStoreBreakTime(parseInt(breakTime) * 60));
+    close();
+  }, [breakTime, sessionTime, dispatch]);
+
+  return (
+    <div className='flex flex-col items-center gap-4 w-full'>
+      <div className='flex gap-2 w-full items-center p-4 rounded border-primary-500 bg-primary-200 dark:bg-gray-800 dark:border-gray-700 border-2'>
+        <p className='flex-1'>Session duration</p>
+        <input
+          className='input-text flex-1'
+          type='number'
+          onChange={(e) => setSessionTime(e.target.value)}
+          value={sessionTime}
+        />
+      </div>
+      <div className='flex gap-2 w-full items-center p-4 rounded dark:border-gray-700 dark:bg-gray-800 border-2 border-primary-500 bg-primary-200'>
+        <p className='flex-1'>Break duration</p>
+        <input
+          className='input-text flex-1'
+          type='number'
+          onChange={(e) => setBreakTime(e.target.value)}
+          value={breakTime}
+        />
+      </div>
+      <button className='btn' onClick={handleSave}>
+        Save
+      </button>
+      <ToggleAutoStart />
+      <ToggleDarkMode />
+    </div>
+  );
+};
+
+export default Settings;

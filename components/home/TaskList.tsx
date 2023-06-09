@@ -1,8 +1,8 @@
 'use client';
 
 import { useAppSelector } from '@/redux/store';
-import { Task, getTasks } from '@/redux/tasks';
-import TaskItem from '@/components/TaskItem';
+import { getTasks } from '@/redux/tasks';
+import TaskItem from '@/components/home/TaskItem';
 
 const TaskList = () => {
   // redux

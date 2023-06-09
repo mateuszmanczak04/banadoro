@@ -7,14 +7,13 @@ import { fetchAllUserDays } from '@/redux/timer';
 import { fetchAllUserTasks, uploadLocalTasks } from '@/redux/tasks';
 import appAxios from '@/lib/appAxios';
 import Loading from '@/components/Loading';
-import LoginWithGoogle from '@/components/LoginWithGoogle';
+import LoginWithGoogle from '@/components/account/LoginWithGoogle';
 
 type Props = {
   setAuthenticationStatus: any;
-  close: () => void;
 };
 
-const RegisterForm = ({ setAuthenticationStatus, close }: Props) => {
+const RegisterForm = ({ setAuthenticationStatus }: Props) => {
   // redux
   const dispatch = useAppDispatch();
 

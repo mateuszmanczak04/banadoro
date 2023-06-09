@@ -2,12 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import appAxios from '../lib/appAxios';
 import { uuid } from 'uuidv4';
 
-export type Task = {
-  _id: string;
-  title: string;
-  checked: boolean;
-};
-
 type InitialState = {
   tasks: Task[];
   loading: boolean;

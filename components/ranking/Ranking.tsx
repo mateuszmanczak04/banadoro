@@ -1,0 +1,57 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import appAxios from '@/lib/appAxios';
+import Loading from '@/components/Loading';
+import { UserType } from '@/models/User';
+
+const Ranking = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchTopUsers = async () => {
+      setLoading(true);
+      setError('');
+
+      try {
+        const response = await appAxios.get('/api/ranking/get-top-users');
+        setUsers(response.data.users);
+        setLoading(false);
+      } catch (err: any) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchTopUsers();
+  }, []);
+
+  return (
+    <div className='flex flex-col items-center gap-4 w-full'>
+      <div className='flex flex-col gap-2 w-full'>
+        {users.map((user: UserType, index) => (
+          <div
+            key={user._id}
+            className='flex flex-col gap-2 md:flex-row justify-between items-center bg-primary-100 border-2 border-primary-600 border-opacity-50 rounded p-2 dark:bg-gray-800 dark:border-gray-700'>
+            <p
+              className={`w-6 h-6 flex justify-center items-center rounded ${
+                index === 0 && 'bg-primary-400 text-primary-800'
+              } ${index === 1 && 'bg-gray-300 text-gray-800'} ${
+                index === 2 && 'bg-primary-700 text-primary-400'
+              }`}>
+              {index + 1}
+            </p>
+            <p>{user.username}</p>
+            <p>{user.totalTime} minutes</p>
+          </div>
+        ))}
+        {loading && <Loading />}
+        {error && <p className='error'>{error}</p>}
+      </div>
+    </div>
+  );
+};
+
+export default Ranking;
