@@ -74,25 +74,6 @@ export const fetchAllUserTasks = createAsyncThunk(
   }
 );
 
-export const uploadLocalTasks = createAsyncThunk(
-  'tasks/upload-local-tasks',
-  async (email: string, thunkAPI: any) => {
-    const tasks = thunkAPI.getState().tasks.tasks;
-    const tasksWithEmail = tasks.map((task: Task) => ({
-      ...task,
-      authorEmail: email,
-    }));
-
-    try {
-      await appAxios.post('/api/tasks/upload-local-tasks', { tasks, email });
-
-      return tasksWithEmail;
-    } catch (err) {
-      thunkAPI.rejectWithValue('Could not upload local tasks.');
-    }
-  }
-);
-
 export const deleteTask = createAsyncThunk(
   'tasks/delete-task',
   async (_id: string, thunkAPI: any) => {
@@ -158,20 +139,6 @@ const tasksSlice = createSlice({
       state.error = '';
     });
     builder.addCase(fetchAllUserTasks.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as string;
-    });
-    // upload local tasks
-    builder.addCase(uploadLocalTasks.pending, (state) => {
-      state.loading = true;
-      state.error = '';
-    });
-    builder.addCase(uploadLocalTasks.fulfilled, (state, action) => {
-      state.loading = false;
-      state.tasks = action.payload;
-      state.error = '';
-    });
-    builder.addCase(uploadLocalTasks.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
     });

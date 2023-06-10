@@ -4,7 +4,6 @@ import { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserDays } from '@/redux/timer';
-import { uploadLocalTasks } from '@/redux/tasks';
 import appAxios from '@/lib/appAxios';
 import Loading from '@/components/Loading';
 import LoginWithGoogle from '@/components/account/LoginWithGoogle';
@@ -53,7 +52,6 @@ const RegisterForm = ({ setAuthenticationStatus }: Props) => {
           return;
         }
 
-        await dispatch(uploadLocalTasks(email));
         await dispatch(fetchAllUserDays());
         setLoading(false);
         close();
