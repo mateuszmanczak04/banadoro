@@ -1,20 +1,15 @@
-import User, { UserType } from '@/models/User';
-import dbConnect from '@/lib/dbConnect';
-
 export const revalidate = 10;
 
 const Ranking = async () => {
-  await dbConnect();
-
-  const topUsers = await User.find()
-    .select({ email: true, totalTime: true, username: true })
-    .sort({ totalTime: -1 })
-    .limit(10);
+  const res = await fetch(process.env.BASE_URL + '/api/ranking/get-top-users', {
+    cache: 'no-store',
+  });
+  const { topUsers } = await res.json();
 
   return (
     <div className='flex flex-col items-center gap-4 w-full'>
       <div className='flex flex-col gap-2 w-full'>
-        {topUsers.map((user: UserType, index) => (
+        {topUsers.map((user: User, index: number) => (
           <div
             key={user._id}
             className='flex flex-col gap-2 md:flex-row justify-between items-center bg-primary-100 border-2 border-primary-600 border-opacity-50 rounded p-2 dark:bg-gray-800 dark:border-gray-700'>
