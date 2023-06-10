@@ -29,7 +29,7 @@ const Account = () => {
   const handleSignOut = () => {
     dispatch(setTasks([]));
     dispatch(resetTotalTime());
-    signOut({ redirect: false });
+    signOut();
     close();
   };
 
