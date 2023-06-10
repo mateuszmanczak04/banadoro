@@ -63,11 +63,9 @@ export const toggleTask = createAsyncThunk(
 
 export const fetchAllUserTasks = createAsyncThunk(
   'tasks/fetchAllUserTasks',
-  async (email: string, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
-      const response = await appAxios.get(
-        '/api/tasks/get-all-user-tasks/' + email
-      );
+      const response = await appAxios.get('/api/tasks/get-all-user-tasks');
 
       return response.data.tasks;
     } catch (err) {

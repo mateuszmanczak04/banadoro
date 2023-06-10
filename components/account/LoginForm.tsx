@@ -4,7 +4,7 @@ import { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserDays } from '@/redux/timer';
-import { fetchAllUserTasks, uploadLocalTasks } from '@/redux/tasks';
+import { uploadLocalTasks } from '@/redux/tasks';
 import Loading from '@/components/Loading';
 import LoginWithGoogle from '@/components/account/LoginWithGoogle';
 
@@ -39,7 +39,6 @@ const LoginForm = ({ setAuthenticationStatus }: Props) => {
     }
 
     await dispatch(uploadLocalTasks(email));
-    await dispatch(fetchAllUserTasks(email));
     await dispatch(fetchAllUserDays());
     setLoading(false);
     close();

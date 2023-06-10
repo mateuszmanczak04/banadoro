@@ -3,6 +3,7 @@
 import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { initTheme } from '@/redux/settings';
 import { useAppDispatch } from '@/redux/store';
+import { fetchAllUserTasks } from '@/redux/tasks';
 import { fetchAllUserDays } from '@/redux/timer';
 import { TrophyIcon } from '@heroicons/react/24/outline';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
@@ -21,6 +22,7 @@ const TopBar = () => {
   useEffect(() => {
     dispatch(initTheme());
     dispatch(fetchAllUserDays());
+    dispatch(fetchAllUserTasks());
   }, [dispatch]);
 
   return (
