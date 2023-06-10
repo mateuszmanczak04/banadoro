@@ -4,7 +4,6 @@ import Ranking from '@/components/ranking/Ranking';
 const page = () => {
   return (
     <Modal maxWidth='xl' title='Ranking'>
-      {/* @ts-expect-error // TODO */}
       <Ranking />
     </Modal>
   );
