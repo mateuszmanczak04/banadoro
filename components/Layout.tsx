@@ -20,7 +20,7 @@ const Layout = ({ children }: Props) => {
       <PersistGate persistor={persistor}>
         <SessionProvider>
           <TopBar />
-          {children}
+          <div className='mt-24'>{children}</div>
         </SessionProvider>
       </PersistGate>
     </Provider>

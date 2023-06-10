@@ -16,6 +16,7 @@ const Modal = ({ children, maxWidth, title }: Props) => {
     router.back();
   };
 
+  // disable document scrolling while modal is open
   useEffect(() => {
     document.body.style.overflowY = 'hidden';
 

@@ -1,7 +1,7 @@
 import User, { UserType } from '@/models/User';
 import dbConnect from '@/lib/dbConnect';
 
-export const revalidate = 60;
+export const revalidate = 10;
 
 const Ranking = async () => {
   await dbConnect();
