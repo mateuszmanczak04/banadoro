@@ -8,6 +8,7 @@ import { fetchAllUserDays } from '@/redux/timer';
 import { TrophyIcon } from '@heroicons/react/24/outline';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import { Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
@@ -19,11 +20,16 @@ const TopBar = () => {
   // redux
   const dispatch = useAppDispatch();
 
+  // session
+  const { data: session } = useSession();
+
   useEffect(() => {
     dispatch(initTheme());
-    dispatch(fetchAllUserDays());
-    dispatch(fetchAllUserTasks());
-  }, [dispatch]);
+    if (session) {
+      dispatch(fetchAllUserDays());
+      dispatch(fetchAllUserTasks());
+    }
+  }, [dispatch, session]);
 
   return (
     <div className='fixed top-0 flex justify-between w-full px-4 py-2 bg-primary-300 dark:bg-gray-800 dark:text-gray-200 z-10'>
