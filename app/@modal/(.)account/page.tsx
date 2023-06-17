@@ -3,7 +3,7 @@ import Modal from '@/components/Modal';
 
 const page = () => {
   return (
-    <Modal maxWidth='4xl' title='Account'>
+    <Modal maxWidth='3xl' title='Account'>
       <Account />
     </Modal>
   );
