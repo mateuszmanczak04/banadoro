@@ -1,6 +1,5 @@
 'use client';
 
-import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { initTheme } from '@/redux/settings';
 import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserTasks } from '@/redux/tasks';
@@ -14,7 +13,6 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 const TopBar = () => {
-  const width = useWindowWidth();
   const pathname = usePathname();
 
   // redux
@@ -41,35 +39,20 @@ const TopBar = () => {
       <div className='flex gap-6 items-center'>
         {pathname !== '/ranking' && (
           <Link href='/ranking' className='flex items-center gap-1'>
-            {width >= 640 ? (
-              <>
-                <TrophyIcon className='h-4 w-4' /> <p>Ranking</p>
-              </>
-            ) : (
-              <TrophyIcon className='h-6 w-6' />
-            )}
+            <TrophyIcon className='h-4 w-4' />{' '}
+            <p className='hidden sm:block'>Ranking</p>
           </Link>
         )}
         {pathname !== '/account' && (
           <Link href='/account' className='flex items-center gap-1'>
-            {width >= 640 ? (
-              <>
-                <UserCircleIcon className='h-4 w-4' /> <p>Account</p>
-              </>
-            ) : (
-              <UserCircleIcon className='h-6 w-6' />
-            )}
+            <UserCircleIcon className='h-4 w-4' />{' '}
+            <p className='hidden sm:block'>Account</p>
           </Link>
         )}
         {pathname !== '/settings' && (
           <Link href='/settings' className='flex items-center gap-1'>
-            {width >= 640 ? (
-              <>
-                <Cog6ToothIcon className='h-4 w-4' /> <p>Settings</p>
-              </>
-            ) : (
-              <Cog6ToothIcon className='h-6 w-6' />
-            )}
+            <Cog6ToothIcon className='h-4 w-4' />{' '}
+            <p className='hidden sm:block'>Settings</p>
           </Link>
         )}
       </div>
