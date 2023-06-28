@@ -13,8 +13,6 @@ const Ranking = async () => {
     .select({ totalTime: true, username: true })
     .sort({ totalTime: -1 });
 
-  throw new Error('Wystąpił błąd');
-
   return (
     <div className='flex flex-col items-center gap-4 w-full'>
       <div className='flex flex-col gap-2 w-full'>
