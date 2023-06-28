@@ -11,3 +11,9 @@ interface User {
   totalTime?: number;
   username?: string;
 }
+
+interface RankingTopUser {
+  _id: string;
+  totalTime: number;
+  username: string;
+}

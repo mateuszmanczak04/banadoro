@@ -1,10 +1,19 @@
-export const revalidate = 10;
+import dbConnect from '@/lib/dbConnect';
+import User from '@/models/User';
+
+// export const revalidate = 10;
+
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 const Ranking = async () => {
-  const res = await fetch(process.env.BASE_URL + '/api/ranking/get-top-users', {
-    cache: 'no-store',
-  });
-  const { topUsers } = await res.json();
+  await dbConnect();
+
+  const topUsers: RankingTopUser[] = await User.find()
+    .select({ totalTime: true, username: true })
+    .sort({ totalTime: -1 });
+
+  throw new Error('Wystąpił błąd');
 
   return (
     <div className='flex flex-col items-center gap-4 w-full'>
