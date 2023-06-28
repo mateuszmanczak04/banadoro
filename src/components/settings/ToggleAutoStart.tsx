@@ -13,11 +13,9 @@ const ToggleAutoStart = () => {
   };
 
   return (
-    <div
-      className='bg-primary-200 shadow text-gray-800 w-full p-2 rounded text-center cursor-pointer hover:bg-primary-100 hover:text-gray-700'
-      onClick={handleClick}>
+    <button className='btn-secondary w-full' onClick={handleClick}>
       Auto Start: {autoStart ? 'ON' : 'OFF'}
-    </div>
+    </button>
   );
 };
 

@@ -24,7 +24,7 @@ export const AddTaskForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-2 items-center w-full max-w-sm bg-primary-100 p-2 rounded-xl border-2 border-primary-500  dark:border-0 dark:bg-transparent'
+      className='flex flex-col gap-2 items-center w-full max-w-sm p-2 rounded-xl '
       onSubmit={handleSubmit}>
       <h2 className='text-3xl font-bold'>Add Task</h2>
       <input
@@ -33,7 +33,7 @@ export const AddTaskForm = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <button className='btn w-full p-2 rounded'>Add</button>
+      <button className='btn-primary w-full'>Add</button>
     </form>
   );
 };

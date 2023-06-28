@@ -21,6 +21,8 @@ const LoginForm = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!email || !password) return;
+
     setLoading(true);
     setError('');
 
@@ -44,7 +46,7 @@ const LoginForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-4 w-full items-center'
+      className='flex flex-col gap-4 w-full items-center bg-gray-800 p-4 rounded-lg'
       onSubmit={handleSubmit}>
       <label className='w-full'>
         <p>E-mail</p>
@@ -64,7 +66,7 @@ const LoginForm = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
-      <button className='btn'>Login</button>
+      <button className='btn-primary w-full'>Login</button>
       <LoginWithGoogle text='Sign In With Google' />
       <p
         className='text-gray-500 cursor-pointer'

@@ -1,8 +1,6 @@
 'use client';
 
-import '@/styles/globals.css';
 import TopBar from './TopBar';
-import { initTheme } from '@/redux/settings';
 import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserTasks } from '@/redux/tasks';
 import { fetchAllUserDays } from '@/redux/timer';
@@ -21,7 +19,6 @@ const Layout = ({ children }: Props) => {
   const { data: session } = useSession();
 
   useEffect(() => {
-    dispatch(initTheme());
     if (session) {
       dispatch(fetchAllUserDays());
       dispatch(fetchAllUserTasks());

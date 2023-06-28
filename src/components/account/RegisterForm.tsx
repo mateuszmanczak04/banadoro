@@ -62,7 +62,7 @@ const RegisterForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-4 w-full items-center'
+      className='flex flex-col gap-4 w-full items-center bg-gray-800 p-4 rounded-lg'
       onSubmit={handleSubmit}>
       <label className='w-full'>
         <p>E-mail</p>
@@ -100,7 +100,7 @@ const RegisterForm = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
       </label>
-      <button className='btn'>Register</button>
+      <button className='btn-primary w-full'>Register</button>
       <LoginWithGoogle text='Sign Up With Google' />
       <p
         className='text-gray-500 cursor-pointer'

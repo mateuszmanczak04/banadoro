@@ -95,19 +95,19 @@ const ClockFrame = () => {
   };
 
   return (
-    <div className='w-full bg-primary-100 border-2 dark:border-0 border-primary-500 p-8 rounded-xl flex flex-col gap-8 items-center dark:bg-gray-800'>
+    <div className='w-full p-8 rounded-xl flex flex-col gap-8 items-center bg-gray-800'>
       <div className='flex gap-4'>
         <button
-          className={`bg-white py-2 px-6 rounded shadow cursor-pointer ${
-            mode === 'session' && 'border-primary-500 border-b-4'
-          } dark:bg-gray-800 dark:hover:text-primary-500`}
+          className={`py-2 px-6 rounded cursor-pointer transition duration-500 bg-gray-800 hover:text-primary-500 border-b-4 border-transparent ${
+            mode === 'session' && 'border-primary-500 main-shadow'
+          }`}
           onClick={handleSetModeSession}>
           Session
         </button>
         <button
-          className={`bg-white py-2 px-6 rounded shadow cursor-pointe ${
-            mode === 'break' && 'border-primary-500 border-b-4'
-          } dark:bg-gray-800 dark:hover:text-primary-500`}
+          className={`py-2 px-6 rounded cursor-pointe transition duration-500 bg-gray-800 hover:text-primary-500 border-transparent border-b-4 ${
+            mode === 'break' && 'border-primary-500 main-shadow'
+          }`}
           onClick={handleSetModeBreak}>
           Break
         </button>
@@ -120,13 +120,13 @@ const ClockFrame = () => {
 
       {running ? (
         <>
-          <button className='btn' onClick={handlePause}>
+          <button className='btn-secondary w-full' onClick={handlePause}>
             Pause
           </button>
         </>
       ) : (
         <>
-          <button className='btn' onClick={handleRun}>
+          <button className='btn-primary w-full' onClick={handleRun}>
             Start
           </button>
         </>

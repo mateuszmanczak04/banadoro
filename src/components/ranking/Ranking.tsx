@@ -19,7 +19,7 @@ const Ranking = async () => {
         {topUsers.map((user: User, index: number) => (
           <div
             key={user._id}
-            className='flex flex-col gap-2 md:flex-row justify-between items-center bg-primary-100 border-2 border-primary-600 border-opacity-50 rounded p-2 dark:bg-gray-800 dark:border-gray-700'>
+            className='flex flex-col gap-2 md:flex-row justify-between items-center border-2 border-opacity-50 rounded p-2 bg-gray-800 border-gray-700'>
             <p
               className={`w-6 h-6 flex justify-center items-center rounded ${
                 index === 0 && 'bg-primary-400 text-primary-800'

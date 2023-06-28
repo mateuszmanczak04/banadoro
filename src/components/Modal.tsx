@@ -33,7 +33,7 @@ const Modal = ({ children, maxWidth, title }: Props) => {
         onClick={handleClose}></div>
       {/* content */}
       <div
-        className={`bg-primary-300 rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-8 flex flex-col gap-4 items-center w-10/12 dark:bg-gray-900 max-h-[83vh] overflow-y-scroll scrollbar-none max-w-${maxWidth}`}>
+        className={`rounded absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-2 md:px-8 py-8 flex flex-col gap-4 items-center w-11/12 bg-gray-900 max-h-[83vh] overflow-y-scroll scrollbar-none max-w-${maxWidth} rounded-xl`}>
         <div className='w-full flex justify-between'>
           <h2 className='text-3xl font-bold'>{title}</h2>
           <svg

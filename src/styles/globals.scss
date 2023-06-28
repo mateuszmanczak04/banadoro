@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+button,
+input {
+  outline: none;
+}
+
+.btn-primary {
+  @apply py-1 px-4 text-gray-900 rounded bg-primary-500 main-shadow main-shadow-hover;
+}
+
+.btn-secondary {
+  @apply py-1 px-4 text-gray-100 rounded bg-gray-700 main-shadow main-shadow-hover;
+}
+
+.google-button {
+  background: #4285f4;
+  @apply w-full py-1 px-3 rounded shadow cursor-pointer transition text-center text-white;
+  transition: 0.4s ease;
+
+  &:hover {
+    -webkit-box-shadow: 0px 8px 70px -9px #4285f4;
+    -moz-box-shadow: 0px 8px 70px -9px #4285f4;
+    box-shadow: 0px 8px 70px -9px #4285f4;
+  }
+}
+
+.error {
+  @apply text-red-500;
+}
+
+.input-text {
+  @apply rounded w-full p-2 bg-gray-700 text-gray-200 border-2 border-gray-500 main-shadow-focus transition duration-500;
+}
+
+.app-gradient {
+  @apply bg-gradient-to-r from-primary-400 to-primary-500;
+}
+
+.main-shadow {
+  transition: 0.4s ease;
+  -webkit-box-shadow: 0px 8px 70px -14px rgba(255, 190, 10, 1);
+  -moz-box-shadow: 0px 8px 70px -14px rgba(255, 190, 10, 1);
+  box-shadow: 0px 8px 70px -14px rgba(255, 190, 10, 1);
+}
+
+.main-shadow-hover:hover,
+.main-shadow-focus:focus {
+  -webkit-box-shadow: 0px 8px 70px -9px rgba(255, 190, 10, 1);
+  -moz-box-shadow: 0px 8px 70px -9px rgba(255, 190, 10, 1);
+  box-shadow: 0px 8px 70px -9px rgba(255, 190, 10, 1);
+}
+
+.white-shadow {
+  -webkit-box-shadow: 0px 8px 70px -14px rgba(255, 255, 255, 1);
+  -moz-box-shadow: 0px 8px 70px -14px rgba(255, 255, 255, 1);
+  box-shadow: 0px 8px 70px -14px rgba(255, 255, 255, 1);
+}
+
+.main-text-shadow {
+  text-shadow: 0px 4px 30px rgba(255, 190, 10, 1);
+}
+
+.white-text-shadow {
+  text-shadow: 0px 4px 30px rgba(255, 255, 255, 1);
+}
+
+.main-display-animation {
+  animation: display 1s ease;
+}
+
+@keyframes display {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+    -webkit-box-shadow: 0px 0px 100px -1px rgba(255, 255, 255, 1);
+    -moz-box-shadow: 0px 0px 100px -1px rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 100px -1px rgba(255, 255, 255, 1);
+  }
+  99% {
+    opacity: 1;
+    transform: translateY(0);
+    -webkit-box-shadow: 0px 0px 100px -1px rgba(255, 255, 255, 0);
+    -moz-box-shadow: 0px 0px 100px -1px rgba(255, 255, 255, 0);
+    box-shadow: 0px 0px 100px -1px rgba(255, 255, 255, 0);
+  }
+  100% {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+}

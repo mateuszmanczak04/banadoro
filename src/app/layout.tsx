@@ -1,6 +1,6 @@
 import AppProviders from '@/components/AppProviders';
 import Layout from '@/components/Layout';
-import '@/styles/globals.css';
+import '@/styles/globals.scss';
 
 type Props = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ export const metadata = {
 const RootLayout = ({ children, modal }: Props) => {
   return (
     <html>
-      <body className='bg-primary-300 dark:bg-gray-900 text-primary-900 dark:text-white scrollbar-none font-sans'>
+      <body className='bg-gray-900 text-white scrollbar-none font-sans'>
         <AppProviders>
           <Layout>
             {children}

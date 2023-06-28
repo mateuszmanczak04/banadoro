@@ -8,7 +8,7 @@ const TopBar = () => {
   const pathname = usePathname();
 
   return (
-    <div className='fixed top-0 flex justify-between w-full px-4 py-2 bg-primary-300 dark:bg-gray-800 dark:text-gray-200 z-10'>
+    <div className='fixed top-0 flex justify-between w-full px-4 py-2 bg-gray-800 text-gray-200 z-10'>
       <Link
         href='/'
         className='text-2xl sm:text-3xl font-extrabold whitespace-nowrap'>

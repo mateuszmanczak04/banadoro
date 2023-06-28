@@ -27,39 +27,20 @@ const TaskItem = ({ title, checked, _id }: Props) => {
 
   return (
     <div
-      className={`flex justify-between w-full py-2 px-4 dark:bg-gray-800 dark:text-gray-200 bg-primary-100 text-gray-800 rounded items-center relative gap-2`}>
+      className={`flex justify-between w-full py-2 px-4 bg-gray-800 text-gray-200 rounded items-center relative gap-2 main-display-animation`}>
       <p
-        className={`flex-1 break-all ${
-          checked && 'text-gray-400 dark:text-gray-700'
-        }`}>
+        className={`flex-1 break-all transition ${checked && 'text-gray-700'}`}>
         {title}
       </p>
       <div className='flex gap-2 items-center'>
         {!checked ? (
-          <div
-            className='flex gap-1 bg-primary-200 border-2 border-primary-300 dark:border-0 rounded py-1 px-2 hover:scale-110 transition cursor-pointer dark:bg-gray-700 w-24 justify-center'
-            onClick={handleToggle}>
-            <svg
-              className='w-6 h-6'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2.5'
-              viewBox='0 0 24 24'
-              xmlns='http://www.w3.org/2000/svg'
-              aria-hidden='true'>
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M4.5 12.75l6 6 9-13.5'></path>
-            </svg>
-            <p>Check</p>
-          </div>
+          <button className='btn-primary' onClick={handleToggle}>
+            Mark as done
+          </button>
         ) : (
-          <p
-            className='text-gray-400 cursor-pointer w-24 justify-center flex items-center'
-            onClick={handleToggle}>
+          <button className='btn-secondary' onClick={handleToggle}>
             Undo
-          </p>
+          </button>
         )}
         <svg
           className='w-6 h-6 hover:scale-110 transition cursor-pointer '

@@ -1,6 +1,6 @@
 const Description = () => {
   return (
-    <div className='bg-primary-100 dark:bg-gray-800 min-h-screen w-full flex justify-center p-4 items-center'>
+    <div className='bg-gray-800 min-h-screen w-full flex justify-center p-4 items-center'>
       <div className='w-10/12 max-w-xl h-full flex flex-col gap-4'>
         <h2 className='text-4xl w-full text-center font-extrabold p-2'>
           Tutorial
