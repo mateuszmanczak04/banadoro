@@ -7,7 +7,7 @@ const page = async () => {
   if (session?.user) redirect('/account/authenticated');
 
   return (
-    <div className='w-11/12 max-w-xl mt-20 mx-auto flex flex-col items-center gap-4 pb-16'>
+    <div className='w-11/12 max-w-xl mt-20 mx-auto flex flex-col items-center gap-4 pb-16 bg-primary-200 dark:bg-transparent p-2 rounded-xl'>
       <h1 className='text-3xl font-bold'>Register</h1>
       <RegisterForm />
     </div>

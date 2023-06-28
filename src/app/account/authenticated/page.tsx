@@ -8,7 +8,7 @@ const page = async () => {
   if (!session || !session.user) redirect('/account/register');
 
   return (
-    <div className='w-11/12 max-w-4xl mt-20 mx-auto flex flex-col items-center gap-4 pb-16'>
+    <div className='w-11/12 max-w-4xl mt-20 mx-auto flex flex-col items-center gap-4 pb-16 bg-primary-200 dark:bg-transparent p-2 rounded-xl'>
       <h1 className='text-3xl font-bold'>Account</h1>
       <div className='flex flex-col items-center gap-4 w-full'>
         <TotalTime />
