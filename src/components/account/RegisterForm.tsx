@@ -7,14 +7,13 @@ import { fetchAllUserDays } from '@/redux/timer';
 import appAxios from '@/lib/appAxios';
 import Loading from '@/components/Loading';
 import LoginWithGoogle from '@/components/account/LoginWithGoogle';
+import { useRouter } from 'next/navigation';
 
-type Props = {
-  setAuthenticationStatus: any;
-};
-
-const RegisterForm = ({ setAuthenticationStatus }: Props) => {
+const RegisterForm = () => {
   // redux
   const dispatch = useAppDispatch();
+
+  const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -39,11 +38,11 @@ const RegisterForm = ({ setAuthenticationStatus }: Props) => {
         username,
         password,
       })
-      .then(async (response) => {
+      .then(async (_) => {
         const result = await signIn('credentials', {
-          redirect: false,
           email,
           password,
+          callbackUrl: '/',
         });
 
         if (result!.error) {
@@ -54,7 +53,6 @@ const RegisterForm = ({ setAuthenticationStatus }: Props) => {
 
         await dispatch(fetchAllUserDays());
         setLoading(false);
-        close();
       })
       .catch((err) => {
         setError(err.response.data.message);
@@ -64,7 +62,7 @@ const RegisterForm = ({ setAuthenticationStatus }: Props) => {
 
   return (
     <form
-      className='flex flex-col gap-4 w-full items-center max-w-md'
+      className='flex flex-col gap-4 w-full items-center'
       onSubmit={handleSubmit}>
       <label className='w-full'>
         <p>E-mail</p>
@@ -106,7 +104,7 @@ const RegisterForm = ({ setAuthenticationStatus }: Props) => {
       <LoginWithGoogle text='Sign Up With Google' />
       <p
         className='text-gray-500 cursor-pointer'
-        onClick={() => setAuthenticationStatus('login')}>
+        onClick={() => router.push('/account/login')}>
         Login instead
       </p>
       {error && <p className='error'>{error}</p>}

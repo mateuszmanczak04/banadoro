@@ -86,7 +86,7 @@ const WeekOverview = () => {
           </button>
         }
       </div>
-      <div className='flex flex-col gap-2 w-full rounded-lg lg:flex-row-reverse lg:h-64'>
+      <div className='flex flex-col gap-2 w-full rounded-lg md:flex-row-reverse md:h-64'>
         {days.map((day: Date) => {
           const workDay = previousDays.find(
             (d: Day) => d.date === getDateSlug(day)
@@ -100,7 +100,7 @@ const WeekOverview = () => {
             <div
               key={getDateSlug(day)}
               className='flex flex-col gap-4 bg-primary-100 border-2 border-gray-200 border-opacity-50 p-2 rounded w-full dark:bg-gray-800 dark:border-gray-700'>
-              <div className='flex gap-4 justify-between lg:flex-col items-center'>
+              <div className='flex gap-4 justify-between md:flex-col items-center'>
                 <p>{getDateSlug(day)}</p>
                 {totalTime > 0 && (
                   <p>
@@ -112,14 +112,14 @@ const WeekOverview = () => {
 
               <div className='w-full h-full relative'>
                 <div
-                  className='app-gradient rounded h-2 lg:w-full absolute bottom-0 transition duration-1000'
+                  className='app-gradient rounded h-2 md:w-full absolute bottom-0 transition duration-1000'
                   style={{
                     width:
-                      windowWidth >= 1024
+                      windowWidth >= 768
                         ? '100%'
                         : (totalTime / maxTotalTime) * 100 + '%',
                     height:
-                      windowWidth >= 1024
+                      windowWidth >= 768
                         ? (totalTime / maxTotalTime) * 100 + '%'
                         : '8px',
                   }}></div>
