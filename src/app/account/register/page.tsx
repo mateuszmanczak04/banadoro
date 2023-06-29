@@ -8,7 +8,6 @@ const page = async () => {
 
   return (
     <div className='w-full max-w-xl mt-20 mx-auto flex flex-col items-center gap-4 pb-16 bg-transparent p-2 rounded-xl'>
-      <h1 className='text-3xl font-bold'>Register</h1>
       <RegisterForm />
     </div>
   );

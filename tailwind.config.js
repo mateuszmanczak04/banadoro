@@ -23,6 +23,9 @@ module.exports = {
           900: '#332602',
         },
       },
+      screens: {
+        xs: '480px',
+      },
     },
   },
   plugins: [require('tailwind-scrollbar')],
