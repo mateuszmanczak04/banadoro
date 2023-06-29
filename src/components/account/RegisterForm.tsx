@@ -7,7 +7,6 @@ import { fetchAllUserDays } from '@/redux/timer';
 import appAxios from '@/lib/appAxios';
 import Loading from '@/components/Loading';
 import LoginWithGoogle from '@/components/account/LoginWithGoogle';
-import { useRouter } from 'next/navigation';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -16,12 +15,9 @@ const RegisterForm = () => {
   // redux
   const dispatch = useAppDispatch();
 
-  const router = useRouter();
-
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [passwordAtLeast6Characters, setPasswordAtLeast6Characters] =
     useState(false);
   const [strongPassword, setStrongPassword] = useState(false);
@@ -82,7 +78,7 @@ const RegisterForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-6 w-full items-center bg-gray-800 p-8 rounded-lg'
+      className='flex flex-col gap-6 w-full items-center sm:bg-gray-800 p-8 rounded-lg'
       onSubmit={handleSubmit}>
       <h1 className='text-3xl font-bold flex flex-col gap-1'>Register</h1>
       <label className='w-full'>
@@ -138,7 +134,7 @@ const RegisterForm = () => {
           </div>
         </div>
       </div>
-      <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2'>
+      <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2 mt-4'>
         <button className='btn-primary w-full'>Register</button>
         <LoginWithGoogle text='Sign Up With Google' />
       </div>

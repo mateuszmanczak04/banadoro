@@ -6,13 +6,11 @@ import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserDays } from '@/redux/timer';
 import Loading from '@/components/Loading';
 import LoginWithGoogle from '@/components/account/LoginWithGoogle';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const LoginForm = () => {
   // redux
   const dispatch = useAppDispatch();
-
-  const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,33 +44,38 @@ const LoginForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-4 w-full items-center bg-gray-800 p-4 rounded-lg'
+      className='flex flex-col gap-6 w-full items-center sm:bg-gray-800 p-8 rounded-lg'
       onSubmit={handleSubmit}>
-      <label className='w-full'>
+      <h1 className='text-3xl font-bold'>Login</h1>
+      <label className='w-full flex flex-col gap-1'>
         <p>E-mail</p>
         <input
+          placeholder='John Smith'
           type='email'
           className='input-text'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
-      <label className='w-full'>
+      <label className='w-full flex flex-col gap-1'>
         <p>Password</p>
         <input
+          placeholder='SuperStrongPassword123#'
           type='password'
           className='input-text'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
-      <button className='btn-primary w-full'>Login</button>
-      <LoginWithGoogle text='Sign In With Google' />
-      <p
-        className='text-gray-500 cursor-pointer'
-        onClick={() => router.push('/account/register')}>
-        Register instead
-      </p>
+      <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2 mt-4'>
+        <button className='btn-primary w-full'>Login</button>
+        <LoginWithGoogle text='Sign In With Google' />
+      </div>
+      <Link
+        href='/account/register'
+        className='cursor-pointer flex items-center gap-1 text-gray-400 mx-auto'>
+        <p>Register instead</p>
+      </Link>
       {error && <p className='error'>{error}</p>}
       {loading && <Loading />}
     </form>
