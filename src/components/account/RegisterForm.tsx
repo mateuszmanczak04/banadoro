@@ -10,6 +10,7 @@ import LoginWithGoogle from '@/components/account/LoginWithGoogle';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import PasswordInput from './PasswordInput';
 
 const RegisterForm = () => {
   // redux
@@ -104,13 +105,7 @@ const RegisterForm = () => {
       <div className='flex flex-col w-full gap-3'>
         <label className='w-full flex flex-col gap-1'>
           <p>Password</p>
-          <input
-            placeholder='SuperStrongPassword123#'
-            type='password'
-            className='input-text'
-            value={password}
-            onChange={handleTypePassword}
-          />
+          <PasswordInput value={password} onChange={handleTypePassword} />
         </label>
         <div className='flex flex-col items-start w-full max-w-sm text-sm text-gray-400 gap-2'>
           <div className='flex gap-1 w-full'>

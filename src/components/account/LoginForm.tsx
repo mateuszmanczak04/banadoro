@@ -7,6 +7,7 @@ import { fetchAllUserDays } from '@/redux/timer';
 import Loading from '@/components/Loading';
 import LoginWithGoogle from '@/components/account/LoginWithGoogle';
 import Link from 'next/link';
+import PasswordInput from './PasswordInput';
 
 const LoginForm = () => {
   // redux
@@ -50,7 +51,7 @@ const LoginForm = () => {
       <label className='w-full flex flex-col gap-1'>
         <p>E-mail</p>
         <input
-          placeholder='John Smith'
+          placeholder='example@abc.com'
           type='email'
           className='input-text'
           value={email}
@@ -59,10 +60,7 @@ const LoginForm = () => {
       </label>
       <label className='w-full flex flex-col gap-1'>
         <p>Password</p>
-        <input
-          placeholder='SuperStrongPassword123#'
-          type='password'
-          className='input-text'
+        <PasswordInput
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
