@@ -10,6 +10,7 @@ import {
   incrementUserTimeByAMinute,
 } from '@/redux/timer';
 import Counter from '@/components/home/Counter';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 const ClockFrame = () => {
   // redux
@@ -130,6 +131,13 @@ const ClockFrame = () => {
             Start
           </button>
         </>
+      )}
+      {running && (
+        <Player
+          autoplay
+          loop
+          src='/sand-timer.json'
+          style={{ height: '80px', width: '80px' }}></Player>
       )}
     </div>
   );
