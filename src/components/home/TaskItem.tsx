@@ -27,7 +27,7 @@ const TaskItem = ({ title, checked, _id }: Props) => {
 
   return (
     <div
-      className={`flex justify-between w-full py-2 px-4 bg-gray-800 text-gray-200 rounded items-center relative gap-2 main-display-animation`}>
+      className={`flex justify-between w-full py-2 px-4 bg-gray-800 text-gray-200 rounded items-center relative gap-2 task-display-animation`}>
       <p
         className={`flex-1 break-all transition ${checked && 'text-gray-700'}`}>
         {title}
