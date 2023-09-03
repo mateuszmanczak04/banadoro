@@ -4,7 +4,6 @@ import '@/styles/globals.scss';
 
 type Props = {
   children: React.ReactNode;
-  modal: React.ReactNode;
 };
 
 export const metadata = {
@@ -12,15 +11,12 @@ export const metadata = {
   description: 'Turn on timer for studying, create tasks, compete with others!',
 };
 
-const RootLayout = ({ children, modal }: Props) => {
+const RootLayout = ({ children }: Props) => {
   return (
     <html>
       <body className='bg-gray-900 text-white scrollbar-none font-sans'>
         <AppProviders>
-          <Layout>
-            {children}
-            {modal}
-          </Layout>
+          <Layout>{children}</Layout>
         </AppProviders>
       </body>
     </html>
