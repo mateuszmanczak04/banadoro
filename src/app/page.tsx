@@ -1,7 +1,7 @@
 import React from 'react';
-import App from '@/components/home/App';
-import Description from '@/components/home/Description';
-import Footer from '@/components/home/Footer';
+import App from './(.)/App';
+import Description from './(.)/Description';
+import Footer from './(.)/Footer';
 
 const page = () => {
   return (

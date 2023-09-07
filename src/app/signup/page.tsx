@@ -1,4 +1,4 @@
-import SignUpForm from '@/app/(authentication)/signup/SignUpForm';
+import SignUpForm from '@/app/signup/SignUpForm';
 import { getAuthSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 

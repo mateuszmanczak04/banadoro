@@ -1,4 +1,4 @@
-import Ranking from '@/components/ranking/Ranking';
+import Ranking from '@/app/ranking/Ranking';
 
 export const fetchCache = 'force-no-store';
 

@@ -4,10 +4,10 @@ import { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserDays } from '@/redux/timer';
-import Loading from '@/components/Loading';
-import GoogleButton from '@/app/(authentication)/GoogleButton';
+import Loading from '../(common)/Loading';
+import GoogleButton from '../(common)/GoogleButton';
 import Link from 'next/link';
-import PasswordInput from '@/app/(authentication)/PasswordInput';
+import PasswordInput from '../(common)/PasswordInput';
 
 const SignInForm = () => {
   // redux

@@ -8,7 +8,7 @@ import {
   setBreakTime as setStoreBreakTime,
   setSessionTime as setStoreSessionTime,
 } from '@/redux/timer';
-import ToggleAutoStart from '@/components/settings/ToggleAutoStart';
+import ToggleAutoStart from './ToggleAutoStart';
 
 const Settings = () => {
   // redux, global time in seconds

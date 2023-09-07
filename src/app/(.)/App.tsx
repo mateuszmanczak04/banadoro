@@ -1,6 +1,6 @@
-import ClockFrame from '@/components/home/ClockFrame';
-import TaskList from '@/components/home/TaskList';
-import { AddTaskForm } from '@/components/home/AddTaskForm';
+import ClockFrame from './ClockFrame';
+import TaskList from './TaskList';
+import { AddTaskForm } from '@/app/(.)/AddTaskForm';
 
 const App = () => {
   return (

@@ -1,5 +1,5 @@
-import SignOutButton from '@/app/(authentication)/SignOutButton';
-import TotalTime from '@/components/account/TotalTime';
+import SignOutButton from '../(common)/SignOutButton';
+import TotalTime from '@/app/account/TotalTime';
 import { getAuthSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 

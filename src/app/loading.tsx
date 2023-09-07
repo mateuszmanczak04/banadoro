@@ -1,7 +1,3 @@
-import Loading from '@/components/Loading';
+import Loading from './(common)/Loading';
 
-const loading = () => {
-  return <Loading />;
-};
-
-export default loading;
+export default Loading;

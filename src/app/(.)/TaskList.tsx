@@ -2,7 +2,7 @@
 
 import { useAppSelector } from '@/redux/store';
 import { getTasks } from '@/redux/tasks';
-import TaskItem from '@/components/home/TaskItem';
+import TaskItem from './TaskItem';
 
 const TaskList = () => {
   // redux

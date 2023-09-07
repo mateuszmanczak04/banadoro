@@ -1,5 +1,5 @@
-import AppProviders from '@/components/AppProviders';
-import Layout from '@/components/Layout';
+import AppProviders from '@/app/(common)/AppProviders';
+import Layout from './(common)/Layout';
 import '@/styles/globals.scss';
 
 type Props = {

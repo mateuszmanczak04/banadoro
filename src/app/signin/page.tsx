@@ -1,4 +1,4 @@
-import SignInForm from '@/app/(authentication)/signin/SignInForm';
+import SignInForm from '@/app/signin/SignInForm';
 import { getAuthSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 

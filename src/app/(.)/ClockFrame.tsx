@@ -9,7 +9,7 @@ import {
   getSessionTime,
   incrementUserTimeByAMinute,
 } from '@/redux/timer';
-import Counter from '@/components/home/Counter';
+import Counter from './Counter';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 const ClockFrame = () => {
