@@ -6,7 +6,7 @@ import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserDays } from '@/redux/timer';
 import appAxios from '@/lib/appAxios';
 import Loading from '@/components/Loading';
-import LoginWithGoogle from '@/app/(authentication)/LoginWithGoogle';
+import GoogleButton from '@/app/(authentication)/GoogleButton';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -131,7 +131,7 @@ const SignUpForm = () => {
       </div>
       <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2 mt-4'>
         <button className='btn-primary w-full'>Register</button>
-        <LoginWithGoogle text='Sign Up With Google' />
+        <GoogleButton text='Sign Up With Google' />
       </div>
       <Link
         href='/signin'

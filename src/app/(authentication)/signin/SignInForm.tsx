@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserDays } from '@/redux/timer';
 import Loading from '@/components/Loading';
-import LoginWithGoogle from '@/app/(authentication)/LoginWithGoogle';
+import GoogleButton from '@/app/(authentication)/GoogleButton';
 import Link from 'next/link';
 import PasswordInput from '@/app/(authentication)/PasswordInput';
 
@@ -67,7 +67,7 @@ const SignInForm = () => {
       </label>
       <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2 mt-4'>
         <button className='btn-primary w-full'>Login</button>
-        <LoginWithGoogle text='Sign In With Google' />
+        <GoogleButton text='Sign In With Google' />
       </div>
       <Link
         href='/signup'

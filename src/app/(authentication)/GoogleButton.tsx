@@ -3,7 +3,7 @@
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 
-const LoginWithGoogle = ({ text }: { text: string }) => {
+const GoogleButton = ({ text }: { text: string }) => {
   const handleLogin = async () => {
     await signIn('google', {
       callbackUrl: '/',
@@ -18,4 +18,4 @@ const LoginWithGoogle = ({ text }: { text: string }) => {
   );
 };
 
-export default LoginWithGoogle;
+export default GoogleButton;
