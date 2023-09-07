@@ -5,11 +5,11 @@ import { signIn } from 'next-auth/react';
 import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserDays } from '@/redux/timer';
 import Loading from '@/components/Loading';
-import LoginWithGoogle from '@/components/account/LoginWithGoogle';
+import LoginWithGoogle from '@/app/(authentication)/LoginWithGoogle';
 import Link from 'next/link';
-import PasswordInput from './PasswordInput';
+import PasswordInput from '@/app/(authentication)/PasswordInput';
 
-const LoginForm = () => {
+const SignInForm = () => {
   // redux
   const dispatch = useAppDispatch();
 
@@ -70,9 +70,9 @@ const LoginForm = () => {
         <LoginWithGoogle text='Sign In With Google' />
       </div>
       <Link
-        href='/account/register'
+        href='/signup'
         className='cursor-pointer flex items-center gap-1 text-gray-400 mx-auto'>
-        <p>Register instead</p>
+        <p>{"Don't have an account? Sign up here"}</p>
       </Link>
       {error && <p className='error'>{error}</p>}
       {loading && <Loading />}
@@ -80,4 +80,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignInForm;

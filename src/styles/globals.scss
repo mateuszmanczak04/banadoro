@@ -16,33 +16,18 @@ input {
 }
 
 .btn-primary {
-  @apply py-1 px-4 text-gray-900 rounded bg-primary-500;
+  @apply py-2 px-4 text-gray-900 rounded bg-primary-500 transition duration-300 flex items-center gap-1 justify-center min-h-[32px];
 
-  transition: 0.4s ease;
-  -webkit-box-shadow: 0px 8px 70px -14px rgba(255, 190, 10, 1);
-  -moz-box-shadow: 0px 8px 70px -14px rgba(255, 190, 10, 1);
-  box-shadow: 0px 8px 70px -14px rgba(255, 190, 10, 1);
-
-  &:focus,
   &:hover {
-    -webkit-box-shadow: 0px 8px 70px -9px rgba(255, 190, 10, 1);
-    -moz-box-shadow: 0px 8px 70px -9px rgba(255, 190, 10, 1);
-    box-shadow: 0px 8px 70px -9px rgba(255, 190, 10, 1);
+    @apply bg-primary-400;
   }
 }
 
 .btn-secondary {
-  @apply py-1 px-4 text-gray-100 rounded bg-gray-700;
+  @apply py-2 px-4 text-gray-100 rounded bg-gray-700 transition duration-300 flex items-center gap-1 justify-center min-h-[32px];
 
-  transition: 0.4s ease;
-  -webkit-box-shadow: 0px 8px 70px -14px rgba(255, 190, 10, 1);
-  -moz-box-shadow: 0px 8px 70px -14px rgba(255, 190, 10, 1);
-  box-shadow: 0px 8px 70px -14px rgba(255, 190, 10, 1);
-
-  &:focus {
-    -webkit-box-shadow: 0px 8px 70px -9px rgba(255, 190, 10, 1);
-    -moz-box-shadow: 0px 8px 70px -9px rgba(255, 190, 10, 1);
-    box-shadow: 0px 8px 70px -9px rgba(255, 190, 10, 1);
+  &:hover {
+    @apply bg-gray-600;
   }
 }
 

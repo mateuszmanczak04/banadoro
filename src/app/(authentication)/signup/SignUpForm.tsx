@@ -6,13 +6,13 @@ import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserDays } from '@/redux/timer';
 import appAxios from '@/lib/appAxios';
 import Loading from '@/components/Loading';
-import LoginWithGoogle from '@/components/account/LoginWithGoogle';
+import LoginWithGoogle from '@/app/(authentication)/LoginWithGoogle';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import PasswordInput from './PasswordInput';
+import PasswordInput from '@/app/(authentication)/PasswordInput';
 
-const RegisterForm = () => {
+const SignUpForm = () => {
   // redux
   const dispatch = useAppDispatch();
 
@@ -31,7 +31,7 @@ const RegisterForm = () => {
     setError('');
 
     appAxios
-      .post('/api/auth/register', {
+      .post('/api/auth/signup', {
         email,
         username,
         password,
@@ -134,10 +134,10 @@ const RegisterForm = () => {
         <LoginWithGoogle text='Sign Up With Google' />
       </div>
       <Link
-        href='/account/login'
+        href='/signin'
         className='cursor-pointer flex items-center gap-1 text-gray-400 mx-auto'>
         <ArrowRightCircleIcon className='h-5 w-5 mt-0.5' />
-        <p>Login instead</p>
+        <p>Already have an account? Sign in here</p>
       </Link>
 
       {error && <p className='error'>{error}</p>}
@@ -146,4 +146,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default SignUpForm;

@@ -27,7 +27,7 @@ const Layout = ({ children }: Props) => {
 
   return (
     <>
-      <TopBar />
+      <TopBar session={session} />
       <div className='mt-24'>{children}</div>
     </>
   );
