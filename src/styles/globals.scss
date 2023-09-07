@@ -10,6 +10,10 @@
   }
 }
 
+html {
+  @apply scrollbar-none;
+}
+
 button,
 input {
   outline: none;
