@@ -4,6 +4,7 @@ import { FormEvent, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useAppDispatch } from '@/redux/store';
 import { addTask } from '@/redux/tasks';
+import { Button } from '../(common)/Button';
 
 export const AddTaskForm = () => {
   // redux
@@ -33,7 +34,8 @@ export const AddTaskForm = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <button className='btn-primary w-full'>Add</button>
+
+      <Button className='w-full'>Add</Button>
     </form>
   );
 };

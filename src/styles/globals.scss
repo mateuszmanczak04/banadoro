@@ -15,33 +15,6 @@ input {
   outline: none;
 }
 
-.btn-primary {
-  @apply py-2 px-4 text-gray-900 rounded bg-primary-500 transition duration-300 flex items-center gap-1 justify-center min-h-[32px];
-
-  &:hover {
-    @apply bg-primary-400;
-  }
-}
-
-.btn-secondary {
-  @apply py-2 px-4 text-gray-100 rounded bg-gray-700 transition duration-300 flex items-center gap-1 justify-center min-h-[32px];
-
-  &:hover {
-    @apply bg-gray-600;
-  }
-}
-
-.google-button {
-  @apply w-full py-1 px-3 rounded shadow cursor-pointer transition text-center text-white flex items-center justify-center gap-2 bg-gray-700;
-  transition: 0.4s ease;
-
-  &:hover {
-    -webkit-box-shadow: 0px 8px 70px -9px #4285f4;
-    -moz-box-shadow: 0px 8px 70px -9px #4285f4;
-    box-shadow: 0px 8px 70px -9px #4285f4;
-  }
-}
-
 .error {
   @apply text-red-500;
 }

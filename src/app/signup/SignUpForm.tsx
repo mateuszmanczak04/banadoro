@@ -11,6 +11,7 @@ import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import PasswordInput from '../(common)/PasswordInput';
+import { Button } from '../(common)/Button';
 
 const SignUpForm = () => {
   // redux
@@ -130,7 +131,9 @@ const SignUpForm = () => {
         </div>
       </div>
       <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2 mt-4'>
-        <button className='btn-primary w-full'>Register</button>
+        <Button variant='primary' className='w-full'>
+          Register
+        </Button>
         <GoogleButton text='Sign Up With Google' />
       </div>
       <Link

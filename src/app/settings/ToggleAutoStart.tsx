@@ -2,6 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { getAutoStart, toggleAutoStart } from '@/redux/settings';
+import { Button } from '../(common)/Button';
 
 const ToggleAutoStart = () => {
   // redux
@@ -13,9 +14,9 @@ const ToggleAutoStart = () => {
   };
 
   return (
-    <button className='btn-secondary w-full' onClick={handleClick}>
+    <Button variant='secondary' className='w-full' onClick={handleClick}>
       Auto Start: {autoStart ? 'ON' : 'OFF'}
-    </button>
+    </Button>
   );
 };
 

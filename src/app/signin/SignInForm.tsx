@@ -8,6 +8,7 @@ import Loading from '../(common)/Loading';
 import GoogleButton from '../(common)/GoogleButton';
 import Link from 'next/link';
 import PasswordInput from '../(common)/PasswordInput';
+import { Button } from '../(common)/Button';
 
 const SignInForm = () => {
   // redux
@@ -66,7 +67,9 @@ const SignInForm = () => {
         />
       </label>
       <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2 mt-4'>
-        <button className='btn-primary w-full'>Login</button>
+        <Button variant='primary' className='w-full'>
+          Login
+        </Button>
         <GoogleButton text='Sign In With Google' />
       </div>
       <Link

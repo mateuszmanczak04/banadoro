@@ -4,6 +4,7 @@ import { useAppDispatch } from '@/redux/store';
 import { setTasks } from '@/redux/tasks';
 import { resetTotalTime } from '@/redux/timer';
 import { signOut } from 'next-auth/react';
+import { Button } from './Button';
 
 const SignOutButton = () => {
   // redux
@@ -17,9 +18,9 @@ const SignOutButton = () => {
   };
 
   return (
-    <button className='btn-primary' onClick={handleSignOut}>
+    <Button variant='primary' onClick={handleSignOut}>
       Sign out
-    </button>
+    </Button>
   );
 };
 

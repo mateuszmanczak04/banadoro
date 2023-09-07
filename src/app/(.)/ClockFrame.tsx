@@ -11,6 +11,7 @@ import {
 } from '@/redux/timer';
 import Counter from './Counter';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { Button } from '../(common)/Button';
 
 const ClockFrame = () => {
   // redux
@@ -121,15 +122,15 @@ const ClockFrame = () => {
 
       {running ? (
         <>
-          <button className='btn-secondary w-full' onClick={handlePause}>
+          <Button variant='secondary' className='w-full' onClick={handlePause}>
             Pause
-          </button>
+          </Button>
         </>
       ) : (
         <>
-          <button className='btn-primary w-full' onClick={handleRun}>
+          <Button variant='primary' className='w-full' onClick={handleRun}>
             Start
-          </button>
+          </Button>
         </>
       )}
       {running && (

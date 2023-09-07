@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { useAppDispatch } from '@/redux/store';
 import { deleteTask, toggleTask } from '@/redux/tasks';
+import { Button } from '../(common)/Button';
 
 type Props = {
   title: string;
@@ -34,13 +35,13 @@ const TaskItem = ({ title, checked, _id }: Props) => {
       </p>
       <div className='flex gap-2 items-center'>
         {!checked ? (
-          <button className='btn-primary' onClick={handleToggle}>
+          <Button variant='primary' onClick={handleToggle}>
             Mark as done
-          </button>
+          </Button>
         ) : (
-          <button className='btn-secondary' onClick={handleToggle}>
+          <Button variant='secondary' onClick={handleToggle}>
             Undo
-          </button>
+          </Button>
         )}
         <svg
           className='w-6 h-6 hover:scale-110 transition cursor-pointer '

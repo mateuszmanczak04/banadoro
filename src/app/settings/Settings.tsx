@@ -9,6 +9,7 @@ import {
   setSessionTime as setStoreSessionTime,
 } from '@/redux/timer';
 import ToggleAutoStart from './ToggleAutoStart';
+import { Button } from '../(common)/Button';
 
 const Settings = () => {
   // redux, global time in seconds
@@ -50,9 +51,9 @@ const Settings = () => {
           value={breakTime}
         />
       </div>
-      <button className='btn-primary w-full' onClick={handleSave}>
+      <Button variant='primary' className='w-full' onClick={handleSave}>
         Save
-      </button>
+      </Button>
       <ToggleAutoStart />
     </div>
   );
