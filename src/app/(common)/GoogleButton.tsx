@@ -2,8 +2,13 @@
 
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
+import { FC } from 'react';
 
-const GoogleButton = ({ text }: { text: string }) => {
+interface Props {
+  text: string;
+}
+
+const GoogleButton: FC<Props> = ({ text }) => {
   const handleLogin = async () => {
     await signIn('google', {
       callbackUrl: '/',

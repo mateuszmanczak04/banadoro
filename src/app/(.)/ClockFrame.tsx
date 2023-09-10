@@ -1,17 +1,17 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { getAutoStart } from '@/redux/settings';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
 import {
   getBreakTime,
   getSessionTime,
   incrementUserTimeByAMinute,
 } from '@/redux/timer';
-import Counter from './Counter';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { useSession } from 'next-auth/react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button } from '../(common)/Button';
+import Counter from './Counter';
 
 const ClockFrame = () => {
   // redux

@@ -1,6 +1,6 @@
-import { getToken } from 'next-auth/jwt';
-import Task from '@/models/Task';
 import dbConnect from '@/lib/dbConnect';
+import Task from '@/models/Task';
+import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function DELETE(

@@ -1,6 +1,5 @@
 'use client';
 
-import { useCallback, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import {
   getBreakTime,
@@ -8,8 +7,9 @@ import {
   setBreakTime as setStoreBreakTime,
   setSessionTime as setStoreSessionTime,
 } from '@/redux/timer';
-import ToggleAutoStart from './ToggleAutoStart';
+import { useCallback, useState } from 'react';
 import { Button } from '../(common)/Button';
+import ToggleAutoStart from './ToggleAutoStart';
 
 const Settings = () => {
   // redux, global time in seconds

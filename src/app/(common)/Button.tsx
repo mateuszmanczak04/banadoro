@@ -1,8 +1,8 @@
 'use client';
 
-import { VariantProps, cva } from 'class-variance-authority';
-import { ButtonHTMLAttributes, FC, forwardRef } from 'react';
 import twClass from '@/lib/twClass';
+import { cva, VariantProps } from 'class-variance-authority';
+import { ButtonHTMLAttributes, FC, forwardRef } from 'react';
 
 const buttonVariants = cva(
   'px-4 py-1 rounded transition duration-100 flex items-center gap-1 justify-center min-h-[32px] border-2', // base
@@ -25,6 +25,7 @@ interface Props
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
 
+/** A reusable button component. */
 const Button: FC<Props> = forwardRef<HTMLButtonElement, Props>(
   ({ className, variant, ...props }, ref) => {
     return (

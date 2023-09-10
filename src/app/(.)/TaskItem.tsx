@@ -1,17 +1,19 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import { useAppDispatch } from '@/redux/store';
 import { deleteTask, toggleTask } from '@/redux/tasks';
+import { useSession } from 'next-auth/react';
+import { FC } from 'react';
 import { Button } from '../(common)/Button';
 
-type Props = {
+interface Props {
   title: string;
   checked: boolean;
   _id: string;
-};
+}
 
-const TaskItem = ({ title, checked, _id }: Props) => {
+/** A component representing a single task item. */
+const TaskItem: FC<Props> = ({ title, checked, _id }) => {
   // redux
   const dispatch = useAppDispatch();
 

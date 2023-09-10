@@ -1,9 +1,9 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { useAppDispatch } from '@/redux/store';
 import { addTask } from '@/redux/tasks';
+import { useSession } from 'next-auth/react';
+import { FormEvent, useState } from 'react';
 import { Button } from '../(common)/Button';
 
 export const AddTaskForm = () => {
@@ -18,7 +18,6 @@ export const AddTaskForm = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!title) return;
-
     dispatch(addTask({ title, authorEmail: session?.user?.email }));
     setTitle('');
   };
@@ -34,7 +33,6 @@ export const AddTaskForm = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-
       <Button className='w-full'>Add</Button>
     </form>
   );

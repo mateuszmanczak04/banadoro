@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type InitialState = {
+interface InitialState {
   autoStart: boolean;
-};
+}
 
 const initialState: InitialState = {
   autoStart: true,

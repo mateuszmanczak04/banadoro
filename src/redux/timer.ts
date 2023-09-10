@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { uuid } from 'uuidv4';
 import appAxios from '../lib/appAxios';
 import { getDateSlug } from '../lib/getDateSlug';
-import { uuid } from 'uuidv4';
 
-type InitialState = {
+interface InitialState {
   sessionTime: number;
   breakTime: number;
   totalTime: number;
@@ -11,13 +11,13 @@ type InitialState = {
   loading: boolean;
   error: string;
   previousDays: Day[];
-};
+}
 
-export type Day = {
+export interface Day {
   totalTime: number;
   date: string;
   _id: string;
-};
+}
 
 const initialState: InitialState = {
   sessionTime: 25 * 60,

@@ -1,7 +1,7 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { getAutoStart, toggleAutoStart } from '@/redux/settings';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { Button } from '../(common)/Button';
 
 const ToggleAutoStart = () => {

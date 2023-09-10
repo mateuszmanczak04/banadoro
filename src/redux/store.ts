@@ -1,18 +1,18 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import storage from 'redux-persist/lib/storage';
 import {
   FLUSH,
   PAUSE,
   PERSIST,
+  persistReducer,
   PURGE,
   REGISTER,
   REHYDRATE,
-  persistReducer,
 } from 'redux-persist';
-import timerReducer from './timer';
-import tasksReducer from './tasks';
+import storage from 'redux-persist/lib/storage';
 import settingsReducer from './settings';
+import tasksReducer from './tasks';
+import timerReducer from './timer';
 
 const persistConfig = {
   key: 'root',

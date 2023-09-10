@@ -1,10 +1,13 @@
-import SignOutButton from '../(common)/SignOutButton';
 import TotalTime from '@/app/account/TotalTime';
 import { getAuthSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import SignOutButton from '../(common)/SignOutButton';
 
 const page = async () => {
+  // session
   const session = await getAuthSession();
+
+  /* if a user is not signed in, then redirect him to sign up page */
   if (!session || !session.user) redirect('/signup');
 
   return (

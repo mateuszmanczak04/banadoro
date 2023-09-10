@@ -1,10 +1,12 @@
 'use client';
 
-type Props = {
-  timeInSeconds: number;
-};
+import { FC } from 'react';
 
-const Counter = ({ timeInSeconds }: Props) => {
+interface Props {
+  timeInSeconds: number;
+}
+
+const Counter: FC<Props> = ({ timeInSeconds }) => {
   return (
     <div className='text-5xl text-center px-8 py-4 rounded font-bold '>
       {Math.floor(timeInSeconds / 60)}:

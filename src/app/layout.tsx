@@ -1,10 +1,11 @@
 import AppProviders from '@/app/(common)/AppProviders';
-import Layout from './(common)/Layout';
 import '@/styles/globals.scss';
+import { ReactNode } from 'react';
+import Layout from './(common)/Layout';
 
-type Props = {
-  children: React.ReactNode;
-};
+interface Props {
+  children: ReactNode;
+}
 
 export const metadata = {
   title: 'Banadoro 🍌 - Pomodoro Timer',

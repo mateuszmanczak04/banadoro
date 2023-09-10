@@ -1,14 +1,15 @@
 'use client';
 
 import Image from 'next/image';
+import { FC } from 'react';
 import { Button } from './(common)/Button';
 
-type Props = {
+interface Props {
   error: Error;
   reset: () => void;
-};
+}
 
-const error = ({ error, reset }: Props) => {
+const error: FC<Props> = ({ error, reset }) => {
   return (
     <div className='w-full flex justify-center text-black'>
       <div className='max-w-2xl w-11/12 mx-auto bg-gray-300 p-4 rounded-xl flex flex-col gap-6 items-center'>

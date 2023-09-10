@@ -1,8 +1,8 @@
-import { getToken } from 'next-auth/jwt';
 import dbConnect from '@/lib/dbConnect';
-import Day from '@/models/Day';
 import { getDateSlug } from '@/lib/getDateSlug';
+import Day from '@/models/Day';
 import User from '@/models/User';
+import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {

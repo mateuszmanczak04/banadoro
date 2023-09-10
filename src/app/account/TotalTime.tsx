@@ -1,8 +1,8 @@
 'use client';
 
+import WeekOverview from '@/app/account/WeekOverview';
 import { useAppSelector } from '@/redux/store';
 import { getTodayTime, getTotalTime } from '@/redux/timer';
-import WeekOverview from '@/app/account/WeekOverview';
 
 const TotalTime = () => {
   // redux

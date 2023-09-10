@@ -1,15 +1,15 @@
 'use client';
 
-import { FC } from 'react';
+import { SessionProvider } from 'next-auth/react';
+import { FC, ReactNode } from 'react';
 import { Provider } from 'react-redux';
-import store from '../../redux/store';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import { SessionProvider } from 'next-auth/react';
+import store from '../../redux/store';
 
 const persistor = persistStore(store);
 interface AppProvidersProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const AppProviders: FC<AppProvidersProps> = ({ children }) => {

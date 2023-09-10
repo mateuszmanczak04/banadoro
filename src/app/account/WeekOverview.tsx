@@ -1,7 +1,7 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
 import { useWindowWidth } from '@/hooks/useWindowWidth';
+import { getDateSlug } from '@/lib/getDateSlug';
 import { useAppSelector } from '@/redux/store';
 import { Day, getPreviousDays } from '@/redux/timer';
 import {
@@ -10,7 +10,7 @@ import {
   ArrowRightIcon,
   ArrowUpIcon,
 } from '@heroicons/react/24/outline';
-import { getDateSlug } from '@/lib/getDateSlug';
+import { useCallback, useEffect, useState } from 'react';
 
 const WeekOverview = () => {
   const [currentDate, setCurrentDate] = useState<Date>(

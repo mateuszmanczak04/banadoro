@@ -1,15 +1,15 @@
 'use client';
 
-import TopBar from './TopBar';
 import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserTasks } from '@/redux/tasks';
 import { fetchAllUserDays } from '@/redux/timer';
-import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { ReactNode, useEffect } from 'react';
+import TopBar from './TopBar';
 
-type Props = {
-  children: React.ReactNode;
-};
+interface Props {
+  children: ReactNode;
+}
 
 const Layout = ({ children }: Props) => {
   // redux

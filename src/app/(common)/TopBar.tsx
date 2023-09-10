@@ -1,13 +1,16 @@
-import { TrophyIcon } from '@heroicons/react/24/outline';
-import { UserCircleIcon } from '@heroicons/react/24/outline';
-import { Cog6ToothIcon } from '@heroicons/react/24/outline';
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowTopRightOnSquareIcon,
+  Cog6ToothIcon,
+  TrophyIcon,
+  UserCircleIcon,
+} from '@heroicons/react/24/outline';
+import { Session } from 'next-auth';
 import Link from 'next/link';
 import { buttonVariants } from './Button';
 
-type Props = {
-  session: any;
-};
+interface Props {
+  session: Session | null;
+}
 
 const TopBar = ({ session }: Props) => {
   return (
