@@ -8,7 +8,7 @@ const page = async () => {
   const session = await getAuthSession();
 
   /* if a user is not signed in, then redirect him to sign up page */
-  if (!session || !session.user) redirect('/signup');
+  if (!session || !session.user) redirect('/');
 
   return (
     <div className='w-full max-w-4xl mt-20 mx-auto flex flex-col items-center gap-4 pb-16 bg-transparent p-2 rounded-xl'>

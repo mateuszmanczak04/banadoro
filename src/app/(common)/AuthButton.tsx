@@ -10,10 +10,19 @@ const AuthLink = () => {
 
   if (hasAccount === null) return null;
 
+  if (hasAccount) {
+    return (
+      <Link href='/signin' className={buttonVariants({ variant: 'primary' })}>
+        <ArrowTopRightOnSquareIcon className='h-6 w-6 text-gray-900' />
+        <p className='hidden sm:block'>Sign In</p>
+      </Link>
+    );
+  }
+
   return (
     <Link href='/signup' className={buttonVariants({ variant: 'primary' })}>
       <ArrowTopRightOnSquareIcon className='h-6 w-6 text-gray-900' />
-      <p className='hidden sm:block'>{hasAccount ? 'Sign In' : 'Sign Up'}</p>
+      <p className='hidden sm:block'>Sign Up</p>
     </Link>
   );
 };
