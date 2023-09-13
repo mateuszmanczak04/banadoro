@@ -1,16 +1,13 @@
 'use client';
 
-import { getAutoStart, toggleAutoStart } from '@/redux/settings';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
+import useSettingsContext from '@/hooks/useSettingsContext';
 import { Button } from '../(common)/Button';
 
 const ToggleAutoStart = () => {
-  // redux
-  const dispatch = useAppDispatch();
-  const autoStart = useAppSelector(getAutoStart);
+  const { autoStart, setAutoStart } = useSettingsContext();
 
   const handleClick = () => {
-    dispatch(toggleAutoStart());
+    setAutoStart((prev) => !prev);
   };
 
   return (

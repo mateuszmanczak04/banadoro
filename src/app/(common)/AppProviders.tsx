@@ -1,5 +1,6 @@
 'use client';
 
+import { SettingsContextProvider } from '@/context/SettingsContext';
 import { TimerContextProvider } from '@/context/TimerContext';
 import { SessionProvider } from 'next-auth/react';
 import { FC, ReactNode } from 'react';
@@ -18,7 +19,9 @@ const AppProviders: FC<AppProvidersProps> = ({ children }) => {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <SessionProvider>
-          <TimerContextProvider>{children}</TimerContextProvider>
+          <SettingsContextProvider>
+            <TimerContextProvider>{children}</TimerContextProvider>
+          </SettingsContextProvider>
         </SessionProvider>
       </PersistGate>
     </Provider>

@@ -1,8 +1,7 @@
 'use client';
 
+import useSettingsContext from '@/hooks/useSettingsContext';
 import useTimerContext from '@/hooks/useTimerContext';
-import { getAutoStart } from '@/redux/settings';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
@@ -10,9 +9,7 @@ import { Button } from '../(common)/Button';
 import Counter from './Counter';
 
 const ClockFrame = () => {
-  // redux
-  const dispatch = useAppDispatch();
-  const autoStart = useAppSelector(getAutoStart);
+  const { autoStart } = useSettingsContext();
 
   const { sessionTime, breakTime, incrementUserTimeByAMinute } =
     useTimerContext();
