@@ -1,7 +1,6 @@
 'use client';
 
 import useTimerContext from '@/hooks/useTimerContext';
-import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { getDateSlug } from '@/lib/getDateSlug';
 import {
   ArrowDownIcon,
@@ -17,7 +16,6 @@ const WeekOverview = () => {
   );
   const [days, setDays] = useState<Date[]>([]);
   const [maxTotalTime, setMaxTotalTime] = useState(10);
-  const windowWidth = useWindowWidth();
 
   const { previousDays } = useTimerContext();
 
@@ -66,21 +64,15 @@ const WeekOverview = () => {
         <button
           className='cursor-pointer hover:scale-105 transition'
           onClick={handleDateBack}>
-          {windowWidth >= 1024 ? (
-            <ArrowLeftIcon className='h-8 w-8 text-gray-500' />
-          ) : (
-            <ArrowDownIcon className='h-8 w-8 text-gray-500' />
-          )}
+          <ArrowLeftIcon className='h-8 w-8 text-gray-500 hidden md:block' />
+          <ArrowDownIcon className='h-8 w-8 text-gray-500 block md:hidden' />
         </button>
         {
           <button
             className='cursor-pointer hover:scale-105 transition'
             onClick={handleDateAhead}>
-            {windowWidth >= 1024 ? (
-              <ArrowRightIcon className='h-8 w-8 text-gray-500' />
-            ) : (
-              <ArrowUpIcon className='h-8 w-8 text-gray-500' />
-            )}
+            <ArrowRightIcon className='h-8 w-8 text-gray-500 hidden md:block' />
+            <ArrowUpIcon className='h-8 w-8 text-gray-500 block md:hidden' />
           </button>
         }
       </div>
@@ -110,16 +102,16 @@ const WeekOverview = () => {
 
               <div className='w-full h-full relative'>
                 <div
-                  className='app-gradient rounded h-2 md:w-full absolute bottom-0 transition duration-1000'
+                  className='app-gradient rounded h-2 md:w-full absolute bottom-0 transition duration-1000 hidden md:block'
                   style={{
-                    width:
-                      windowWidth >= 768
-                        ? '100%'
-                        : (totalTime / maxTotalTime) * 100 + '%',
-                    height:
-                      windowWidth >= 768
-                        ? (totalTime / maxTotalTime) * 100 + '%'
-                        : '8px',
+                    width: '100%',
+                    height: (totalTime / maxTotalTime) * 100 + '%',
+                  }}></div>
+                <div
+                  className='app-gradient rounded h-2 md:w-full absolute bottom-0 transition duration-1000 block md:hidden'
+                  style={{
+                    width: (totalTime / maxTotalTime) * 100 + '%',
+                    height: '8px',
                   }}></div>
               </div>
             </div>
