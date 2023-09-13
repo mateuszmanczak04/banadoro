@@ -1,7 +1,6 @@
 'use client';
 
 import useTimerContext from '@/hooks/useTimerContext';
-import appAxios from '@/lib/appAxios';
 import {
   ArrowRightCircleIcon,
   InformationCircleIcon,
@@ -17,7 +16,6 @@ import PasswordInput from '../(common)/PasswordInput';
 
 const SignUpForm = () => {
   const { fetchAllUserDays } = useTimerContext();
-
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -32,32 +30,27 @@ const SignUpForm = () => {
     setLoading(true);
     setError('');
 
-    axios
-      .post('/api/auth/signup', {
+    try {
+      await axios.post('/api/auth/signup', {
         email,
         username,
         password,
-      })
-      .then(async (_) => {
-        const result = await signIn('credentials', {
+      });
+      try {
+        await signIn('credentials', {
           email,
           password,
           callbackUrl: '/',
         });
-
-        if (result!.error) {
-          setError(result!.error);
-          setLoading(false);
-          return;
-        }
-
         await fetchAllUserDays();
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.response.data.message);
-        setLoading(false);
-      });
+      } catch {
+        setError('Could not sign in.');
+      }
+    } catch (err: any) {
+      setError(err.response.data.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleTypePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +76,7 @@ const SignUpForm = () => {
     <form
       className='flex flex-col gap-6 w-full items-center sm:bg-gray-800 p-8 rounded-lg'
       onSubmit={handleSubmit}>
-      <h1 className='text-3xl font-bold flex flex-col gap-1'>Register</h1>
+      <h1 className='text-3xl font-bold flex flex-col gap-1'>Sign Up</h1>
       <label className='w-full'>
         <p>E-mail</p>
         <input
@@ -133,7 +126,7 @@ const SignUpForm = () => {
       </div>
       <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2 mt-4'>
         <Button variant='primary' className='w-full'>
-          Register
+          Sign Up
         </Button>
         <GoogleButton text='Sign Up With Google' />
       </div>

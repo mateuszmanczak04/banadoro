@@ -15,8 +15,8 @@ interface TimerContextProps {
   resetTotalTime: () => void;
   setSessionTime: (time: number) => void;
   setBreakTime: (time: number) => void;
-  incrementUserTimeByAMinute: () => void;
-  fetchAllUserDays: () => void;
+  incrementUserTimeByAMinute: () => Promise<void> | void;
+  fetchAllUserDays: () => Promise<void> | void;
   sessionTime: number;
   breakTime: number;
   totalTime: number;

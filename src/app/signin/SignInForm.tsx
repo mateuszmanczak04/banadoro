@@ -11,7 +11,6 @@ import PasswordInput from '../(common)/PasswordInput';
 
 const SignInForm = () => {
   const { fetchAllUserDays } = useTimerContext();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -46,7 +45,7 @@ const SignInForm = () => {
     <form
       className='flex flex-col gap-6 w-full items-center sm:bg-gray-800 p-8 rounded-lg'
       onSubmit={handleSubmit}>
-      <h1 className='text-3xl font-bold'>Login</h1>
+      <h1 className='text-3xl font-bold'>Sign In</h1>
       <label className='w-full flex flex-col gap-1'>
         <p>E-mail</p>
         <input
@@ -66,7 +65,7 @@ const SignInForm = () => {
       </label>
       <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2 mt-4'>
         <Button variant='primary' className='w-full'>
-          Login
+          Sign In
         </Button>
         <GoogleButton text='Sign In With Google' />
       </div>

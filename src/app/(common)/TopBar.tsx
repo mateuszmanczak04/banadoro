@@ -1,11 +1,11 @@
 import {
-  ArrowTopRightOnSquareIcon,
   Cog6ToothIcon,
   TrophyIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Session } from 'next-auth';
 import Link from 'next/link';
+import AuthLink from './AuthButton';
 import { buttonVariants } from './Button';
 
 interface Props {
@@ -44,12 +44,7 @@ const TopBar = ({ session }: Props) => {
               <p className='hidden sm:block'>Account</p>
             </Link>
           ) : (
-            <Link
-              href='/signup'
-              className={buttonVariants({ variant: 'primary' })}>
-              <ArrowTopRightOnSquareIcon className='h-6 w-6 text-gray-900' />
-              <p className='hidden sm:block'>Sign Up</p>
-            </Link>
+            <AuthLink />
           )}
         </div>
       </div>

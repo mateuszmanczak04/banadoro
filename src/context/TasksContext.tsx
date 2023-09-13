@@ -15,10 +15,10 @@ interface TasksContextProps {
   setTasks: (tasks: Task[]) => void;
   isLoading: boolean;
   error: string;
-  addTask: ({ title }: { title: string }) => void;
-  toggleTask: ({ taskId }: { taskId: string }) => void;
-  fetchAllUserTasks: () => void;
-  deleteTask: ({ taskId }: { taskId: string }) => void;
+  addTask: ({ title }: { title: string }) => void | Promise<void>;
+  toggleTask: ({ taskId }: { taskId: string }) => void | Promise<void>;
+  fetchAllUserTasks: () => void | Promise<void>;
+  deleteTask: ({ taskId }: { taskId: string }) => void | Promise<void>;
 }
 
 const initialValue: TasksContextProps = {
