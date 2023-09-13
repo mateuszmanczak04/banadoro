@@ -1,5 +1,6 @@
 import { getDateSlug } from '@/lib/getDateSlug';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import {
   createContext,
   FC,
@@ -45,6 +46,7 @@ export const TimerContext = createContext<TimerContextProps>(initialState);
 export const TimerContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const { data: session } = useSession();
   const [sessionTime, setSessionTime] = useState(initialState.sessionTime);
   const [breakTime, setBreakTime] = useState(initialState.breakTime);
   const [totalTime, setTotalTime] = useState(initialState.totalTime);
@@ -58,58 +60,52 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
     setTotalTime(0);
   };
 
-  const incrementUserTimeByAMinute = useCallback(() => {
+  const incrementUserTimeByAMinute = useCallback(async () => {
+    console.log('increment');
+    if (!session?.user) return;
+
     setIsLoading(true);
     setError('');
 
-    axios
-      .post('/api/time/increment-user-time')
-      .then(() => {
-        const todayDateSlug = getDateSlug(new Date());
-        setPreviousDays((prev: Day[]) => {
-          if (prev.find((day: Day) => day.date === todayDateSlug)) {
-            return prev.map((d: Day) => {
-              if (d.date === todayDateSlug) {
-                return { ...d, totalTime: d.totalTime + 1 };
-              }
-              return d;
-            });
-          } else {
-            return [
-              ...prev,
-              { date: todayDateSlug, totalTime: 1, _id: uuid() },
-            ];
-          }
-        });
-        setError('');
-      })
-      .catch(() => {
-        setError('Could not increment user time.');
-      })
-      .finally(() => {
-        setIsLoading(false);
+    try {
+      await axios.post('/api/time/increment-user-time');
+      const todayDateSlug = getDateSlug(new Date());
+      setPreviousDays((prev: Day[]) => {
+        if (prev.find((day: Day) => day.date === todayDateSlug)) {
+          return prev.map((d: Day) => {
+            if (d.date === todayDateSlug) {
+              return { ...d, totalTime: d.totalTime + 1 };
+            }
+            return d;
+          });
+        } else {
+          return [...prev, { date: todayDateSlug, totalTime: 1, _id: uuid() }];
+        }
       });
-  }, []);
+    } catch {
+      setError('Could not increment user time.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [session?.user]);
 
-  const fetchAllUserDays = useCallback(() => {
+  const fetchAllUserDays = useCallback(async () => {
+    if (!session?.user) return;
+
     setIsLoading(true);
     setError('');
 
-    axios
-      .get('/api/time/get-user-total-time-and-days')
-      .then((res) => {
-        setPreviousDays(res.data.days);
-        setTotalTime(res.data.totalTime);
-        setTodayTime(res.data.todayTime);
-        setError('');
-      })
-      .catch(() => {
-        setError('Could not fetch all users days.');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+    try {
+      const res = await axios.get('/api/time/get-user-total-time-and-days');
+      setPreviousDays(res.data.days);
+      setTotalTime(res.data.totalTime);
+      setTodayTime(res.data.todayTime);
+    } catch {
+      setError('Could not fetch all users days.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [session?.user]);
 
   useEffect(() => {
     fetchAllUserDays();

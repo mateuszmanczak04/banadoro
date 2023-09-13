@@ -1,8 +1,6 @@
 'use client';
 
-import { useAppDispatch } from '@/redux/store';
-import { deleteTask, toggleTask } from '@/redux/tasks';
-import { useSession } from 'next-auth/react';
+import useTasksContext from '@/hooks/useTasksContext';
 import { FC } from 'react';
 import { Button } from '../(common)/Button';
 
@@ -12,21 +10,12 @@ interface Props {
   _id: string;
 }
 
-/** A component representing a single task item. */
 const TaskItem: FC<Props> = ({ title, checked, _id }) => {
-  // redux
-  const dispatch = useAppDispatch();
+  const { toggleTask, deleteTask } = useTasksContext();
 
-  // session
-  const { data: session } = useSession();
+  const handleToggle = () => toggleTask({ taskId: _id });
 
-  const handleToggle = () => {
-    dispatch(toggleTask({ _id, authorEmail: session?.user?.email }));
-  };
-
-  const handleDelete = () => {
-    dispatch(deleteTask(_id));
-  };
+  const handleDelete = () => deleteTask({ taskId: _id });
 
   return (
     <div

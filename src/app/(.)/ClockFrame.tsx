@@ -35,16 +35,10 @@ const ClockFrame = () => {
 
   // updating total time
   useEffect(() => {
-    if (
-      session &&
-      session!.user!.email &&
-      mode === 'session' &&
-      timePassed > 0 &&
-      timePassed % 60 === 0
-    ) {
+    if (mode === 'session' && timePassed > 0 && timePassed % 2 === 0) {
       incrementUserTimeByAMinute();
     }
-  }, [timePassed, incrementUserTimeByAMinute, mode, session]);
+  }, [timePassed, incrementUserTimeByAMinute, mode]);
 
   // run and pause
   const handleRun = () => {

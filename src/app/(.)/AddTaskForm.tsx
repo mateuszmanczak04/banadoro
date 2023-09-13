@@ -1,24 +1,18 @@
 'use client';
 
-import { useAppDispatch } from '@/redux/store';
-import { addTask } from '@/redux/tasks';
-import { useSession } from 'next-auth/react';
+import useTasksContext from '@/hooks/useTasksContext';
 import { FormEvent, useState } from 'react';
 import { Button } from '../(common)/Button';
 
 export const AddTaskForm = () => {
-  // redux
-  const dispatch = useAppDispatch();
-
-  // session
-  const { data: session } = useSession();
+  const { addTask } = useTasksContext();
 
   const [title, setTitle] = useState('');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!title) return;
-    dispatch(addTask({ title, authorEmail: session?.user?.email }));
+    addTask({ title });
     setTitle('');
   };
 

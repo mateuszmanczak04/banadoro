@@ -1,12 +1,10 @@
 'use client';
 
-import { useAppSelector } from '@/redux/store';
-import { getTasks } from '@/redux/tasks';
+import useTasksContext from '@/hooks/useTasksContext';
 import TaskItem from './TaskItem';
 
 const TaskList = () => {
-  // redux
-  const tasks = useAppSelector(getTasks);
+  const { tasks } = useTasksContext();
 
   return (
     <div className='flex flex-col items-center gap-2 w-full max-w-sm mt-2'>

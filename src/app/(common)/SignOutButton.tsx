@@ -1,18 +1,16 @@
 'use client';
 
+import useTasksContext from '@/hooks/useTasksContext';
 import useTimerContext from '@/hooks/useTimerContext';
-import { useAppDispatch } from '@/redux/store';
-import { setTasks } from '@/redux/tasks';
 import { signOut } from 'next-auth/react';
 import { Button } from './Button';
 
 const SignOutButton = () => {
-  // redux
-  const dispatch = useAppDispatch();
   const { resetTotalTime } = useTimerContext();
+  const { setTasks } = useTasksContext();
 
   const handleSignOut = () => {
-    dispatch(setTasks([]));
+    setTasks([]);
     resetTotalTime();
     signOut();
     close();

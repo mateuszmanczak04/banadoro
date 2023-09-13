@@ -19,7 +19,6 @@ const WeekOverview = () => {
   const [maxTotalTime, setMaxTotalTime] = useState(10);
   const windowWidth = useWindowWidth();
 
-  // redux
   const { previousDays } = useTimerContext();
 
   const handleDateAhead = () => {

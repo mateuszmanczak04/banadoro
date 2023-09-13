@@ -11,7 +11,6 @@ A private project created just for learning new things and showing skills to rec
 - Next.js
 - TailwindCSS
 - Next auth
-- Redux toolkit
 - MongoDB
 - Typescript
 

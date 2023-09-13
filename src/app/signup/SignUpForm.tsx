@@ -6,6 +6,7 @@ import {
   ArrowRightCircleIcon,
   InformationCircleIcon,
 } from '@heroicons/react/24/outline';
+import axios from 'axios';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
@@ -31,7 +32,7 @@ const SignUpForm = () => {
     setLoading(true);
     setError('');
 
-    appAxios
+    axios
       .post('/api/auth/signup', {
         email,
         username,
