@@ -1,9 +1,4 @@
-'use client';
-
-import useTimerContext from '@/hooks/useTimerContext';
-
-import { useSession } from 'next-auth/react';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import TopBar from './TopBar';
 
 interface Props {
@@ -11,20 +6,10 @@ interface Props {
 }
 
 const Layout = ({ children }: Props) => {
-  const { fetchAllUserDays } = useTimerContext();
-
-  // session
-  const { data: session } = useSession();
-
-  useEffect(() => {
-    if (session) {
-      fetchAllUserDays();
-    }
-  }, [session, fetchAllUserDays]);
-
   return (
     <>
-      <TopBar session={session} />
+      {/* @ts-ignore server component */}
+      <TopBar />
       <div className='mt-24'>{children}</div>
     </>
   );

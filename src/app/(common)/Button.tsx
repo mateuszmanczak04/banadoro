@@ -1,5 +1,3 @@
-'use client';
-
 import twClass from '@/lib/twClass';
 import { cva, VariantProps } from 'class-variance-authority';
 import { ButtonHTMLAttributes, FC, forwardRef } from 'react';

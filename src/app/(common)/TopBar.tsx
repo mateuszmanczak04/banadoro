@@ -3,16 +3,14 @@ import {
   TrophyIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
-import { Session } from 'next-auth';
+import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import AuthLink from './AuthButton';
 import { buttonVariants } from './Button';
 
-interface Props {
-  session: Session | null;
-}
+const TopBar = async () => {
+  const session = await getServerSession();
 
-const TopBar = ({ session }: Props) => {
   return (
     <div className='fixed top-0 grid content-center w-full px-4 h-16 sm:h-20 bg-gray-800 text-gray-200 z-10'>
       <div className='w-full max-w-3xl flex justify-between items-center mx-auto'>
