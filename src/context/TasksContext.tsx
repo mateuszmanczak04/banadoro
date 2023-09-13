@@ -21,7 +21,7 @@ interface TasksContextProps {
   deleteTask: ({ taskId }: { taskId: string }) => void | Promise<void>;
 }
 
-const initialValue: TasksContextProps = {
+const initialState: TasksContextProps = {
   tasks: [],
   setTasks: () => {},
   isLoading: false,
@@ -31,15 +31,15 @@ const initialValue: TasksContextProps = {
   fetchAllUserTasks: () => {},
   deleteTask: () => {},
 };
-export const TasksContext = createContext<TasksContextProps>(initialValue);
+export const TasksContext = createContext<TasksContextProps>(initialState);
 
 export const TasksContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const { data: session } = useSession();
-  const [tasks, setTasks] = useState<Task[]>(initialValue.tasks);
-  const [isLoading, setIsLoading] = useState<boolean>(initialValue.isLoading);
-  const [error, setError] = useState<string>(initialValue.error);
+  const [tasks, setTasks] = useState<Task[]>(initialState.tasks);
+  const [isLoading, setIsLoading] = useState<boolean>(initialState.isLoading);
+  const [error, setError] = useState<string>(initialState.error);
 
   const addTask = async ({ title }: { title: string }) => {
     const _id = uuid();

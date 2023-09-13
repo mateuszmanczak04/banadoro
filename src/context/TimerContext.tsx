@@ -14,12 +14,8 @@ import { v4 as uuid } from 'uuid';
 
 interface TimerContextProps {
   resetTotalTime: () => void;
-  setSessionTime: (time: number) => void;
-  setBreakTime: (time: number) => void;
   incrementUserTimeByAMinute: () => Promise<void> | void;
   fetchAllUserDays: () => Promise<void> | void;
-  sessionTime: number;
-  breakTime: number;
   totalTime: number;
   todayTime: number;
   error: string;
@@ -35,16 +31,12 @@ interface TimerContextProps {
 }
 
 const initialState: TimerContextProps = {
-  sessionTime: 25 * 60,
-  breakTime: 5 * 60,
   totalTime: 0,
   todayTime: 0,
   error: '',
   isLoading: false,
   previousDays: [],
   resetTotalTime: () => {},
-  setSessionTime: () => {},
-  setBreakTime: () => {},
   incrementUserTimeByAMinute: () => {},
   fetchAllUserDays: () => {},
   mode: 'session',
@@ -62,8 +54,6 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const { data: session } = useSession();
-  const [sessionTime, setSessionTime] = useState(initialState.sessionTime);
-  const [breakTime, setBreakTime] = useState(initialState.breakTime);
   const [totalTime, setTotalTime] = useState(initialState.totalTime);
   const [todayTime, setTodayTime] = useState(initialState.todayTime);
   const [error, setError] = useState(initialState.error);
@@ -76,7 +66,7 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
     useState<number>(initialState.currentSessionTimePassed);
   const [mode, setMode] = useState<Mode>(initialState.mode);
   const [intervalId, setIntervalId] = useState<any>();
-  const { autoStart } = useSettingsContext();
+  const { autoStart, sessionTime, breakTime } = useSettingsContext();
 
   const resetTotalTime = () => {
     setTodayTime(0);
@@ -187,18 +177,14 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
   // fetch all user days if he is signed in on the app start
   useEffect(() => {
     fetchAllUserDays();
-  }, [fetchAllUserDays]);
+  }, [fetchAllUserDays, session?.user]);
 
   return (
     <TimerContext.Provider
       value={{
         resetTotalTime,
-        setSessionTime,
-        setBreakTime,
         incrementUserTimeByAMinute,
         fetchAllUserDays,
-        sessionTime,
-        breakTime,
         todayTime,
         totalTime,
         previousDays,

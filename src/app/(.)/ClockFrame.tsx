@@ -1,5 +1,6 @@
 'use client';
 
+import useSettingsContext from '@/hooks/useSettingsContext';
 import useTimerContext from '@/hooks/useTimerContext';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { Button } from '../(common)/Button';
@@ -7,8 +8,6 @@ import Counter from './Counter';
 
 const ClockFrame = () => {
   const {
-    sessionTime,
-    breakTime,
     mode,
     setMode,
     currentSessionTimePassed,
@@ -17,6 +16,7 @@ const ClockFrame = () => {
     isTimerRunning,
     handleRun,
   } = useTimerContext();
+  const { sessionTime, breakTime } = useSettingsContext();
 
   // changing modes
   const handleSetModeSession = () => {

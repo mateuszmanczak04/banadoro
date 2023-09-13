@@ -8,8 +8,6 @@ import { buttonVariants } from './Button';
 const AuthLink = () => {
   const { hasAccount } = useSettingsContext();
 
-  if (hasAccount === null) return null;
-
   if (hasAccount) {
     return (
       <Link href='/signin' className={buttonVariants({ variant: 'primary' })}>

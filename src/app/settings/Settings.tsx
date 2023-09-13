@@ -1,31 +1,26 @@
 'use client';
 
-import useTimerContext from '@/hooks/useTimerContext';
+import useSettingsContext from '@/hooks/useSettingsContext';
 import { useCallback, useState } from 'react';
 import { Button } from '../(common)/Button';
 import ToggleAutoStart from './ToggleAutoStart';
 
 const Settings = () => {
-  const {
-    sessionTime: storeSessionTime,
-    breakTime: storeBreakTime,
-    setSessionTime: setStoreSessionTime,
-    setBreakTime: setStoreBreakTime,
-  } = useTimerContext();
+  const { sessionTime, breakTime, setSessionTime, setBreakTime } =
+    useSettingsContext();
 
-  // local time just for settings in minutes
-  const [sessionTime, setSessionTime] = useState<string>(
-    (storeSessionTime / 60).toString()
+  const [sessionTimeInMinutes, setSessionTimeInMinutes] = useState<string>(
+    (sessionTime / 60).toString()
   );
-  const [breakTime, setBreakTime] = useState<string>(
-    (storeBreakTime / 60).toString()
+  const [breakTimeInMinutes, setBreakTimeInMinutes] = useState<string>(
+    (breakTime / 60).toString()
   );
 
   const handleSave = useCallback(() => {
-    setStoreSessionTime(parseInt(sessionTime) * 60);
-    setStoreBreakTime(parseInt(breakTime) * 60);
+    setSessionTime(parseInt(sessionTimeInMinutes) * 60);
+    setBreakTime(parseInt(breakTimeInMinutes) * 60);
     close();
-  }, [breakTime, sessionTime, setStoreBreakTime, setStoreSessionTime]);
+  }, [breakTimeInMinutes, sessionTimeInMinutes, setBreakTime, setSessionTime]);
 
   return (
     <div className='flex flex-col items-center gap-4 w-full'>
@@ -34,8 +29,8 @@ const Settings = () => {
         <input
           className='input-text flex-1'
           type='number'
-          onChange={(e) => setSessionTime(e.target.value)}
-          value={sessionTime}
+          onChange={(e) => setSessionTimeInMinutes(e.target.value)}
+          value={sessionTimeInMinutes}
         />
       </div>
       <div className='flex gap-2 w-full items-center p-4 rounded border-gray-700 bg-gray-800 border-2'>
@@ -43,8 +38,8 @@ const Settings = () => {
         <input
           className='input-text flex-1'
           type='number'
-          onChange={(e) => setBreakTime(e.target.value)}
-          value={breakTime}
+          onChange={(e) => setBreakTimeInMinutes(e.target.value)}
+          value={breakTimeInMinutes}
         />
       </div>
       <Button variant='primary' className='w-full' onClick={handleSave}>
