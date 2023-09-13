@@ -1,13 +1,10 @@
 'use client';
 
 import WeekOverview from '@/app/account/WeekOverview';
-import { useAppSelector } from '@/redux/store';
-import { getTodayTime, getTotalTime } from '@/redux/timer';
+import useTimerContext from '@/hooks/useTimerContext';
 
 const TotalTime = () => {
-  // redux
-  const todayTime = useAppSelector(getTodayTime);
-  const totalTime = useAppSelector(getTotalTime);
+  const { todayTime, totalTime } = useTimerContext();
 
   return (
     <div className='flex flex-col items-center gap-2 w-full'>

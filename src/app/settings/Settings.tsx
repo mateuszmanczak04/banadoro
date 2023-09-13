@@ -1,21 +1,17 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '@/redux/store';
-import {
-  getBreakTime,
-  getSessionTime,
-  setBreakTime as setStoreBreakTime,
-  setSessionTime as setStoreSessionTime,
-} from '@/redux/timer';
+import useTimerContext from '@/hooks/useTimerContext';
 import { useCallback, useState } from 'react';
 import { Button } from '../(common)/Button';
 import ToggleAutoStart from './ToggleAutoStart';
 
 const Settings = () => {
-  // redux, global time in seconds
-  const dispatch = useAppDispatch();
-  const storeSessionTime = useAppSelector(getSessionTime);
-  const storeBreakTime = useAppSelector(getBreakTime);
+  const {
+    sessionTime: storeSessionTime,
+    breakTime: storeBreakTime,
+    setSessionTime: setStoreSessionTime,
+    setBreakTime: setStoreBreakTime,
+  } = useTimerContext();
 
   // local time just for settings in minutes
   const [sessionTime, setSessionTime] = useState<string>(
@@ -26,10 +22,10 @@ const Settings = () => {
   );
 
   const handleSave = useCallback(() => {
-    dispatch(setStoreSessionTime(parseInt(sessionTime) * 60));
-    dispatch(setStoreBreakTime(parseInt(breakTime) * 60));
+    setStoreSessionTime(parseInt(sessionTime) * 60);
+    setStoreBreakTime(parseInt(breakTime) * 60);
     close();
-  }, [breakTime, sessionTime, dispatch]);
+  }, [breakTime, sessionTime, setStoreBreakTime, setStoreSessionTime]);
 
   return (
     <div className='flex flex-col items-center gap-4 w-full'>

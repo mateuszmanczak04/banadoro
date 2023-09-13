@@ -1,7 +1,6 @@
 'use client';
 
-import { useAppDispatch } from '@/redux/store';
-import { fetchAllUserDays } from '@/redux/timer';
+import useTimerContext from '@/hooks/useTimerContext';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
@@ -11,8 +10,7 @@ import Loading from '../(common)/Loading';
 import PasswordInput from '../(common)/PasswordInput';
 
 const SignInForm = () => {
-  // redux
-  const dispatch = useAppDispatch();
+  const { fetchAllUserDays } = useTimerContext();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,7 +38,7 @@ const SignInForm = () => {
       return;
     }
 
-    await dispatch(fetchAllUserDays());
+    await fetchAllUserDays();
     setLoading(false);
   };
 

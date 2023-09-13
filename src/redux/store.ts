@@ -12,7 +12,6 @@ import {
 import storage from 'redux-persist/lib/storage';
 import settingsReducer from './settings';
 import tasksReducer from './tasks';
-import timerReducer from './timer';
 
 const persistConfig = {
   key: 'root',
@@ -21,7 +20,6 @@ const persistConfig = {
 };
 
 const reducer = combineReducers({
-  timer: timerReducer,
   tasks: tasksReducer,
   settings: settingsReducer,
 });

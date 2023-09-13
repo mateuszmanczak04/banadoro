@@ -17,3 +17,9 @@ interface RankingTopUser {
   totalTime: number;
   username: string;
 }
+
+interface Day {
+  date: string;
+  totalTime: number;
+  _id: string;
+}

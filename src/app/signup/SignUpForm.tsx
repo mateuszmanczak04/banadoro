@@ -1,8 +1,7 @@
 'use client';
 
+import useTimerContext from '@/hooks/useTimerContext';
 import appAxios from '@/lib/appAxios';
-import { useAppDispatch } from '@/redux/store';
-import { fetchAllUserDays } from '@/redux/timer';
 import {
   ArrowRightCircleIcon,
   InformationCircleIcon,
@@ -16,8 +15,7 @@ import Loading from '../(common)/Loading';
 import PasswordInput from '../(common)/PasswordInput';
 
 const SignUpForm = () => {
-  // redux
-  const dispatch = useAppDispatch();
+  const { fetchAllUserDays } = useTimerContext();
 
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -52,7 +50,7 @@ const SignUpForm = () => {
           return;
         }
 
-        await dispatch(fetchAllUserDays());
+        await fetchAllUserDays();
         setLoading(false);
       })
       .catch((err) => {

@@ -1,9 +1,8 @@
 'use client';
 
+import useTimerContext from '@/hooks/useTimerContext';
 import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { getDateSlug } from '@/lib/getDateSlug';
-import { useAppSelector } from '@/redux/store';
-import { Day, getPreviousDays } from '@/redux/timer';
 import {
   ArrowDownIcon,
   ArrowLeftIcon,
@@ -21,7 +20,7 @@ const WeekOverview = () => {
   const windowWidth = useWindowWidth();
 
   // redux
-  const previousDays = useAppSelector(getPreviousDays);
+  const { previousDays } = useTimerContext();
 
   const handleDateAhead = () => {
     const today = new Date(new Date().setHours(0, 0, 0, 0));

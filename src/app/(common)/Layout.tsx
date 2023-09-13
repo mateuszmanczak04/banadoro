@@ -1,8 +1,9 @@
 'use client';
 
+import useTimerContext from '@/hooks/useTimerContext';
 import { useAppDispatch } from '@/redux/store';
 import { fetchAllUserTasks } from '@/redux/tasks';
-import { fetchAllUserDays } from '@/redux/timer';
+
 import { useSession } from 'next-auth/react';
 import { ReactNode, useEffect } from 'react';
 import TopBar from './TopBar';
@@ -14,16 +15,17 @@ interface Props {
 const Layout = ({ children }: Props) => {
   // redux
   const dispatch = useAppDispatch();
+  const { fetchAllUserDays } = useTimerContext();
 
   // session
   const { data: session } = useSession();
 
   useEffect(() => {
     if (session) {
-      dispatch(fetchAllUserDays());
+      fetchAllUserDays();
       dispatch(fetchAllUserTasks());
     }
-  }, [dispatch, session]);
+  }, [dispatch, session, fetchAllUserDays]);
 
   return (
     <>

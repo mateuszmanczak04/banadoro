@@ -1,12 +1,8 @@
 'use client';
 
+import useTimerContext from '@/hooks/useTimerContext';
 import { getAutoStart } from '@/redux/settings';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
-import {
-  getBreakTime,
-  getSessionTime,
-  incrementUserTimeByAMinute,
-} from '@/redux/timer';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
@@ -15,10 +11,11 @@ import Counter from './Counter';
 
 const ClockFrame = () => {
   // redux
-  const sessionTime = useAppSelector(getSessionTime);
-  const breakTime = useAppSelector(getBreakTime);
   const dispatch = useAppDispatch();
   const autoStart = useAppSelector(getAutoStart);
+
+  const { sessionTime, breakTime, incrementUserTimeByAMinute } =
+    useTimerContext();
 
   // state
   const [running, setRunning] = useState<boolean>(false);
@@ -46,11 +43,11 @@ const ClockFrame = () => {
       session!.user!.email &&
       mode === 'session' &&
       timePassed > 0 &&
-      timePassed % 60 == 0
+      timePassed % 60 === 0
     ) {
-      dispatch(incrementUserTimeByAMinute());
+      incrementUserTimeByAMinute();
     }
-  }, [timePassed, dispatch, mode, session]);
+  }, [timePassed, incrementUserTimeByAMinute, mode, session]);
 
   // run and pause
   const handleRun = () => {
