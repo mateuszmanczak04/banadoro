@@ -18,7 +18,8 @@ const GoogleButton: FC<Props> = ({ text }) => {
   return (
     <button
       className='w-full py-1 px-3 rounded shadow cursor-pointer transition text-center text-white flex items-center justify-center gap-2 bg-gray-700 duration-300 hover:bg-gray-600'
-      onClick={handleLogin}>
+      onClick={handleLogin}
+      type='button'>
       <Image src='/google-icon.svg' width={20} height={20} alt='google icon' />
       <p>{text}</p>
     </button>
