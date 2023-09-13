@@ -23,3 +23,5 @@ interface Day {
   totalTime: number;
   _id: string;
 }
+
+type Mode = 'session' | 'break';
