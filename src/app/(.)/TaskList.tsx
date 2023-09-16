@@ -7,7 +7,7 @@ const TaskList = () => {
   const { tasks } = useTasksContext();
 
   return (
-    <div className='flex flex-col items-center gap-2 w-full max-w-sm mt-2'>
+    <div className='flex flex-col items-center gap-2 w-full mt-2'>
       <h2 className='text-3xl font-bold'>Tasks</h2>
       {tasks.map((task: Task) => (
         <TaskItem

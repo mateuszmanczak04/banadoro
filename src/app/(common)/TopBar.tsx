@@ -12,8 +12,8 @@ const TopBar = async () => {
   const session = await getServerSession();
 
   return (
-    <div className='fixed top-0 grid content-center w-full px-4 h-16 sm:h-20 bg-gray-800 text-gray-200 z-10'>
-      <div className='w-full max-w-3xl flex justify-between items-center mx-auto'>
+    <div className='fixed top-0 grid content-center w-full h-16 sm:h-20 bg-gray-800 text-gray-200 z-10'>
+      <div className='w-full max-w-4xl px-4 flex justify-between items-center mx-auto'>
         <Link
           href='/'
           className='text-2xl sm:text-3xl font-extrabold whitespace-nowrap flex items-center gap-2'>

@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import TimerModal from './TimerModal';
 import TopBar from './TopBar';
 
 interface Props {
@@ -10,6 +11,7 @@ const Layout = ({ children }: Props) => {
     <>
       {/* @ts-ignore server component */}
       <TopBar />
+      <TimerModal />
       <div className='mt-24'>{children}</div>
     </>
   );
