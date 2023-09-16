@@ -7,7 +7,7 @@ const ToggleAutoStart = () => {
   const { autoStart, setAutoStart } = useSettingsContext();
 
   const handleClick = () => {
-    setAutoStart((prev) => !prev);
+    setAutoStart(!autoStart);
   };
 
   return (
