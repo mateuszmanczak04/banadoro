@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const useLocalStorage = <T>(
   key: string,
@@ -14,12 +14,15 @@ const useLocalStorage = <T>(
     } catch {}
   });
 
-  const setValue = (value: T) => {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-      setState(value);
-    } catch {}
-  };
+  const setValue = useCallback(
+    (value: T) => {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        setState(value);
+      } catch {}
+    },
+    [key]
+  );
 
   return [state, setValue];
 };
