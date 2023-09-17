@@ -1,3 +1,4 @@
+import useLocalStorage from '@/hooks/useLocalStorage';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import {
@@ -37,7 +38,10 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const { data: session } = useSession();
-  const [tasks, setTasks] = useState<Task[]>(initialState.tasks);
+  const [tasks, setTasks] = useLocalStorage<Task[]>(
+    'tasks',
+    initialState.tasks
+  );
   const [isLoading, setIsLoading] = useState<boolean>(initialState.isLoading);
   const [error, setError] = useState<string>(initialState.error);
 
@@ -45,7 +49,7 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
     const _id = uuid();
     if (!session?.user.email) {
       const newTask = { title, checked: false, _id };
-      setTasks((prev) => [...prev, newTask]);
+      setTasks([...tasks, newTask]);
       return;
     }
 
@@ -59,7 +63,7 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
         _id,
       });
       const newTask = { title, checked: false, _id };
-      setTasks((prev) => [...prev, newTask]);
+      setTasks([...tasks, newTask]);
     } catch {
       setError('Could not add task.');
     } finally {
@@ -69,8 +73,8 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
 
   const toggleTask = async ({ taskId }: { taskId: string }) => {
     if (!session?.user) {
-      setTasks((prev) =>
-        prev.map((task) => {
+      setTasks(
+        tasks.map((task) => {
           if (task._id === taskId) {
             return { ...task, checked: !task.checked };
           }
@@ -85,8 +89,8 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
 
     try {
       await axios.put('/api/tasks/toggle-task', { _id: taskId });
-      setTasks((prev) =>
-        prev.map((task) => {
+      setTasks(
+        tasks.map((task) => {
           if (task._id === taskId) {
             return { ...task, checked: !task.checked };
           }
@@ -114,11 +118,11 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
     } finally {
       setIsLoading(false);
     }
-  }, [session?.user]);
+  }, [session?.user, setTasks]);
 
   const deleteTask = async ({ taskId }: { taskId: string }) => {
     if (!session?.user) {
-      setTasks((prev) => prev.filter((task) => task._id !== taskId));
+      setTasks(tasks.filter((task) => task._id !== taskId));
       return;
     }
 
@@ -127,7 +131,7 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
 
     try {
       await axios.delete('/api/tasks/delete-task/' + taskId);
-      setTasks((prev) => prev.filter((task) => task._id !== taskId));
+      setTasks(tasks.filter((task) => task._id !== taskId));
     } catch {
       setError('Could not delete a task.');
     } finally {
