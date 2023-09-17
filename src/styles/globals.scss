@@ -23,18 +23,6 @@ input {
   @apply text-red-500;
 }
 
-.input-text {
-  @apply rounded w-full p-2 bg-gray-700 text-gray-200 border-2 border-gray-600 transition duration-100;
-
-  &:focus {
-    @apply border-primary-700;
-  }
-
-  &::placeholder {
-    @apply text-gray-500;
-  }
-}
-
 .app-gradient {
   @apply bg-gradient-to-r from-primary-400 to-primary-500;
 }

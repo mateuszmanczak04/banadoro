@@ -3,6 +3,7 @@
 import useSettingsContext from '@/hooks/useSettingsContext';
 import { useCallback, useState } from 'react';
 import { Button } from '../(common)/Button';
+import Input from '../(common)/Input';
 import ToggleAutoStart from './ToggleAutoStart';
 
 const Settings = () => {
@@ -26,17 +27,17 @@ const Settings = () => {
     <div className='flex flex-col items-center gap-4 w-full'>
       <div className='flex gap-2 w-full items-center p-4 rounded  bg-gray-800 border-gray-700 border-2'>
         <p className='flex-1'>Session duration</p>
-        <input
-          className='input-text flex-1'
+        <Input
           type='number'
+          className='flex-1'
           onChange={(e) => setSessionTimeInMinutes(e.target.value)}
           value={sessionTimeInMinutes}
         />
       </div>
       <div className='flex gap-2 w-full items-center p-4 rounded border-gray-700 bg-gray-800 border-2'>
         <p className='flex-1'>Break duration</p>
-        <input
-          className='input-text flex-1'
+        <Input
+          className='flex-1'
           type='number'
           onChange={(e) => setBreakTimeInMinutes(e.target.value)}
           value={breakTimeInMinutes}

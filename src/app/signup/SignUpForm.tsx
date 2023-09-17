@@ -12,7 +12,7 @@ import { FormEvent, useState } from 'react';
 import { Button } from '../(common)/Button';
 import GoogleButton from '../(common)/GoogleButton';
 import Loading from '../(common)/Loading';
-import PasswordInput from '../(common)/PasswordInput';
+import Input from '../(common)/Input';
 
 const SignUpForm = () => {
   const { fetchAllUserDays } = useTimerContext();
@@ -79,20 +79,18 @@ const SignUpForm = () => {
       <h1 className='text-3xl font-bold flex flex-col gap-1'>Sign Up</h1>
       <label className='w-full'>
         <p>E-mail</p>
-        <input
+        <Input
           placeholder='example@abc.com'
           type='email'
-          className='input-text'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
       <label className='w-full flex flex-col gap-1'>
         <p>Username</p>
-        <input
+        <Input
           placeholder='John Smith'
           type='text'
-          className='input-text'
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
@@ -100,7 +98,12 @@ const SignUpForm = () => {
       <div className='flex flex-col w-full gap-3'>
         <label className='w-full flex flex-col gap-1'>
           <p>Password</p>
-          <PasswordInput value={password} onChange={handleTypePassword} />
+          <Input
+            value={password}
+            type='password'
+            placeholder='SomePassword123#'
+            onChange={handleTypePassword}
+          />
         </label>
         <div className='flex flex-col items-start w-full max-w-sm text-sm text-gray-400 gap-2'>
           <div className='flex gap-1 w-full'>

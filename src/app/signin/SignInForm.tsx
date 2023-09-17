@@ -7,7 +7,7 @@ import { FormEvent, useState } from 'react';
 import { Button } from '../(common)/Button';
 import GoogleButton from '../(common)/GoogleButton';
 import Loading from '../(common)/Loading';
-import PasswordInput from '../(common)/PasswordInput';
+import Input from '../(common)/Input';
 
 const SignInForm = () => {
   const { fetchAllUserDays } = useTimerContext();
@@ -48,17 +48,18 @@ const SignInForm = () => {
       <h1 className='text-3xl font-bold'>Sign In</h1>
       <label className='w-full flex flex-col gap-1'>
         <p>E-mail</p>
-        <input
+        <Input
           placeholder='example@abc.com'
           type='email'
-          className='input-text'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
       <label className='w-full flex flex-col gap-1'>
         <p>Password</p>
-        <PasswordInput
+        <Input
+          placeholder='SomePassword123#'
+          type='password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
