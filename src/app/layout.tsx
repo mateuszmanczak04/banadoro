@@ -8,13 +8,16 @@ interface Props {
 }
 
 export const metadata = {
-  title: 'Banadoro 🍌 - Pomodoro Timer',
+  title: 'Banadoro - Pomodoro Timer',
   description: 'Turn on timer for studying, create tasks, compete with others!',
 };
 
 const RootLayout = ({ children }: Props) => {
   return (
     <html>
+      <head>
+        <link rel='icon' href='/images/favicon.ico' sizes='any' />
+      </head>
       <body className='bg-gray-900 text-white scrollbar-none font-sans'>
         <AppProviders>
           <Layout>{children}</Layout>

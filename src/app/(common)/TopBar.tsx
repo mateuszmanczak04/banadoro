@@ -4,6 +4,7 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { getServerSession } from 'next-auth';
+import Image from 'next/image';
 import Link from 'next/link';
 import AuthLink from './AuthButton';
 import { buttonVariants } from './Button';
@@ -17,7 +18,8 @@ const TopBar = async () => {
         <Link
           href='/'
           className='text-2xl sm:text-3xl font-extrabold whitespace-nowrap flex items-center gap-2'>
-          🍌<span className='hidden sm:block'>Banadoro</span>
+          <Image src='/logo.svg' alt='logo' width={64} height={64} />
+          <span className='hidden sm:block'>Banadoro</span>
         </Link>
         <div className='flex gap-2 items-center'>
           <Link
