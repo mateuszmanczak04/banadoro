@@ -1,16 +1,18 @@
+'use client';
+
 import {
   Cog6ToothIcon,
   TrophyIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
-import { getServerSession } from 'next-auth';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import AuthLink from './AuthButton';
 import { buttonVariants } from './Button';
 
-const TopBar = async () => {
-  const session = await getServerSession();
+const TopBar = () => {
+  const { data: session } = useSession();
 
   return (
     <div className='fixed top-0 grid content-center w-full h-16 sm:h-20 bg-gray-800 text-gray-200 z-10'>
