@@ -25,23 +25,25 @@ const Settings = () => {
 
   return (
     <div className='flex flex-col items-center gap-4 w-full'>
-      <div className='flex gap-2 w-full items-center p-4 rounded  bg-gray-800 border-gray-700 border-2'>
-        <p className='flex-1'>Session duration</p>
-        <Input
-          type='number'
-          className='flex-1'
-          onChange={(e) => setSessionTimeInMinutes(e.target.value)}
-          value={sessionTimeInMinutes}
-        />
-      </div>
-      <div className='flex gap-2 w-full items-center p-4 rounded border-gray-700 bg-gray-800 border-2'>
-        <p className='flex-1'>Break duration</p>
-        <Input
-          className='flex-1'
-          type='number'
-          onChange={(e) => setBreakTimeInMinutes(e.target.value)}
-          value={breakTimeInMinutes}
-        />
+      <div className='flex justify-between w-full gap-4 flex-col sm:flex-row'>
+        <div className='flex flex-1 gap-2 w-full items-center p-4 rounded  bg-gray-800 border-gray-700 border-2'>
+          <p className='flex-1'>Session duration</p>
+          <Input
+            type='number'
+            className='w-16 text-center'
+            onChange={(e) => setSessionTimeInMinutes(e.target.value)}
+            value={sessionTimeInMinutes}
+          />
+        </div>
+        <div className='flex flex-1 gap-2 w-full items-center p-4 rounded border-gray-700 bg-gray-800 border-2'>
+          <p className='flex-1'>Break duration</p>
+          <Input
+            className='w-16 text-center'
+            type='number'
+            onChange={(e) => setBreakTimeInMinutes(e.target.value)}
+            value={breakTimeInMinutes}
+          />
+        </div>
       </div>
       <Button variant='primary' className='w-full' onClick={handleSave}>
         Save

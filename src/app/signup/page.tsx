@@ -7,7 +7,7 @@ const page = async () => {
   if (session?.user) redirect('/account');
 
   return (
-    <div className='w-full max-w-xl mt-20 mx-auto flex flex-col items-center gap-4 pb-16 bg-transparent rounded-xl'>
+    <div className='w-11/12 max-w-4xl mx-auto flex flex-col items-center gap-4 pb-16 bg-transparent rounded-xl'>
       <SignUpForm />
     </div>
   );

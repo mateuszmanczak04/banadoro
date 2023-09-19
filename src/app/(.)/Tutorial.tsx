@@ -1,7 +1,7 @@
 const Tutorial = () => {
   return (
-    <div className='bg-gray-800 min-h-screen w-full flex justify-center p-4 items-center'>
-      <div className='w-10/12 max-w-xl h-full flex flex-col gap-4'>
+    <div className='bg-gray-800 min-h-screen w-full flex justify-center items-center'>
+      <div className='w-11/12 max-w-4xl h-full flex flex-col gap-4'>
         <h2 className='text-4xl w-full text-center font-extrabold p-2'>
           Tutorial
         </h2>

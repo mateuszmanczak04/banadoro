@@ -74,7 +74,7 @@ const SignUpForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-6 w-full items-center sm:bg-gray-800 p-8 rounded-lg'
+      className='flex flex-col gap-6 w-full items-center rounded-lg'
       onSubmit={handleSubmit}>
       <h1 className='text-3xl font-bold flex flex-col gap-1'>Sign Up</h1>
       <label className='w-full'>
