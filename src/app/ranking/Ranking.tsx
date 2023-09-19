@@ -1,7 +1,10 @@
 'use client';
 
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useCallback, useEffect, useState } from 'react';
+import { Button } from '../(common)/Button';
+import Error from '../(common)/Error';
 import Loading from '../loading';
 
 const Ranking = () => {
@@ -9,26 +12,29 @@ const Ranking = () => {
   const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchTopUsers = async () => {
-      setIsLoading(true);
-      try {
-        const res = await axios.get('/api/ranking/top-users');
-        setTopUsers(res.data);
-      } catch {
-        setError('Something went wrong');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchTopUsers();
+  const fetchTopUsers = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await axios.get('/api/ranking/top-users');
+      setTopUsers(res.data);
+    } catch (err: any) {
+      setError(err.response.data.message);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchTopUsers();
+  }, [fetchTopUsers]);
+
+  if (isLoading) return <Loading />;
+
+  if (error) return <Error message={error} retry={fetchTopUsers} />;
 
   return (
     <div className='flex flex-col items-center gap-4 w-full'>
       <div className='flex flex-col gap-2 w-full'>
-        {isLoading && <Loading />}
-        {error && <p>{error}</p>}
         {topUsers &&
           topUsers.length > 0 &&
           topUsers.map((user: User, index: number) => (

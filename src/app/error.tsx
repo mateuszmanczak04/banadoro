@@ -1,8 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { Button } from './(common)/Button';
-import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import Error from './(common)/Error';
 
 interface Props {
   error: Error;
@@ -11,15 +10,8 @@ interface Props {
 
 const error: FC<Props> = ({ error, reset }) => {
   return (
-    <div className='w-full flex justify-center text-white'>
-      <div className='max-w-2xl w-11/12 mx-auto bg-gray-800 p-4 rounded-xl flex flex-col items-center'>
-        <ExclamationCircleIcon className='h-40 w-40 text-white' />
-        <h1 className='text-4xl font-medium'>Error</h1>
-        <p>{error.message}</p>
-        <Button variant='primary' className='mt-8' onClick={reset}>
-          Try again
-        </Button>
-      </div>
+    <div className='mt-28 w-full max-w-4xl mx-auto'>
+      <Error message={error.message} retry={reset} />
     </div>
   );
 };
