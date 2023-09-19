@@ -86,25 +86,48 @@ const SignUpForm = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
-      <div className='w-full flex flex-col sm:flex-row gap-y-4 gap-x-2'>
-        <label className='w-full flex flex-col gap-1 flex-1'>
-          <p>Username</p>
-          <Input
-            placeholder='John Smith'
-            type='text'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <label className='w-full flex flex-col gap-1 flex-1'>
-          <p>Password</p>
-          <Input
-            value={password}
-            type='password'
-            placeholder='SomePassword123#'
-            onChange={handleTypePassword}
-          />
-        </label>
+      <div className='flex flex-col gap-4'>
+        <div className='w-full flex flex-col sm:flex-row gap-y-4 gap-x-2'>
+          <label className='w-full flex flex-col gap-1 flex-1'>
+            <p>Username</p>
+            <Input
+              placeholder='John Smith'
+              type='text'
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </label>
+          <label className='w-full flex flex-col gap-1 flex-1'>
+            <p>Password</p>
+            <Input
+              value={password}
+              type='password'
+              placeholder='SomePassword123#'
+              onChange={handleTypePassword}
+            />
+          </label>
+        </div>
+        <div className='flex flex-col items-start w-full max-w-sm text-sm text-gray-400 gap-2'>
+          <div className='flex gap-1 w-full'>
+            <InformationCircleIcon
+              className={`h-4 w-4 mt-0.5 shrink-0 transition duration-500 ${
+                passwordAtLeast6Characters ? 'text-green-500' : 'text-red-500'
+              }`}
+            />
+            <p>Password must be at least 6 characters long</p>
+          </div>
+          <div className='flex gap-1 w-full'>
+            <InformationCircleIcon
+              className={`h-4 w-4 mt-0.5 shrink-0 transition duration-500 ${
+                strongPassword ? 'text-green-500' : 'text-red-500'
+              }`}
+            />
+            <p>
+              It is not obligatory but recommended to use small and capital
+              letters combined with special signs
+            </p>
+          </div>
+        </div>
       </div>
       <div className='w-full flex flex-col sm:flex-row gap-2 mt-4'>
         <Button variant='primary' className='w-full'>
