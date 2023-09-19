@@ -43,7 +43,7 @@ const SignInForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-4 w-11/12 my-auto lg:max-h-[80vh] mx-auto lg:mr-4 xs:px-4 xs:py-12 xs:max-w-lg items-center rounded-lg overflow-y-scroll scrollbar-none'
+      className='flex flex-col gap-4 w-full my-auto lg:max-h-[80vh] mx-auto lg:mr-4 xs:px-4 xs:py-12 xs:max-w-lg items-center rounded-lg overflow-y-scroll scrollbar-none'
       onSubmit={handleSubmit}>
       <h1 className='text-3xl font-bold'>Sign In</h1>
       <label className='w-full flex flex-col gap-1'>
