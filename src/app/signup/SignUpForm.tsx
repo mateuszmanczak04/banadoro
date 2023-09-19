@@ -137,8 +137,7 @@ const SignUpForm = () => {
       </div>
       <Link
         href='/signin'
-        className='cursor-pointer flex items-center gap-1 text-gray-400 mx-auto'>
-        <ArrowRightCircleIcon className='h-5 w-5 mt-0.5' />
+        className='cursor-pointer flex gap-1 text-gray-400 mx-auto text-center'>
         <p>Already have an account? Sign in here</p>
       </Link>
 

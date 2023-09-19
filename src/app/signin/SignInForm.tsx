@@ -72,7 +72,7 @@ const SignInForm = () => {
       </div>
       <Link
         href='/signup'
-        className='cursor-pointer flex items-center gap-1 text-gray-400 hover:text-gray-300 transition mx-auto'>
+        className='cursor-pointer flex items-center gap-1 text-gray-400 hover:text-gray-300 transition mx-auto text-center'>
         <p>{"Don't have an account yet? Sign up here"}</p>
       </Link>
       {error && <p className='error'>{error}</p>}
