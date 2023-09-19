@@ -8,7 +8,8 @@ export async function GET() {
 
     const topUsers: RankingTopUser[] = await User.find()
       .select({ totalTime: true, username: true })
-      .sort({ totalTime: -1 });
+      .sort({ totalTime: -1 })
+      .limit(10);
 
     return NextResponse.json(topUsers);
   } catch {
