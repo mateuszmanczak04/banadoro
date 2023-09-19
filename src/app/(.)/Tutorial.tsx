@@ -1,11 +1,11 @@
-const Description = () => {
+const Tutorial = () => {
   return (
     <div className='bg-gray-800 min-h-screen w-full flex justify-center p-4 items-center'>
       <div className='w-10/12 max-w-xl h-full flex flex-col gap-4'>
         <h2 className='text-4xl w-full text-center font-extrabold p-2'>
           Tutorial
         </h2>
-        <p className='text-justify'>
+        <p className='text-justify leading-7'>
           {'"'}Banadoro 🍌{'"'} app uses a popular studying method called {'"'}
           pomodoro{'"'}. Firstly it was used to schedule study session time for
           25 minutes and break for 5 (but you can adjust this time to your
@@ -26,4 +26,4 @@ const Description = () => {
   );
 };
 
-export default Description;
+export default Tutorial;

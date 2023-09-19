@@ -1,12 +1,12 @@
 import App from './(.)/App';
-import Description from './(.)/Description';
+import Tutorial from './(.)/Tutorial';
 import Footer from './(.)/Footer';
 
 const page = () => {
   return (
     <>
       <App />
-      <Description />
+      <Tutorial />
       <Footer />
     </>
   );
