@@ -37,16 +37,17 @@ const TimerModal = () => {
     // switching to /account
     // must go firstly to / and then to /account
     // to see th timer there
+    // timer must also be running
     if (pathname === '/') {
       setIsOpen(false);
       setOpenOnNext(true);
     } else {
-      if (openOnNext) {
+      if (openOnNext && isTimerRunning) {
         setIsOpen(true);
         setOpenOnNext(false);
       }
     }
-  }, [pathname, openOnNext]);
+  }, [pathname, openOnNext, isTimerRunning]);
 
   return (
     <div
