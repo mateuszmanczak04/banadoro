@@ -134,7 +134,10 @@ const SignUpForm = () => {
         </div>
       </div>
       <div className='w-full flex flex-col sm:flex-row gap-2 mt-4'>
-        <Button variant='primary' className='w-full'>
+        <Button
+          variant='primary'
+          className='w-full'
+          disabled={!email || !username || !password}>
           Sign Up
         </Button>
         <GoogleButton text='Sign Up With Google' />
