@@ -12,7 +12,7 @@ const Layout = ({ children }: Props) => {
       {/* @ts-ignore server component */}
       <TopBar />
       <TimerModal />
-      <div className='mt-20 sm:mt-24'>{children}</div>
+      <div>{children}</div>
     </>
   );
 };

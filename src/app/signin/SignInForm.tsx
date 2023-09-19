@@ -43,7 +43,7 @@ const SignInForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-6 w-full items-center rounded-lg'
+      className='flex flex-col gap-4 w-11/12 my-auto lg:max-h-[80vh] mx-auto lg:mr-4 xs:px-4 xs:py-12 xs:max-w-lg items-center rounded-lg overflow-y-scroll scrollbar-none'
       onSubmit={handleSubmit}>
       <h1 className='text-3xl font-bold'>Sign In</h1>
       <label className='w-full flex flex-col gap-1'>
@@ -64,7 +64,7 @@ const SignInForm = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
-      <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2 mt-4'>
+      <div className='w-full flex flex-col sm:flex-row gap-2 mt-4'>
         <Button variant='primary' className='w-full'>
           Sign In
         </Button>
@@ -72,8 +72,8 @@ const SignInForm = () => {
       </div>
       <Link
         href='/signup'
-        className='cursor-pointer flex items-center gap-1 text-gray-400 mx-auto'>
-        <p>{"Don't have an account? Sign up here"}</p>
+        className='cursor-pointer flex items-center gap-1 text-gray-400 hover:text-gray-300 transition mx-auto'>
+        <p>{"Don't have an account yet? Sign up here"}</p>
       </Link>
       {error && <p className='error'>{error}</p>}
       {loading && <Loading />}

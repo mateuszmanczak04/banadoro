@@ -74,10 +74,10 @@ const SignUpForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-6 w-full items-center rounded-lg'
+      className='flex flex-col gap-4 w-11/12 my-auto lg:max-h-[80vh] mx-auto lg:mr-4 xs:px-4 xs:py-12 xs:max-w-lg items-center rounded-lg overflow-y-scroll scrollbar-none'
       onSubmit={handleSubmit}>
-      <h1 className='text-3xl font-bold flex flex-col gap-1'>Sign Up</h1>
-      <label className='w-full'>
+      <h1 className='text-3xl font-bold'>Sign Up</h1>
+      <label className='w-full flex flex-col gap-1'>
         <p>E-mail</p>
         <Input
           placeholder='example@abc.com'
@@ -86,17 +86,17 @@ const SignUpForm = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
-      <label className='w-full flex flex-col gap-1'>
-        <p>Username</p>
-        <Input
-          placeholder='John Smith'
-          type='text'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </label>
-      <div className='flex flex-col w-full gap-3'>
-        <label className='w-full flex flex-col gap-1'>
+      <div className='w-full flex flex-col sm:flex-row gap-y-4 gap-x-2'>
+        <label className='w-full flex flex-col gap-1 flex-1'>
+          <p>Username</p>
+          <Input
+            placeholder='John Smith'
+            type='text'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+        <label className='w-full flex flex-col gap-1 flex-1'>
           <p>Password</p>
           <Input
             value={password}
@@ -105,29 +105,8 @@ const SignUpForm = () => {
             onChange={handleTypePassword}
           />
         </label>
-        <div className='flex flex-col items-start w-full max-w-sm text-sm text-gray-400 gap-2'>
-          <div className='flex gap-1 w-full'>
-            <InformationCircleIcon
-              className={`h-4 w-4 mt-0.5 shrink-0 transition duration-500 ${
-                passwordAtLeast6Characters ? 'text-green-500' : 'text-red-500'
-              }`}
-            />
-            <p>Password must be at least 6 characters long</p>
-          </div>
-          <div className='flex gap-1 w-full'>
-            <InformationCircleIcon
-              className={`h-4 w-4 mt-0.5 shrink-0 transition duration-500 ${
-                strongPassword ? 'text-green-500' : 'text-red-500'
-              }`}
-            />
-            <p>
-              It is not obligatory but recommended to use small and capital
-              letters combined with special signs
-            </p>
-          </div>
-        </div>
       </div>
-      <div className='w-full flex flex-col xs:flex-row gap-y-2 xs:gap-x-2 mt-4'>
+      <div className='w-full flex flex-col sm:flex-row gap-2 mt-4'>
         <Button variant='primary' className='w-full'>
           Sign Up
         </Button>
