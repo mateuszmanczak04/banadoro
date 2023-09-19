@@ -13,6 +13,7 @@ import { Button } from '../(common)/Button';
 import GoogleButton from '../(common)/GoogleButton';
 import Loading from '../(common)/Loading';
 import Input from '../(common)/Input';
+import { useRouter } from 'next/navigation';
 
 const SignUpForm = () => {
   const { fetchAllUserDays } = useTimerContext();
@@ -24,6 +25,7 @@ const SignUpForm = () => {
   const [strongPassword, setStrongPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -31,21 +33,23 @@ const SignUpForm = () => {
     setError('');
 
     try {
+      // create an account
       await axios.post('/api/auth/signup', {
         email,
         username,
         password,
       });
-      try {
-        await signIn('credentials', {
-          email,
-          password,
-          callbackUrl: '/',
-        });
-        await fetchAllUserDays();
-      } catch {
-        setError('Could not sign in.');
-      }
+
+      // login to the account
+      await signIn('credentials', {
+        email,
+        password,
+        callbackUrl: '/',
+        redirect: false,
+      });
+
+      await fetchAllUserDays();
+      router.push('/');
     } catch (err: any) {
       setError(err.response.data.message);
     } finally {

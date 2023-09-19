@@ -8,6 +8,7 @@ import { Button } from '../(common)/Button';
 import GoogleButton from '../(common)/GoogleButton';
 import Loading from '../(common)/Loading';
 import Input from '../(common)/Input';
+import { useRouter } from 'next/navigation';
 
 const SignInForm = () => {
   const { fetchAllUserDays } = useTimerContext();
@@ -15,6 +16,7 @@ const SignInForm = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -23,22 +25,27 @@ const SignInForm = () => {
     setLoading(true);
     setError('');
 
-    const result = await signIn('credentials', {
-      email,
-      password,
-      callbackUrl: '/',
-    });
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        callbackUrl: '/',
+        redirect: false,
+      });
 
-    await new Promise((resolve) => setTimeout(() => resolve('good'), 3000));
+      if (result!.error) {
+        setError(result!.error);
+        setLoading(false);
+        return;
+      }
 
-    if (result!.error) {
-      setError(result!.error);
+      await fetchAllUserDays();
+      router.push('/');
+    } catch (err: any) {
+      setError(err.response.data.message);
+    } finally {
       setLoading(false);
-      return;
     }
-
-    await fetchAllUserDays();
-    setLoading(false);
   };
 
   return (
