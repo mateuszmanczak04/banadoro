@@ -1,12 +1,15 @@
 'use client';
 
-import useSettingsContext from '@/hooks/useSettingsContext';
-import { useCallback, useState } from 'react';
+import { FC } from 'react';
 import { Button } from '../(common)/Button';
 import Input from '../(common)/Input';
 import ToggleAutoStart from './ToggleAutoStart';
+import useSettingsContext from '@/hooks/useSettingsContext';
+import { useCallback, useState } from 'react';
 
-const Settings = () => {
+interface TimerSettingsProps {}
+
+const TimerSettings: FC<TimerSettingsProps> = ({}) => {
   const { sessionTime, breakTime, setSessionTime, setBreakTime } =
     useSettingsContext();
 
@@ -24,8 +27,9 @@ const Settings = () => {
   }, [breakTimeInMinutes, sessionTimeInMinutes, setBreakTime, setSessionTime]);
 
   return (
-    <div className='flex flex-col items-center gap-4 w-full'>
-      <div className='flex justify-between w-full gap-4 flex-col sm:flex-row'>
+    <div className='flex flex-col w-full gap-4'>
+      <h3 className='font-extrabold text-3xl w-full'>Timer</h3>
+      <div className='flex justify-between w-full gap-4 flex-col xs:flex-row'>
         <div className='flex flex-1 gap-2 w-full items-center p-4 rounded  bg-gray-800 border-gray-700 border-2'>
           <p className='flex-1'>Session duration</p>
           <Input
@@ -53,4 +57,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default TimerSettings;

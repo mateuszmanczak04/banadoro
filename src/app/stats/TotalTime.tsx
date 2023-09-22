@@ -1,6 +1,6 @@
 'use client';
 
-import WeekOverview from '@/app/account/WeekOverview';
+import WeekOverview from '@/app/stats/WeekOverview';
 import useTimerContext from '@/hooks/useTimerContext';
 
 const TotalTime = () => {

@@ -3,13 +3,14 @@
 import {
   Cog6ToothIcon,
   TrophyIcon,
-  UserCircleIcon,
+  ChartBarSquareIcon,
 } from '@heroicons/react/24/outline';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import AuthLink from './AuthButton';
 import { buttonVariants } from './Button';
+import {} from '@heroicons/react/24/outline';
 
 const TopBar = () => {
   const { data: session } = useSession();
@@ -40,10 +41,10 @@ const TopBar = () => {
 
           {session && session.user ? (
             <Link
-              href='/account'
+              href='/stats'
               className={buttonVariants({ variant: 'secondary' })}>
-              <UserCircleIcon className='w-6 h-6' />
-              <p className='hidden sm:block'>Account</p>
+              <ChartBarSquareIcon className='w-6 h-6' />
+              <p className='hidden sm:block'>Stats</p>
             </Link>
           ) : (
             <AuthLink />
