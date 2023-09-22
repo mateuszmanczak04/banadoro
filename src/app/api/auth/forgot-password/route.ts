@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
 
     await dbConnect();
 
-    const user = await User.exists({ email });
+    const user = await User.findOne({ email }).select({ username: 1 });
 
     if (!user)
       return NextResponse.json(
@@ -45,7 +45,15 @@ export async function POST(req: NextRequest) {
       to: email,
       subject: 'Reset Password',
       text: 'Reset Password',
-      html: `<a href="http://localhost:3000/reset-password?&token=${token}">Reset Password</a>`,
+      // html: `<a href="">Reset Password</a>`,
+      html: `
+        <div style="background: #111827; color: white; padding: 2rem; border-radius: 1rem; font-family: sans-serif;">
+          <h1 style="display: block;">Hi ${user.username}</h1>
+          <h2 style="display: block;">It is a response for your reset password request.</h2>
+          <a href="${process.env.BASE_URL}/reset-password?&token=${token}" style="background-color: #ffbe0a; color: #111827; padding: 0.25rem 0.5rem;cursor: pointer; display: block; border-radius: 0.25rem; font-size: 1rem; font-weight: medium; width: fit-content; text-decoration: none;">Click here to reset your password.</a>
+          <small style="opacity: 75%; display: block; margin-top: 0.5rem;">Ignore this email if it was not you trying to reset it.</small>
+        </div>
+      `,
     };
     transporter.sendMail(option, (error, info) => {
       if (error) {
