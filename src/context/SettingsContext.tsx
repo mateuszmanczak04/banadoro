@@ -1,5 +1,6 @@
 import Loading from '@/app/loading';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { useSession } from 'next-auth/react';
 import { createContext, FC, ReactNode, useEffect, useState } from 'react';
 
 interface SettingsContextProps {
@@ -38,6 +39,7 @@ export const SettingsContextProvider: FC<{ children: ReactNode }> = ({
   );
 
   const [hasLoaded, setHasLoaded] = useState(false);
+  const { status } = useSession();
 
   useEffect(() => {
     setHasLoaded(true);
@@ -55,7 +57,7 @@ export const SettingsContextProvider: FC<{ children: ReactNode }> = ({
         breakTime,
         setBreakTime,
       }}>
-      {hasLoaded ? (
+      {hasLoaded && status !== 'loading' ? (
         children
       ) : (
         <div className='w-screen h-screen grid place-items-center'>
