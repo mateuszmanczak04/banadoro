@@ -1,14 +1,17 @@
+'use client';
+
 import TotalTime from '@/app/account/TotalTime';
-import { getAuthSession } from '@/lib/auth';
+import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import SignOutButton from '../(common)/SignOutButton';
+import Loading from '../loading';
 
-const page = async () => {
-  // session
-  const session = await getAuthSession();
+const AccountPage = () => {
+  const { status } = useSession();
 
-  /* if a user is not signed in, then redirect him to sign up page */
-  if (!session || !session.user) redirect('/');
+  if (status === 'loading') return <Loading />;
+
+  if (status === 'unauthenticated') redirect('/');
 
   return (
     <div className='mt-28 w-11/12 max-w-4xl mx-auto flex flex-col items-center gap-4 pb-16 bg-transparent rounded-xl'>
@@ -21,4 +24,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default AccountPage;
