@@ -2,7 +2,6 @@
 
 import useSettingsContext from '@/hooks/useSettingsContext';
 import useTimerContext from '@/hooks/useTimerContext';
-import { Player } from '@lottiefiles/react-lottie-player';
 import { Button } from '../(common)/Button';
 import Counter from './Counter';
 
@@ -32,52 +31,44 @@ const ClockFrame = () => {
     handlePause();
   };
 
+  const getTimeInSeconds = () => {
+    return mode === 'session'
+      ? sessionTime - currentSessionTimePassed
+      : breakTime - currentSessionTimePassed;
+  };
+
   return (
-    <div className='w-full p-8 rounded-xl flex flex-col gap-8 items-center bg-gray-800'>
-      <div className='flex gap-4'>
-        <button
-          className={`py-2 px-6 rounded cursor-pointer transition duration-500 bg-gray-800 hover:text-primary-500 border-b-4 border-transparent ${
-            mode === 'session' && 'border-primary-500 main-shadow'
-          }`}
-          onClick={handleSetModeSession}>
-          Session
-        </button>
-        <button
-          className={`py-2 px-6 rounded cursor-pointe transition duration-500 bg-gray-800 hover:text-primary-500 border-transparent border-b-4 ${
-            mode === 'break' && 'border-primary-500 main-shadow'
-          }`}
-          onClick={handleSetModeBreak}>
-          Break
-        </button>
+    <div className='mx-auto p-4 md:rounded-md flex flex-col gap-4 items-center bg-gray-800 w-full'>
+      <h2 className='text-3xl font-extrabold w-full text-center rounded px-2'>
+        Focus!
+      </h2>
+      <div className='w-full flex gap-4'>
+        <div className='rounded-md flex-[2] overflow-hidden flex'>
+          <Button
+            variant={mode === 'session' ? 'primary' : 'secondary'}
+            className='flex-1 rounded-none'
+            onClick={handleSetModeSession}>
+            Session
+          </Button>
+          <Button
+            variant={mode === 'session' ? 'secondary' : 'primary'}
+            className='flex-1 rounded-none'
+            onClick={handleSetModeBreak}>
+            Break
+          </Button>
+        </div>
+        <Button
+          variant={isTimerRunning ? 'secondary' : 'primary'}
+          className='flex-1'
+          onClick={() => {
+            if (isTimerRunning) handlePause();
+            else handleRun();
+          }}>
+          {isTimerRunning ? 'Pause' : 'Start'}
+        </Button>
       </div>
 
-      {mode === 'session' && (
-        <Counter timeInSeconds={sessionTime - currentSessionTimePassed} />
-      )}
-      {mode === 'break' && (
-        <Counter timeInSeconds={breakTime - currentSessionTimePassed} />
-      )}
-
-      {isTimerRunning ? (
-        <>
-          <Button variant='secondary' className='w-full' onClick={handlePause}>
-            Pause
-          </Button>
-        </>
-      ) : (
-        <>
-          <Button variant='primary' className='w-full' onClick={handleRun}>
-            Start
-          </Button>
-        </>
-      )}
-      {isTimerRunning && (
-        <Player
-          autoplay
-          loop
-          src='/sand-timer.json'
-          style={{ height: '80px', width: '80px' }}></Player>
-      )}
+      <Counter timeInSeconds={getTimeInSeconds()} />
     </div>
   );
 };

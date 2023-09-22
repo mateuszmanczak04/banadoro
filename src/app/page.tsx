@@ -4,7 +4,7 @@ import Footer from './(.)/Footer';
 
 const page = () => {
   return (
-    <div className='mt-28'>
+    <div>
       <App />
       <Tutorial />
       <Footer />
