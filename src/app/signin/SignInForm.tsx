@@ -63,7 +63,14 @@ const SignInForm = () => {
         />
       </label>
       <label className='w-full flex flex-col gap-1'>
-        <p>Password</p>
+        <div className='flex gap-2'>
+          <p>Password</p>{' '}
+          <Link
+            href='/forgot-password'
+            className='cursor-pointer text-gray-400 hover:text-gray-300 transition'>
+            <p>Forgot?</p>
+          </Link>
+        </div>
         <Input
           placeholder='SomePassword123#'
           type='password'
@@ -82,7 +89,7 @@ const SignInForm = () => {
       </div>
       <Link
         href='/signup'
-        className='cursor-pointer flex items-center gap-1 text-gray-400 hover:text-gray-300 transition mx-auto text-center'>
+        className='cursor-pointer text-gray-400 hover:text-gray-300 transition mx-auto text-center'>
         <p>{"Don't have an account yet? Sign up here"}</p>
       </Link>
       {error && <p className='error'>{error}</p>}

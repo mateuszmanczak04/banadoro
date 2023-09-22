@@ -3,15 +3,16 @@
 import SignInForm from '@/app/signin/SignInForm';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Loading from '../loading';
 
 const SignInPage = () => {
   const { status } = useSession();
+  const router = useRouter();
 
   if (status === 'loading') return <Loading />;
 
-  if (status === 'authenticated') redirect('/account');
+  if (status === 'authenticated') return router.replace('/');
 
   return (
     <div className='w-11/12 max-w-4xl mx-auto py-20 h-screen flex gap-4'>
