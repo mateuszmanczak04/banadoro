@@ -67,16 +67,15 @@ export async function POST(req: NextRequest) {
       });
     });
 
-    transporter.sendMail(options, (error, info) => {
-      if (error) {
-        return NextResponse.json(
-          {
-            message: 'Internal Server Error.',
-          },
-          { status: 500 }
-        );
-      }
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(options, (error, info) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(info);
+      });
     });
+
     return NextResponse.json({ message: 'Email sent.' }, { status: 200 });
   } catch {
     return NextResponse.json(
