@@ -39,7 +39,7 @@ const TopBar = () => {
             <p className='hidden sm:block'>Settings</p>
           </Link>
 
-          {session && session.user ? (
+          {session?.user ? (
             <Link
               href='/stats'
               className={buttonVariants({ variant: 'secondary' })}>

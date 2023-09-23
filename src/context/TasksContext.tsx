@@ -47,7 +47,7 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
 
   const addTask = async ({ title }: { title: string }) => {
     const _id = uuid();
-    if (!session?.user.email) {
+    if (!session?.user?.email) {
       const newTask = { title, checked: false, _id };
       setTasks([...tasks, newTask]);
       return;
