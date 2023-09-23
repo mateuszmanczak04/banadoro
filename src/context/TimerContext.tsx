@@ -1,5 +1,4 @@
 import useSettingsContext from '@/hooks/useSettingsContext';
-import { getDateSlug } from '@/lib/getDateSlug';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import {
@@ -10,7 +9,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { v4 as uuid } from 'uuid';
 
 interface TimerContextProps {
   resetTotalTime: () => void;
@@ -80,20 +78,22 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
     setError('');
 
     try {
-      await axios.post('/api/time/increment-user-time');
-      const todayDateSlug = getDateSlug(new Date());
+      // update user time in stats after every minute
+      const res = await axios.post('/api/time/increment-user-time');
+      const { today, totalTime } = res.data;
       setPreviousDays((prev: Day[]) => {
-        if (prev.find((day: Day) => day.date === todayDateSlug)) {
+        if (prev.find((day: Day) => day.date === today.date)) {
           return prev.map((d: Day) => {
-            if (d.date === todayDateSlug) {
-              return { ...d, totalTime: d.totalTime + 1 };
+            if (d.date === today.date) {
+              return { ...d, totalTime: today.totalTime };
             }
             return d;
           });
         } else {
-          return [...prev, { date: todayDateSlug, totalTime: 1, _id: uuid() }];
+          return [...prev, today];
         }
       });
+      setTotalTime(totalTime);
     } catch {
       setError('Could not increment user time.');
     } finally {

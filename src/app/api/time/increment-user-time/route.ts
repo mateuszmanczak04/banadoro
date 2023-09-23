@@ -36,25 +36,21 @@ export const POST = errorMiddleware(
     // update specific day time
     const dateSlug = getDateSlug(new Date());
 
-    const day = await Day.findOne({ user: email, date: dateSlug }).select({
-      totalTime: 1,
-    });
+    const today = await Day.findOne({ user: email, date: dateSlug });
 
-    if (day) {
+    if (today) {
       await Day.updateOne(
         { user: email, date: dateSlug },
-        { $set: { totalTime: day.totalTime + 1 } }
+        { $set: { totalTime: today.totalTime + 1 } }
       );
     } else {
       await Day.create({ user: email, totalTime: 1, date: dateSlug });
     }
 
-    const todayTime = (await Day.findOne({ user: email, date: dateSlug }))
-      .totalTime;
-
     return NextResponse.json({
       totalTime: user.totalTime + 1,
-      todayTime,
+      todayDateSlug: dateSlug,
+      today,
     });
   })
 );
