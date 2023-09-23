@@ -40,7 +40,8 @@ export async function POST(req: NextRequest) {
         pass: process.env.NODEMAILER_PASS,
       },
     });
-    const option = {
+
+    const options = {
       from: process.env.NODEMAILER_USER,
       to: email,
       subject: 'Reset Password',
@@ -55,7 +56,18 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     };
-    transporter.sendMail(option, (error, info) => {
+
+    await new Promise((resolve, reject) => {
+      transporter.verify((error, success) => {
+        if (error) {
+          return reject(error);
+        }
+
+        return resolve(success);
+      });
+    });
+
+    transporter.sendMail(options, (error, info) => {
       if (error) {
         return NextResponse.json(
           {
