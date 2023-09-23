@@ -3,12 +3,13 @@
 import useTimerContext from '@/hooks/useTimerContext';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Button } from '../(common)/Button';
 import GoogleButton from '../(common)/GoogleButton';
 import Loading from '../(common)/Loading';
 import Input from '../(common)/Input';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const SignInForm = () => {
   const { fetchAllUserDays } = useTimerContext();
@@ -17,6 +18,8 @@ const SignInForm = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [passwordHint, setPasswordHint] = useState('');
+  const [isPasswordHintLoading, setIsPasswordHintLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -48,6 +51,22 @@ const SignInForm = () => {
     }
   };
 
+  const handleGetHint = async () => {
+    if (email.trim() === '') return;
+    try {
+      setIsPasswordHintLoading(true);
+      const res = await axios.get('/api/auth/password-hint?email=' + email);
+      if (res.data.hint === '') {
+        setPasswordHint('No hint found');
+      } else {
+        setPasswordHint(res.data.hint);
+      }
+    } catch {
+    } finally {
+      setIsPasswordHintLoading(false);
+    }
+  };
+
   return (
     <form
       className='flex flex-col gap-4 w-full my-auto lg:max-h-[80vh] mx-auto lg:mr-4 xs:px-4 xs:py-12 xs:max-w-lg items-center rounded-lg overflow-y-scroll scrollbar-none'
@@ -59,25 +78,48 @@ const SignInForm = () => {
           placeholder='example@abc.com'
           type='email'
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setPasswordHint('');
+          }}
         />
       </label>
-      <label className='w-full flex flex-col gap-1'>
+      <div className='w-full flex flex-col gap-1'>
         <div className='flex gap-2'>
-          <p>Password</p>{' '}
+          <label htmlFor='password'>Password</label>{' '}
           <Link
             href='/forgot-password'
             className='cursor-pointer text-gray-400 hover:text-gray-300 transition'>
             <p>Forgot?</p>
           </Link>
         </div>
-        <Input
-          placeholder='SomePassword123#'
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
+        <div>
+          {isPasswordHintLoading && <Loading />}
+          {passwordHint && (
+            <p>
+              Your password hint:{' '}
+              <span className='text-gray-400'>{passwordHint}</span>
+            </p>
+          )}
+        </div>
+        <div className='w-full flex items-center gap-2 mt-1'>
+          <Input
+            id='password'
+            placeholder='SomePassword123#'
+            type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {!passwordHint && !isPasswordHintLoading && email && (
+            <Button
+              variant='secondary'
+              className='text-sm px-2 shrink-0 self-stretch'
+              onClick={handleGetHint}>
+              Get Hint
+            </Button>
+          )}
+        </div>
+      </div>
       <div className='w-full flex flex-col sm:flex-row gap-2 mt-4'>
         <Button
           variant='primary'

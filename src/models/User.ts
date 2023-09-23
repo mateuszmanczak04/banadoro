@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema({
     required: false,
     type: String,
   },
+  passwordHint: {
+    required: false,
+    type: String,
+  },
 });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

@@ -1,18 +1,23 @@
-'use client';
+// 'use client';
 
 import SignInForm from '@/app/signin/SignInForm';
+import { getAuthSession } from '@/lib/auth';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import Loading from '../loading';
 
-const SignInPage = () => {
-  const { status } = useSession();
-  const router = useRouter();
+const page = async () => {
+  // const { status } = useSession();
+  const session = await getAuthSession();
 
-  if (status === 'loading') return <Loading />;
+  if (session) {
+    redirect('/');
+  }
 
-  if (status === 'authenticated') return router.replace('/');
+  // if (status === 'loading') return <Loading />;
+
+  // if (status === 'authenticated') return router.replace('/');
 
   return (
     <div className='w-11/12 max-w-4xl mx-auto py-20 h-screen flex gap-4'>
@@ -37,4 +42,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default page;

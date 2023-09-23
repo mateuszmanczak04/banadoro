@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import SignOutButton from '../(common)/SignOutButton';
 import ChangePassword from './ChangePassword';
+import PasswordHint from './PasswordHint';
 
 const AccountSettings = () => {
   const { data: session } = useSession();
@@ -13,6 +14,7 @@ const AccountSettings = () => {
     <div className='flex flex-col gap-4 w-full'>
       <h3 className='font-extrabold text-3xl w-full'>Account</h3>
       <ChangePassword />
+      <PasswordHint />
       <SignOutButton />
     </div>
   );
