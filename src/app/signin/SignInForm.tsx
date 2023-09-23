@@ -114,7 +114,8 @@ const SignInForm = () => {
             <Button
               variant='secondary'
               className='text-sm px-2 shrink-0 self-stretch'
-              onClick={handleGetHint}>
+              onClick={handleGetHint}
+              type='button'>
               Get Hint
             </Button>
           )}
@@ -124,7 +125,8 @@ const SignInForm = () => {
         <Button
           variant='primary'
           className='w-full'
-          disabled={!email || !password}>
+          disabled={!email || !password}
+          type='submit'>
           Sign In
         </Button>
         <GoogleButton text='Sign In With Google' />
