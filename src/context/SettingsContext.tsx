@@ -54,7 +54,6 @@ export const SettingsContextProvider: FC<{ children: ReactNode }> = ({
         const res = await axios.get(
           '/api/auth/password-hint?email=' + session?.user?.email
         );
-        console.log(res.data);
         setPasswordHint(res.data.hint);
       } catch {
       } finally {
