@@ -14,9 +14,8 @@ const SignOutButton = () => {
   const handleSignOut = () => {
     setTasks([]);
     resetTotalTime();
-    signOut();
     setHasAccount(true);
-    close();
+    signOut();
   };
 
   return (
