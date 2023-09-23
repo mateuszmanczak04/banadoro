@@ -1,16 +1,16 @@
 import authMiddleware from '@/lib/authMiddleware';
+import CustomError from '@/lib/CustomError';
 import dbConnect from '@/lib/dbConnect';
+import errorMiddleware from '@/lib/errorMiddleware';
 import User from '@/models/User';
 import CustomNextRequest from '@/types/CustomNextRequest';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const PUT = authMiddleware(async (req: CustomNextRequest) => {
-  try {
+export const PUT = errorMiddleware(
+  authMiddleware(async (req: CustomNextRequest) => {
     const { hint } = await req.json();
 
-    if (!hint) {
-      return NextResponse.json({ message: 'Missing fields.' }, { status: 400 });
-    }
+    if (!hint) throw new CustomError('Missing fields.', 400);
 
     await dbConnect();
 
@@ -20,31 +20,16 @@ export const PUT = authMiddleware(async (req: CustomNextRequest) => {
       { message: 'Password hint updated.' },
       { status: 200 }
     );
-  } catch {
-    return NextResponse.json(
-      { message: 'Internal Server Error.' },
-      { status: 500 }
-    );
-  }
+  })
+);
+
+export const GET = errorMiddleware(async (req: NextRequest) => {
+  const url = new URL(req.nextUrl.toString());
+  const email = url.searchParams.get('email');
+
+  await dbConnect();
+
+  const user = await User.findOne({ email }).select({ passwordHint: 1 });
+
+  return NextResponse.json({ hint: user?.passwordHint || '' });
 });
-
-export const GET = async (req: NextRequest) => {
-  try {
-    const url = new URL(req.nextUrl.toString());
-    const email = url.searchParams.get('email');
-
-    await dbConnect();
-
-    const user = await User.findOne({ email }).select({ passwordHint: 1 });
-
-    return NextResponse.json(
-      { hint: user?.passwordHint || '' },
-      { status: 200 }
-    );
-  } catch {
-    return NextResponse.json(
-      { message: 'Internal Server Error.' },
-      { status: 500 }
-    );
-  }
-};

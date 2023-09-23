@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
 
         await dbConnect();
 
-        const user = await User.findOne({ email }).select('password');
+        const user = await User.findOne({ email }).select({ password: 1 });
 
         // check if user exists
         if (!user) throw new Error('Invalid Credentials.');
@@ -31,7 +31,6 @@ export const authOptions: NextAuthOptions = {
 
         const result = {
           email,
-          _id: user._id as string,
         };
 
         return result;
@@ -72,25 +71,6 @@ export const authOptions: NextAuthOptions = {
         });
       }
       return true;
-    },
-    async jwt({ token }) {
-      await dbConnect();
-      const user = await User.findOne({ email: token.email }).select('_id');
-
-      delete token.name;
-      delete token.picture;
-
-      if (!user) {
-        return token;
-      }
-
-      token._id = user._id;
-      return token;
-    },
-    async session({ session, token }) {
-      if (!token) return session;
-      session.user._id = token._id;
-      return session;
     },
   },
 };

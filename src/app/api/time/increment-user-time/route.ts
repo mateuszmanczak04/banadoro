@@ -1,27 +1,24 @@
 import authMiddleware from '@/lib/authMiddleware';
+import CustomError from '@/lib/CustomError';
 import dbConnect from '@/lib/dbConnect';
+import errorMiddleware from '@/lib/errorMiddleware';
 import { getDateSlug } from '@/lib/getDateSlug';
 import Day from '@/models/Day';
 import User from '@/models/User';
 import CustomNextRequest from '@/types/CustomNextRequest';
 import { NextResponse } from 'next/server';
 
-export const POST = authMiddleware(async (req: CustomNextRequest) => {
-  try {
+export const POST = errorMiddleware(
+  authMiddleware(async (req: CustomNextRequest) => {
     await dbConnect();
 
     const { email } = req;
 
-    const user = await User.findOne({ email }).select('totalTime');
+    const user = await User.findOne({ email }).select({ totalTime: 1 });
 
-    if (!user) {
-      return NextResponse.json(
-        { message: 'User does not exist.' },
-        { status: 404 }
-      );
-    }
+    if (!user) throw new CustomError('User not found.', 404);
 
-    // update user total time
+    // update user's total time
     if (user.totalTime) {
       await User.findOneAndUpdate(
         { email },
@@ -39,9 +36,9 @@ export const POST = authMiddleware(async (req: CustomNextRequest) => {
     // update specific day time
     const dateSlug = getDateSlug(new Date());
 
-    const day = await Day.findOne({ user: email, date: dateSlug }).select(
-      'totalTime'
-    );
+    const day = await Day.findOne({ user: email, date: dateSlug }).select({
+      totalTime: 1,
+    });
 
     if (day) {
       await Day.updateOne(
@@ -59,7 +56,5 @@ export const POST = authMiddleware(async (req: CustomNextRequest) => {
       totalTime: user.totalTime + 1,
       todayTime,
     });
-  } catch (err) {
-    return NextResponse.json({ message: 'Server error' }, { status: 500 });
-  }
-});
+  })
+);

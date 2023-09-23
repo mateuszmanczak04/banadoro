@@ -1,14 +1,16 @@
-import User from '@/models/User';
-import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
 import authMiddleware from '@/lib/authMiddleware';
+import CustomError from '@/lib/CustomError';
+import errorMiddleware from '@/lib/errorMiddleware';
+import User from '@/models/User';
 import CustomNextRequest from '@/types/CustomNextRequest';
+import bcrypt from 'bcryptjs';
+import { NextResponse } from 'next/server';
 
-export const PUT = authMiddleware(async (req: CustomNextRequest) => {
-  try {
+export const PUT = errorMiddleware(
+  authMiddleware(async (req: CustomNextRequest) => {
     const { password } = await req.json();
-    if (!password)
-      return NextResponse.json({ message: 'Missing fields.' }, { status: 400 });
+
+    if (!password) throw new CustomError('Missing Fields.', 400);
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -17,11 +19,6 @@ export const PUT = authMiddleware(async (req: CustomNextRequest) => {
       { password: hashedPassword }
     );
 
-    return NextResponse.json({ message: 'Password updated.' }, { status: 200 });
-  } catch {
-    return NextResponse.json(
-      { message: 'Internal Server Error.' },
-      { status: 500 }
-    );
-  }
-});
+    return NextResponse.json({ message: 'Password updated.' });
+  })
+);

@@ -1,17 +1,16 @@
 import CustomNextRequest from '@/types/CustomNextRequest';
-import { NextResponse } from 'next/server';
 import { getAuthSession } from './auth';
+import CustomError from './CustomError';
 
 const authMiddleware = (handler: (req: CustomNextRequest) => void) => {
   return async (req: CustomNextRequest) => {
-    try {
-      const session = await getAuthSession();
-      if (!session || !session.user || !session.user.email) {
-        return NextResponse.json({ message: 'Unauthorized.' }, { status: 401 });
-      }
-      req.email = session.user.email;
-      return handler(req);
-    } catch {}
+    const session = await getAuthSession();
+    if (!session || !session.user || !session.user.email) {
+      throw new CustomError('Unauthorized.', 401);
+    }
+
+    req.email = session.user.email;
+    return handler(req);
   };
 };
 
