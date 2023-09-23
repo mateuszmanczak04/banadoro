@@ -1,21 +1,18 @@
+import authMiddleware from '@/lib/authMiddleware';
 import dbConnect from '@/lib/dbConnect';
 import { getDateSlug } from '@/lib/getDateSlug';
 import Day from '@/models/Day';
 import User from '@/models/User';
-import { getToken } from 'next-auth/jwt';
-import { NextRequest, NextResponse } from 'next/server';
+import CustomNextRequest from '@/types/CustomNextRequest';
+import { NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
+export const POST = authMiddleware(async (req: CustomNextRequest) => {
   try {
-    const token = await getToken({ req });
-
-    if (!token) {
-      return NextResponse.json({ message: 'Invalid token.' }, { status: 401 });
-    }
-
     await dbConnect();
 
-    const user = await User.findOne({ email: token.email }).select('totalTime');
+    const { email } = req;
+
+    const user = await User.findOne({ email }).select('totalTime');
 
     if (!user) {
       return NextResponse.json(
@@ -27,13 +24,13 @@ export async function POST(req: NextRequest) {
     // update user total time
     if (user.totalTime) {
       await User.findOneAndUpdate(
-        { email: token.email },
+        { email },
         { $set: { totalTime: user.totalTime + 1 } }
       );
     } else {
       await User.findOneAndUpdate(
         {
-          email: token.email,
+          email,
         },
         { totalTime: 1 }
       );
@@ -42,20 +39,20 @@ export async function POST(req: NextRequest) {
     // update specific day time
     const dateSlug = getDateSlug(new Date());
 
-    const day = await Day.findOne({ user: token.email, date: dateSlug }).select(
+    const day = await Day.findOne({ user: email, date: dateSlug }).select(
       'totalTime'
     );
 
     if (day) {
       await Day.updateOne(
-        { user: token.email, date: dateSlug },
+        { user: email, date: dateSlug },
         { $set: { totalTime: day.totalTime + 1 } }
       );
     } else {
-      await Day.create({ user: token.email, totalTime: 1, date: dateSlug });
+      await Day.create({ user: email, totalTime: 1, date: dateSlug });
     }
 
-    const todayTime = (await Day.findOne({ user: token.email, date: dateSlug }))
+    const todayTime = (await Day.findOne({ user: email, date: dateSlug }))
       .totalTime;
 
     return NextResponse.json({
@@ -65,4 +62,4 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     return NextResponse.json({ message: 'Server error' }, { status: 500 });
   }
-}
+});

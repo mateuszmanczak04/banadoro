@@ -1,9 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
-import { Button } from '../(common)/Button';
 import Error from '../(common)/Error';
 import Loading from '../loading';
 
@@ -15,7 +13,7 @@ const Ranking = () => {
   const fetchTopUsers = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get('/api/ranking/top-users');
+      const res = await axios.get('/api/top-users');
       setTopUsers(res.data);
     } catch (err: any) {
       setError(err.response.data.message);

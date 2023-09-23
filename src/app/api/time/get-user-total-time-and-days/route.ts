@@ -1,26 +1,21 @@
+import authMiddleware from '@/lib/authMiddleware';
 import dbConnect from '@/lib/dbConnect';
 import { getDateSlug } from '@/lib/getDateSlug';
 import Day from '@/models/Day';
 import User from '@/models/User';
-import { getToken } from 'next-auth/jwt';
-import { NextRequest, NextResponse } from 'next/server';
+import CustomNextRequest from '@/types/CustomNextRequest';
+import { NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export const GET = authMiddleware(async (req: CustomNextRequest) => {
   try {
-    const token = await getToken({ req });
-
-    if (!token) {
-      return NextResponse.json({ message: 'Invalid token.' }, { status: 401 });
-    }
-
     await dbConnect();
 
-    const days = await Day.find({ user: token.email })
+    const days = await Day.find({ user: req.email })
       .select('totalTime date')
       .sort({ date: 1 });
     const today = days.find((d) => d.date === getDateSlug(new Date()));
     const totalTime = (
-      await User.findOne({ email: token.email }).select('totalTime')
+      await User.findOne({ email: req.email }).select('totalTime')
     ).totalTime;
 
     return NextResponse.json({
@@ -31,4 +26,4 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     return NextResponse.json({ message: 'Server error.' }, { status: 500 });
   }
-}
+});

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-export async function PUT(req: NextRequest) {
+export const PUT = async (req: NextRequest) => {
   try {
     /* "token" is the chain of characters that was sent to the user's email.
     while decoded is a jwt object that contains the user's email and the token. */
@@ -58,4 +58,4 @@ export async function PUT(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+};

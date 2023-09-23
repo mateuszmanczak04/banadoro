@@ -4,7 +4,7 @@ import User from '@/models/User';
 import bcrypt from 'bcryptjs';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
+export const POST = async (req: NextRequest) => {
   try {
     const { email, username, password } = await req.json();
 
@@ -54,4 +54,4 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json({ message: 'Server error.' }, { status: 500 });
   }
-}
+};

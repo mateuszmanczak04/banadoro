@@ -1,19 +1,11 @@
-import { authOptions } from '@/lib/auth';
+import authMiddleware from '@/lib/authMiddleware';
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
-import { getServerSession } from 'next-auth';
+import CustomNextRequest from '@/types/CustomNextRequest';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(req: NextRequest) {
+export const PUT = authMiddleware(async (req: CustomNextRequest) => {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session) {
-      return NextResponse.json({ message: 'Unauthorized.' }, { status: 401 });
-    }
-
-    const email = session?.user?.email;
-
     const { hint } = await req.json();
 
     if (!hint) {
@@ -22,7 +14,7 @@ export async function PUT(req: NextRequest) {
 
     await dbConnect();
 
-    await User.findOneAndUpdate({ email }, { passwordHint: hint });
+    await User.findOneAndUpdate({ email: req.email }, { passwordHint: hint });
 
     return NextResponse.json(
       { message: 'Password hint updated.' },
@@ -34,9 +26,9 @@ export async function PUT(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
-export async function GET(req: NextRequest) {
+export const GET = async (req: NextRequest) => {
   try {
     const url = new URL(req.nextUrl.toString());
     const email = url.searchParams.get('email');
@@ -55,4 +47,4 @@ export async function GET(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+};

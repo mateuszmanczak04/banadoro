@@ -5,7 +5,7 @@ import nodemailer from 'nodemailer';
 import crypto from 'crypto-js';
 import jwt, { Secret } from 'jsonwebtoken';
 
-export async function POST(req: NextRequest) {
+export const POST = async (req: NextRequest) => {
   try {
     const { email } = await req.json();
 
@@ -83,4 +83,4 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+};

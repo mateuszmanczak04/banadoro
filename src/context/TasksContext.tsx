@@ -57,7 +57,7 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
     setIsLoading(true);
 
     try {
-      await axios.post('/api/tasks/add-task', {
+      await axios.post('/api/tasks', {
         title,
         authorEmail: session.user.email,
         _id,
@@ -88,7 +88,7 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
     setIsLoading(true);
 
     try {
-      await axios.put('/api/tasks/toggle-task', { _id: taskId });
+      await axios.put('/api/tasks', { _id: taskId });
       setTasks(
         tasks.map((task) => {
           if (task._id === taskId) {
@@ -111,7 +111,7 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
     setError('');
 
     try {
-      const res = await axios.get('/api/tasks/get-all-user-tasks');
+      const res = await axios.get('/api/tasks');
       setTasks(res.data.tasks);
     } catch {
       setError('Could not fetch tasks.');
@@ -130,7 +130,7 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
     setError('');
 
     try {
-      await axios.delete('/api/tasks/delete-task/' + taskId);
+      await axios.delete('/api/tasks?_id=' + taskId);
       setTasks(tasks.filter((task) => task._id !== taskId));
     } catch {
       setError('Could not delete a task.');

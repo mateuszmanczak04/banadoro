@@ -2,7 +2,7 @@ import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+export const GET = async () => {
   try {
     await dbConnect();
 
@@ -18,4 +18,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+};
