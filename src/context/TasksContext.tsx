@@ -9,14 +9,13 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { v4 as uuid } from 'uuid';
 
 interface TasksContextProps {
   tasks: Task[];
   setTasks: (tasks: Task[]) => void;
   isLoading: boolean;
   error: string;
-  addTask: ({ title }: { title: string }) => void | Promise<void>;
+  createTask: ({ title }: { title: string }) => void | Promise<void>;
   toggleTask: ({ taskId }: { taskId: string }) => void | Promise<void>;
   fetchAllUserTasks: () => void | Promise<void>;
   deleteTask: ({ taskId }: { taskId: string }) => void | Promise<void>;
@@ -27,7 +26,7 @@ const initialState: TasksContextProps = {
   setTasks: () => {},
   isLoading: false,
   error: '',
-  addTask: () => {},
+  createTask: () => {},
   toggleTask: () => {},
   fetchAllUserTasks: () => {},
   deleteTask: () => {},
@@ -45,10 +44,10 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
   const [isLoading, setIsLoading] = useState<boolean>(initialState.isLoading);
   const [error, setError] = useState<string>(initialState.error);
 
-  const addTask = async ({ title }: { title: string }) => {
-    const _id = uuid();
+  const createTask = async ({ title }: { title: string }) => {
+    // offline
     if (!session?.user?.email) {
-      const newTask = { title, checked: false, _id };
+      const newTask = { title, checked: false, _id: Math.random().toString() };
       setTasks([...tasks, newTask]);
       return;
     }
@@ -56,16 +55,15 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
     setError('');
     setIsLoading(true);
 
+    // online
     try {
-      await axios.post('/api/tasks', {
+      const res = await axios.post('/api/tasks', {
         title,
-        authorEmail: session.user.email,
-        _id,
       });
-      const newTask = { title, checked: false, _id };
+      const newTask = res.data.task;
       setTasks([...tasks, newTask]);
-    } catch {
-      setError('Could not add task.');
+    } catch (error: any) {
+      setError(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
@@ -150,7 +148,7 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
         setTasks,
         isLoading,
         error,
-        addTask,
+        createTask,
         toggleTask,
         fetchAllUserTasks,
         deleteTask,

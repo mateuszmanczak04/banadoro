@@ -14,10 +14,6 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  _id: {
-    type: String,
-    required: true,
-  },
 });
 
 export default mongoose.models.Task || mongoose.model('Task', TaskSchema);

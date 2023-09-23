@@ -6,14 +6,14 @@ import { Button } from '../(common)/Button';
 import Input from '../(common)/Input';
 
 export const AddTaskForm = () => {
-  const { addTask } = useTasksContext();
+  const { createTask } = useTasksContext();
 
   const [title, setTitle] = useState('');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!title) return;
-    addTask({ title });
+    createTask({ title });
     setTitle('');
   };
 

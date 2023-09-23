@@ -20,14 +20,18 @@ export const GET = errorMiddleware(
 // create a task
 export const POST = errorMiddleware(
   authMiddleware(async (req: CustomNextRequest) => {
-    const { title, _id } = await req.json();
+    const { title } = await req.json();
 
-    if (!title || title.trim().length === 0 || !_id)
+    if (!title || title.trim().length === 0)
       throw new CustomError('Invalid data.', 400);
 
     await dbConnect();
 
-    const task = await Task.create({ title, _id, authorEmail: req.email });
+    const task = await Task.create({
+      title,
+      authorEmail: req.email,
+      checked: false,
+    });
 
     return NextResponse.json({ task });
   })
