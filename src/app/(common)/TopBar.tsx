@@ -10,7 +10,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import AuthLink from './AuthButton';
 import { buttonVariants } from './Button';
-import {} from '@heroicons/react/24/outline';
 
 const TopBar = () => {
   const { data: session } = useSession();
