@@ -8,7 +8,7 @@ const TaskList = () => {
   const { tasks, error, isLoading } = useTasksContext();
 
   return (
-    <div className='md:flex-1 flex flex-col items-center gap-2 p-4 w-full bg-gray-800 max-h-[400px] md:rounded-md md:h-96'>
+    <div className='md:flex-1 flex flex-col items-center gap-2 p-4 w-full bg-gray-800 max-h-[400px] rounded-md md:h-96'>
       <h2 className='text-3xl font-bold mb-1'>Tasks</h2>
       <div className='flex flex-col items-center gap-2 w-full flex-1 overflow-y-scroll scrollbar-none'>
         {tasks.map((task: Task) => (

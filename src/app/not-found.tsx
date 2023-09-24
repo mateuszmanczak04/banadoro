@@ -12,8 +12,8 @@ interface Props {
 
 const NotFound: FC<Props> = () => {
   return (
-    <div className='w-full flex justify-center'>
-      <div className='max-w-2xl w-11/12 mx-auto bg-gray-800 p-4 rounded-xl flex flex-col items-center'>
+    <div className='bottom-menu w-full flex justify-center'>
+      <div className='container bg-gray-800 rounded-xl flex flex-col items-center'>
         <QuestionMarkCircleIcon className='h-40 w-40 text-white' />
         <h1 className='text-4xl font-medium'>Page not found</h1>
         <Link

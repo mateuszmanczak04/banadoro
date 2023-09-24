@@ -38,7 +38,7 @@ const ClockFrame = () => {
   };
 
   return (
-    <div className='mx-auto p-4 md:rounded-md flex flex-col gap-4 items-center bg-gray-800 w-full'>
+    <div className='mx-auto p-4 rounded-md flex flex-col gap-4 items-center bg-gray-800 w-full'>
       <h2 className='text-3xl font-extrabold w-full text-center rounded px-2'>
         Focus!
       </h2>

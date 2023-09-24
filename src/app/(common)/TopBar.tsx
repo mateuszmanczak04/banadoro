@@ -15,8 +15,8 @@ const TopBar = () => {
   const { data: session } = useSession();
 
   return (
-    <div className='fixed top-0 grid content-center w-full h-16 sm:h-20 bg-gray-800 text-gray-200 z-10'>
-      <div className='w-full max-w-4xl px-4 flex justify-between items-center mx-auto'>
+    <div className='fixed bottom-0 shadow-[0px_0px_100px_-20px_rgba(3,7,18,1)] sm:top-0 grid content-center w-full h-16 sm:h-20 bg-gray-800 text-gray-200 z-10'>
+      <div className='container flex justify-between items-center'>
         <Link
           href='/'
           className='text-2xl sm:text-3xl font-extrabold whitespace-nowrap flex items-center gap-2'>

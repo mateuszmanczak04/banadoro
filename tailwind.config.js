@@ -25,6 +25,15 @@ module.exports = {
       },
       screens: {
         xs: '480px',
+        phone: {
+          raw: '(max-width: 639px)',
+        },
+      },
+      container: {
+        padding: {
+          DEFAULT: '1rem',
+        },
+        center: true,
       },
     },
   },

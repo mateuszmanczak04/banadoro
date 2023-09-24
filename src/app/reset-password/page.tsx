@@ -51,9 +51,9 @@ const ResetPasswordPage = () => {
   };
 
   return (
-    <div className='pt-20 sm:pt-24 w-full'>
+    <div className='bottom-menu container'>
       <form
-        className='w-11/12 max-w-lg mx-auto bg-gray-800 rounded-md flex flex-col items-center gap-4 p-4 text-center'
+        className='bg-gray-800 rounded-md flex flex-col items-center gap-4 p-4 text-center'
         onSubmit={handleSubmit}>
         <h2 className='text-3xl font-extrabold'>Reset Your Password</h2>
         <p className='shrink-0'>Enter your new password here:</p>

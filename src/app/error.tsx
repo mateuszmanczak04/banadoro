@@ -10,7 +10,7 @@ interface Props {
 
 const error: FC<Props> = ({ error, reset }) => {
   return (
-    <div className='mt-28 w-full max-w-4xl mx-auto'>
+    <div className='bottom-menu container'>
       <Error message={error.message} retry={reset} />
     </div>
   );

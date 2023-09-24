@@ -4,7 +4,7 @@ import Footer from './(.)/Footer';
 
 const page = () => {
   return (
-    <div>
+    <div className='bottom-menu flex flex-col gap-4'>
       <App />
       <Tutorial />
       <Footer />

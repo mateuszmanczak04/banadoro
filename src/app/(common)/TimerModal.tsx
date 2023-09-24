@@ -52,7 +52,7 @@ const TimerModal = () => {
   return (
     <div
       className={clsx(
-        'fixed bottom-6 right-6 text-white p-4 rounded-md z-50 flex flex-col items-center transition w-32 shadow-xl pt-8',
+        'fixed bottom-20 right-4 sm:bottom-6 sm:right-6 text-white p-4 rounded-md z-50 flex flex-col items-center transition w-32 shadow-xl pt-8',
         mode === 'session'
           ? 'bg-red-500 text-white'
           : 'bg-green-500 text-white',

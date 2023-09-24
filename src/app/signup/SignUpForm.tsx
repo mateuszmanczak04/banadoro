@@ -75,7 +75,7 @@ const SignUpForm = () => {
 
   return (
     <form
-      className='flex flex-col gap-4 w-full my-auto lg:max-h-[80vh] mx-auto lg:mr-4 xs:px-4 xs:py-12 xs:max-w-lg items-center rounded-lg overflow-y-scroll scrollbar-none'
+      className='flex flex-col gap-4 w-full my-auto mx-auto max-w-md items-center rounded-lg'
       onSubmit={handleSubmit}>
       <h1 className='text-3xl font-bold'>Sign Up</h1>
       <label className='w-full flex flex-col gap-1'>
@@ -87,8 +87,8 @@ const SignUpForm = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
-      <div className='flex flex-col gap-4'>
-        <div className='w-full flex flex-col sm:flex-row gap-y-4 gap-x-2'>
+      <div className='w-full flex flex-col gap-4'>
+        <div className='w-full flex flex-col xs:flex-row gap-y-4 gap-x-2'>
           <label className='w-full flex flex-col gap-1 flex-1'>
             <p>Username</p>
             <Input
@@ -130,7 +130,7 @@ const SignUpForm = () => {
           </div>
         </div>
       </div>
-      <div className='w-full flex flex-col sm:flex-row gap-2 mt-4'>
+      <div className='w-full flex flex-col xs:flex-row gap-2 mt-4'>
         <Button
           variant='primary'
           className='w-full'
