@@ -9,26 +9,18 @@ import Loading from '../loading';
 
 const PasswordHint = () => {
   const { data: session } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [done, setDone] = useState(false);
-  const { setPasswordHint, passwordHint } = useSettingsContext();
+  const {
+    handleSetPasswordHint,
+    passwordHintError: error,
+    passwordHint,
+    isPasswordHintLoading: isLoading,
+    isPasswordHintDone: done,
+  } = useSettingsContext();
   const [newHint, setNewHint] = useState(passwordHint);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!newHint) return;
-    setIsLoading(true);
-    setError('');
-    setDone(false);
-    try {
-      await setPasswordHint(newHint);
-      setDone(true);
-    } catch {
-      setError('Something went wrong. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
+    handleSetPasswordHint(newHint);
   };
 
   if (!session) return null;
@@ -54,7 +46,7 @@ const PasswordHint = () => {
           variant='primary'
           type='submit'
           className='self-stretch'
-          disabled={isLoading || !newHint}>
+          disabled={isLoading}>
           Update
         </Button>
       </div>

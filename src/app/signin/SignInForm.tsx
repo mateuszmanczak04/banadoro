@@ -20,6 +20,7 @@ const SignInForm = () => {
   const router = useRouter();
   const [passwordHint, setPasswordHint] = useState('');
   const [isPasswordHintLoading, setIsPasswordHintLoading] = useState(false);
+  const [passwordHintError, setPasswordHintError] = useState('');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -53,15 +54,17 @@ const SignInForm = () => {
 
   const handleGetHint = async () => {
     if (email.trim() === '') return;
+    setPasswordHintError('');
+    setIsPasswordHintLoading(true);
     try {
-      setIsPasswordHintLoading(true);
       const res = await axios.get('/api/auth/password-hint?email=' + email);
       if (res.data.hint === '') {
         setPasswordHint('No hint found');
       } else {
         setPasswordHint(res.data.hint);
       }
-    } catch {
+    } catch (error: any) {
+      setPasswordHintError(error.response.data.message);
     } finally {
       setIsPasswordHintLoading(false);
     }
@@ -95,6 +98,7 @@ const SignInForm = () => {
         </div>
         <div>
           {isPasswordHintLoading && <Loading />}
+          {passwordHintError && <p className='error'>{passwordHintError}</p>}
           {passwordHint && (
             <p>
               Your password hint:{' '}

@@ -8,18 +8,13 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const PUT = errorMiddleware(
   authMiddleware(async (req: CustomNextRequest) => {
-    const { hint } = await req.json();
-
-    if (!hint) throw new CustomError('Missing fields.', 400);
+    const { hint = '' } = await req.json();
 
     await dbConnect();
 
     await User.findOneAndUpdate({ email: req.email }, { passwordHint: hint });
 
-    return NextResponse.json(
-      { message: 'Password hint updated.' },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: 'Password hint updated.' });
   })
 );
 

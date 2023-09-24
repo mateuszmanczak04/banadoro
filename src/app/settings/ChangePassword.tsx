@@ -24,8 +24,8 @@ const ChangePassword = () => {
       });
       setDone(true);
       setNewPassword('');
-    } catch {
-      setError('Something went wrong. Please try again.');
+    } catch (error: any) {
+      setError(error.response.data.message);
     } finally {
       setIsLoading(false);
     }

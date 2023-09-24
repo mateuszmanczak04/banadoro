@@ -14,7 +14,10 @@ interface SettingsContextProps {
   setSessionTime: (time: number) => void;
   setBreakTime: (time: number) => void;
   passwordHint: string;
-  setPasswordHint: (hint: string) => void;
+  passwordHintError: string;
+  isPasswordHintLoading: boolean;
+  isPasswordHintDone: boolean;
+  handleSetPasswordHint: (hint: string) => void;
 }
 
 export const SettingsContext = createContext<SettingsContextProps>(
@@ -40,22 +43,28 @@ export const SettingsContextProvider: FC<{ children: ReactNode }> = ({
     'breakTime',
     5 * 60
   );
-  const [passwordHint, setPasswordHint] = useState('');
-
-  const [hasLoaded, setHasLoaded] = useState(false);
   const { data: session, status: sessionStatus } = useSession();
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  // password hint
+  const [passwordHint, setPasswordHint] = useState('');
+  const [passwordHintError, setPasswordHintError] = useState('');
+  const [isPasswordHintLoading, setIsPasswordHintLoading] = useState(false);
+  const [isPasswordHintDone, setIsPasswordHintDone] = useState(false);
 
   /* if user is not logged in just set as loaded,
   if he is logged in, await fetching his password hint
   until displaying anything in the ui */
   useEffect(() => {
     const fetchPasswordHint = async () => {
+      setPasswordHintError('');
       try {
         const res = await axios.get(
           '/api/auth/password-hint?email=' + session?.user?.email
         );
         setPasswordHint(res.data.hint);
-      } catch {
+      } catch (error: any) {
+        setPasswordHintError(error.response.data.message);
       } finally {
         setHasLoaded(true);
       }
@@ -70,12 +79,20 @@ export const SettingsContextProvider: FC<{ children: ReactNode }> = ({
   }, [session?.user?.email, sessionStatus]);
 
   const handleSetPasswordHint = async (hint: string) => {
+    setIsPasswordHintLoading(true);
+    setPasswordHintError('');
+    setIsPasswordHintDone(false);
     try {
       await axios.put('/api/auth/password-hint', {
         hint,
       });
       setPasswordHint(hint);
-    } catch {}
+      setIsPasswordHintDone(true);
+    } catch (error: any) {
+      setPasswordHintError(error.response.data.message);
+    } finally {
+      setIsPasswordHintLoading(false);
+    }
   };
 
   return (
@@ -90,7 +107,10 @@ export const SettingsContextProvider: FC<{ children: ReactNode }> = ({
         breakTime,
         setBreakTime,
         passwordHint,
-        setPasswordHint: handleSetPasswordHint,
+        passwordHintError,
+        isPasswordHintLoading,
+        isPasswordHintDone,
+        handleSetPasswordHint,
       }}>
       {hasLoaded && sessionStatus !== 'loading' ? (
         children

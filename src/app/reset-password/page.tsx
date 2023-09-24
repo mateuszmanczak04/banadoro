@@ -43,8 +43,8 @@ const ResetPasswordPage = () => {
         }
       );
       setDone(true);
-    } catch {
-      setError('Something went wrong. Please try again.');
+    } catch (error: any) {
+      setError(error.response.data.message);
     } finally {
       setIsLoading(false);
     }

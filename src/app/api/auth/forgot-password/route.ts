@@ -29,22 +29,23 @@ export const POST = errorMiddleware(async (req: NextRequest) => {
     }
   );
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    secure: true,
-    auth: {
-      user: process.env.NODEMAILER_USER,
-      pass: process.env.NODEMAILER_PASS,
-    },
-  });
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      secure: true,
+      auth: {
+        user: process.env.NODEMAILER_USER,
+        pass: process.env.NODEMAILER_PASS,
+      },
+    });
 
-  const options = {
-    from: process.env.NODEMAILER_USER,
-    to: email,
-    subject: 'Reset Password',
-    text: 'Reset Password',
-    // html: `<a href="">Reset Password</a>`,
-    html: `
+    const options = {
+      from: process.env.NODEMAILER_USER,
+      to: email,
+      subject: 'Reset Password',
+      text: 'Reset Password',
+      // html: `<a href="">Reset Password</a>`,
+      html: `
         <div style="background: #111827; color: white; padding: 2rem; border-radius: 1rem; font-family: sans-serif;">
           <h1 style="display: block;">Hi ${user.username}</h1>
           <h2 style="display: block;">It is a response for your reset password request.</h2>
@@ -52,25 +53,28 @@ export const POST = errorMiddleware(async (req: NextRequest) => {
           <small style="opacity: 75%; display: block; margin-top: 0.5rem;">Ignore this email if it was not you trying to reset it.</small>
         </div>
       `,
-  };
+    };
 
-  await new Promise((resolve, reject) => {
-    transporter.verify((error, success) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(success);
+    await new Promise((resolve, reject) => {
+      transporter.verify((error, success) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(success);
+      });
     });
-  });
 
-  await new Promise((resolve, reject) => {
-    transporter.sendMail(options, (error, info) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(info);
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(options, (error, info) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(info);
+      });
     });
-  });
+  } catch {
+    throw new CustomError('Could not send email.', 500);
+  }
 
   return NextResponse.json({ message: 'Email sent.' });
 });

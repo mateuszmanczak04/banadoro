@@ -26,6 +26,7 @@ const UserSchema = new mongoose.Schema({
   passwordHint: {
     required: false,
     type: String,
+    default: '',
   },
 });
 
