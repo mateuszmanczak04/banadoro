@@ -31,6 +31,15 @@ const TopBar = () => {
             <p className='hidden sm:block'>Ranking</p>
           </Link>
 
+          {session?.user && (
+            <Link
+              href='/stats'
+              className={buttonVariants({ variant: 'secondary' })}>
+              <ChartBarSquareIcon className='w-6 h-6' />
+              <p className='hidden sm:block'>Stats</p>
+            </Link>
+          )}
+
           <Link
             href='/settings'
             className={buttonVariants({ variant: 'secondary' })}>
@@ -38,16 +47,7 @@ const TopBar = () => {
             <p className='hidden sm:block'>Settings</p>
           </Link>
 
-          {session?.user ? (
-            <Link
-              href='/stats'
-              className={buttonVariants({ variant: 'secondary' })}>
-              <ChartBarSquareIcon className='w-6 h-6' />
-              <p className='hidden sm:block'>Stats</p>
-            </Link>
-          ) : (
-            <AuthLink />
-          )}
+          {!session?.user && <AuthLink />}
         </div>
       </div>
     </div>
