@@ -50,7 +50,11 @@ export const POST = errorMiddleware(
     return NextResponse.json({
       totalTime: user.totalTime + 1,
       todayDateSlug: dateSlug,
-      today,
+      today: {
+        _id: today?._id,
+        totalTime: today?.totalTime + 1, // explain me why +1
+        date: today?.date,
+      },
     });
   })
 );

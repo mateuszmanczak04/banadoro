@@ -15,7 +15,6 @@ interface TimerContextProps {
   incrementUserTimeByAMinute: () => Promise<void> | void;
   fetchAllUserDays: () => Promise<void> | void;
   totalTime: number;
-  todayTime: number;
   error: string;
   isLoading: boolean;
   previousDays: Day[];
@@ -30,7 +29,6 @@ interface TimerContextProps {
 
 const initialState: TimerContextProps = {
   totalTime: 0,
-  todayTime: 0,
   error: '',
   isLoading: false,
   previousDays: [],
@@ -53,7 +51,6 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 }) => {
   const { data: session } = useSession();
   const [totalTime, setTotalTime] = useState(initialState.totalTime);
-  const [todayTime, setTodayTime] = useState(initialState.todayTime);
   const [error, setError] = useState(initialState.error);
   const [isLoading, setIsLoading] = useState(initialState.isLoading);
   const [previousDays, setPreviousDays] = useState(initialState.previousDays);
@@ -67,20 +64,19 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
   const { autoStart, sessionTime, breakTime } = useSettingsContext();
 
   const resetTotalTime = () => {
-    setTodayTime(0);
     setTotalTime(0);
   };
 
   const incrementUserTimeByAMinute = useCallback(async () => {
     if (!session?.user) return;
 
-    setIsLoading(true);
     setError('');
 
     try {
       // update user time in stats after every minute
       const res = await axios.post('/api/time/increment-user-time');
-      const { today, totalTime } = res.data;
+      const { today, totalTime }: { today: Day; totalTime: number } = res.data;
+
       setPreviousDays((prev: Day[]) => {
         if (prev.find((day: Day) => day.date === today.date)) {
           return prev.map((d: Day) => {
@@ -94,10 +90,8 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
         }
       });
       setTotalTime(totalTime);
-    } catch {
-      setError('Could not increment user time.');
-    } finally {
-      setIsLoading(false);
+    } catch (error: any) {
+      setError(error.response.data.message);
     }
   }, [session?.user]);
 
@@ -111,9 +105,8 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
       const res = await axios.get('/api/time/get-user-total-time-and-days');
       setPreviousDays(res.data.days);
       setTotalTime(res.data.totalTime);
-      setTodayTime(res.data.todayTime);
-    } catch {
-      setError('Could not fetch all users days.');
+    } catch (error: any) {
+      setError(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
@@ -185,7 +178,6 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
         resetTotalTime,
         incrementUserTimeByAMinute,
         fetchAllUserDays,
-        todayTime,
         totalTime,
         previousDays,
         error,

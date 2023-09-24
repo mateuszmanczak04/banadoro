@@ -1,10 +1,7 @@
 'use client';
 
 import useTimerContext from '@/hooks/useTimerContext';
-import {
-  ArrowRightCircleIcon,
-  InformationCircleIcon,
-} from '@heroicons/react/24/outline';
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';

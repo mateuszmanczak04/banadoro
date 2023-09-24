@@ -2,14 +2,18 @@
 
 import WeekOverview from '@/app/stats/WeekOverview';
 import useTimerContext from '@/hooks/useTimerContext';
+import Loading from '../loading';
 
 const TotalTime = () => {
-  const { todayTime, totalTime } = useTimerContext();
+  const { totalTime, error, isLoading } = useTimerContext();
+
+  if (isLoading) return <Loading />;
+
+  if (error) return <p className='text-red-500'>{error}</p>;
 
   return (
     <div className='flex flex-col items-center gap-2 w-full'>
-      <h2>Total Time: {totalTime} minutes</h2>
-      <h2>Today Time: {todayTime} minutes</h2>
+      <p>Total Time: {totalTime} minutes</p>
       <WeekOverview />
     </div>
   );
