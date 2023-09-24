@@ -70,7 +70,8 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
   };
 
   const toggleTask = async ({ taskId }: { taskId: string }) => {
-    if (!session?.user) {
+    // offline
+    if (!session?.user?.email) {
       setTasks(
         tasks.map((task) => {
           if (task._id === taskId) {
@@ -85,6 +86,7 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
     setError('');
     setIsLoading(true);
 
+    // online
     try {
       await axios.put('/api/tasks', { _id: taskId });
       setTasks(
@@ -95,30 +97,33 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
           return task;
         })
       );
-    } catch {
-      setError('Could not toggle task.');
+    } catch (error: any) {
+      setError(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
   };
 
   const fetchAllUserTasks = useCallback(async () => {
+    // offline
     if (!session?.user) return;
 
     setIsLoading(true);
     setError('');
 
+    // online
     try {
       const res = await axios.get('/api/tasks');
       setTasks(res.data.tasks);
-    } catch {
-      setError('Could not fetch tasks.');
+    } catch (error: any) {
+      setError(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
   }, [session?.user, setTasks]);
 
   const deleteTask = async ({ taskId }: { taskId: string }) => {
+    // offline
     if (!session?.user) {
       setTasks(tasks.filter((task) => task._id !== taskId));
       return;
@@ -127,11 +132,12 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
     setIsLoading(true);
     setError('');
 
+    // online
     try {
       await axios.delete('/api/tasks?_id=' + taskId);
       setTasks(tasks.filter((task) => task._id !== taskId));
-    } catch {
-      setError('Could not delete a task.');
+    } catch (error: any) {
+      setError(error.response.data.message);
     } finally {
       setIsLoading(false);
     }

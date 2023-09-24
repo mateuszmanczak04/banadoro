@@ -1,10 +1,11 @@
 'use client';
 
 import useTasksContext from '@/hooks/useTasksContext';
+import Loading from '../loading';
 import TaskItem from './TaskItem';
 
 const TaskList = () => {
-  const { tasks } = useTasksContext();
+  const { tasks, error, isLoading } = useTasksContext();
 
   return (
     <div className='md:flex-1 flex flex-col items-center gap-2 p-4 w-full bg-gray-800 max-h-[400px] md:rounded-md md:h-96'>
@@ -23,6 +24,8 @@ const TaskList = () => {
             There are no tasks, you can create one right now!
           </p>
         )}
+        {isLoading && <Loading />}
+        {error && <p className='text-red-500'>{error}</p>}
       </div>
     </div>
   );
