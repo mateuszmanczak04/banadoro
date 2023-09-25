@@ -1,5 +1,6 @@
 'use client';
 
+import twClass from '@/lib/twClass';
 import {
   Cog6ToothIcon,
   TrophyIcon,
@@ -9,11 +10,13 @@ import {
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import AuthLink from './AuthLink';
 import { buttonVariants } from './Button';
 
 const Navigation = () => {
   const { data: session } = useSession();
+  const pathname = usePathname();
 
   return (
     <>
@@ -29,7 +32,12 @@ const Navigation = () => {
           <div className='flex gap-2 items-center'>
             <Link
               href='/ranking'
-              className={buttonVariants({ variant: 'secondary' })}>
+              className={twClass(
+                buttonVariants({
+                  variant: 'secondary',
+                }),
+                pathname === '/ranking' && 'bg-gray-600 border-gray-500'
+              )}>
               <TrophyIcon className='w-6 h-6' />
               <p className='hidden sm:block'>Ranking</p>
             </Link>
@@ -37,7 +45,12 @@ const Navigation = () => {
             {session?.user && (
               <Link
                 href='/stats'
-                className={buttonVariants({ variant: 'secondary' })}>
+                className={twClass(
+                  buttonVariants({
+                    variant: 'secondary',
+                  }),
+                  pathname === '/stats' && 'bg-gray-600 border-gray-500'
+                )}>
                 <ChartBarSquareIcon className='w-6 h-6' />
                 <p className='hidden sm:block'>Stats</p>
               </Link>
@@ -45,7 +58,12 @@ const Navigation = () => {
 
             <Link
               href='/settings'
-              className={buttonVariants({ variant: 'secondary' })}>
+              className={twClass(
+                buttonVariants({
+                  variant: 'secondary',
+                }),
+                pathname === '/settings' && 'bg-gray-600 border-gray-500'
+              )}>
               <Cog6ToothIcon className='w-6 h-6' />
               <p className='hidden sm:block'>Settings</p>
             </Link>
@@ -61,34 +79,38 @@ const Navigation = () => {
           <div className='flex w-[calc(50%-1.25rem)]'>
             <Link
               href='/ranking'
-              className={buttonVariants({
-                variant: 'secondary',
-                className: 'w-[48%] rounded-none',
-              })}>
+              className={twClass(
+                'w-[48%] bg-gray-700 grid place-content-center',
+                pathname === '/ranking' &&
+                  'bg-gray-600 border-2 border-gray-500'
+              )}>
               <TrophyIcon className='w-6 h-6' />
             </Link>
             <Link
               href='/stats'
-              className={buttonVariants({
-                variant: 'secondary',
-                className: 'w-[52%] rounded-none',
-              })}>
+              className={twClass(
+                'w-[52%] bg-gray-700 grid place-content-center',
+                pathname === '/stats' && 'bg-gray-600 border-2 border-gray-500'
+              )}>
               <ChartBarSquareIcon className='w-6 h-6' />
             </Link>
           </div>
 
           <Link
             href='/'
-            className='rounded-full w-20 h-20 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-600 hover:bg-gray-500 grid place-items-center border-2 border-gray-500 hover:border-gray-400 transition'>
+            className={twClass(
+              'rounded-full w-20 h-20 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-600 hover:bg-gray-500 grid place-items-center border-2 border-gray-500 hover:border-gray-400 hover:text-white transition',
+              pathname === '/' && 'bg-gray-500 border-2 border-gray-400'
+            )}>
             <HomeIcon className='h-8 w-8' />
           </Link>
 
           <Link
             href='/settings'
-            className={buttonVariants({
-              variant: 'secondary',
-              className: 'w-[calc(50%-1.25rem)] rounded-none',
-            })}>
+            className={twClass(
+              'w-[calc(50%-1.25rem)] bg-gray-700 grid place-content-center',
+              pathname === '/settings' && 'bg-gray-600 border-2 border-gray-500'
+            )}>
             <Cog6ToothIcon className='w-6 h-6' />
           </Link>
         </div>
@@ -98,25 +120,30 @@ const Navigation = () => {
           <div className='flex w-[calc(50%-1.25rem)]'>
             <Link
               href='/ranking'
-              className={buttonVariants({
-                variant: 'secondary',
-                className: 'w-[48%] rounded-none',
-              })}>
+              className={twClass(
+                'w-[48%] bg-gray-700 grid place-content-center',
+                pathname === '/ranking' &&
+                  'bg-gray-600 border-2 border-gray-500'
+              )}>
               <TrophyIcon className='w-6 h-6' />
             </Link>
             <Link
               href='/settings'
-              className={buttonVariants({
-                variant: 'secondary',
-                className: 'w-[52%] rounded-none',
-              })}>
+              className={twClass(
+                'w-[52%] bg-gray-700 grid place-content-center',
+                pathname === '/settings' &&
+                  'bg-gray-600 border-2 border-gray-500'
+              )}>
               <Cog6ToothIcon className='w-6 h-6' />
             </Link>
           </div>
 
           <Link
             href='/'
-            className='rounded-full w-20 h-20 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-600 hover:bg-gray-500 grid place-items-center border-2 border-gray-500 hover:border-gray-400 transition'>
+            className={twClass(
+              'rounded-full w-20 h-20 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-600 hover:bg-gray-500 grid place-items-center border-2 border-gray-500 hover:border-gray-400 hover:text-white transition',
+              pathname === '/' && 'bg-gray-500 border-2 border-gray-400'
+            )}>
             <HomeIcon className='h-8 w-8' />
           </Link>
 
