@@ -3,13 +3,14 @@
 import useTimerContext from '@/hooks/useTimerContext';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { Button } from '../(common)/Button';
 import GoogleButton from '../(common)/GoogleButton';
 import Loading from '../(common)/Loading';
 import Input from '../(common)/Input';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import debounce from 'lodash.debounce';
 
 const SignInForm = () => {
   const { fetchAllUserDays } = useTimerContext();
@@ -19,8 +20,6 @@ const SignInForm = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [passwordHint, setPasswordHint] = useState('');
-  const [isPasswordHintLoading, setIsPasswordHintLoading] = useState(false);
-  const [passwordHintError, setPasswordHintError] = useState('');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -52,23 +51,24 @@ const SignInForm = () => {
     }
   };
 
-  const handleGetHint = async () => {
+  const getPasswordHint = async (email: string) => {
     if (email.trim() === '') return;
-    setPasswordHintError('');
-    setIsPasswordHintLoading(true);
+    setPasswordHint('');
     try {
       const res = await axios.get('/api/auth/password-hint?email=' + email);
-      if (res.data.hint === '') {
-        setPasswordHint('No hint found');
-      } else {
-        setPasswordHint(res.data.hint);
-      }
-    } catch (error: any) {
-      setPasswordHintError(error.response.data.message);
-    } finally {
-      setIsPasswordHintLoading(false);
-    }
+      if (!res.data.hint) return;
+      setPasswordHint(res.data.hint);
+    } catch {}
   };
+
+  // how can i rename a function below?
+  const getPasswordHintDebounced = debounce((email: string) => {
+    getPasswordHint(email);
+  }, 300);
+
+  const debounceGetPasswordHint = useCallback((email: string) => {
+    getPasswordHintDebounced(email);
+  }, []);
 
   return (
     <form
@@ -83,7 +83,7 @@ const SignInForm = () => {
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
-            setPasswordHint('');
+            debounceGetPasswordHint(e.target.value);
           }}
         />
       </label>
@@ -96,16 +96,11 @@ const SignInForm = () => {
             <p>Forgot?</p>
           </Link>
         </div>
-        <div>
-          {isPasswordHintLoading && <Loading />}
-          {passwordHintError && <p className='error'>{passwordHintError}</p>}
-          {passwordHint && (
-            <p>
-              Your password hint:{' '}
-              <span className='text-gray-400'>{passwordHint}</span>
-            </p>
-          )}
-        </div>
+        {passwordHint && (
+          <p>
+            Your hint: <span className='text-gray-400'>{passwordHint}</span>
+          </p>
+        )}
         <div className='w-full flex items-center gap-2 mt-1'>
           <Input
             id='password'
@@ -114,15 +109,6 @@ const SignInForm = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {!passwordHint && !isPasswordHintLoading && email && (
-            <Button
-              variant='secondary'
-              className='text-sm px-2 shrink-0 self-stretch'
-              onClick={handleGetHint}
-              type='button'>
-              Get Hint
-            </Button>
-          )}
         </div>
       </div>
       <div className='w-full flex flex-col xs:flex-row gap-2 mt-4'>
