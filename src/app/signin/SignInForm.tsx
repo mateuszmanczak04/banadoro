@@ -125,7 +125,7 @@ const SignInForm = () => {
           )}
         </div>
       </div>
-      <div className='w-full flex flex-col sm:flex-row gap-2 mt-4'>
+      <div className='w-full flex flex-col xs:flex-row gap-2 mt-4'>
         <Button
           variant='primary'
           className='w-full'

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import TimerModal from './TimerModal';
-import TopBar from './TopBar';
+import Navigation from './Navigation';
 
 interface Props {
   children: ReactNode;
@@ -10,7 +10,7 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       {/* @ts-ignore server component */}
-      <TopBar />
+      <Navigation />
       <TimerModal />
       <div>{children}</div>
     </>
