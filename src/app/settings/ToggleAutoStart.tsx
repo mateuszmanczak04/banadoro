@@ -11,7 +11,11 @@ const ToggleAutoStart = () => {
   };
 
   return (
-    <Button variant='secondary' className='w-full' onClick={handleClick}>
+    <Button
+      variant='secondary'
+      className='w-full'
+      onClick={handleClick}
+      type='button'>
       Auto Start: {autoStart ? 'ON' : 'OFF'}
     </Button>
   );
