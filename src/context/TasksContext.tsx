@@ -116,7 +116,13 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
       const res = await axios.get('/api/tasks');
       setTasks(res.data.tasks);
     } catch (error: any) {
-      setError(error.response.data.message);
+      console.log(error);
+
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An error occurred while fetching tasks.');
+      }
     } finally {
       setIsLoading(false);
     }
