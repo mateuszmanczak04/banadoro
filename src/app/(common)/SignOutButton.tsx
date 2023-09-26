@@ -1,6 +1,6 @@
 'use client';
 
-import useSettingsContext from '@/hooks/useSettingsContext';
+import useLocalSettingsContext from '@/hooks/useLocalSettingsContext';
 import useTasksContext from '@/hooks/useTasksContext';
 import useTimerContext from '@/hooks/useTimerContext';
 import { signOut } from 'next-auth/react';
@@ -9,7 +9,7 @@ import { Button } from './Button';
 const SignOutButton = () => {
   const { resetTotalTime } = useTimerContext();
   const { setTasks } = useTasksContext();
-  const { setHasAccount } = useSettingsContext();
+  const { setHasAccount } = useLocalSettingsContext();
 
   const handleSignOut = () => {
     setTasks([]);

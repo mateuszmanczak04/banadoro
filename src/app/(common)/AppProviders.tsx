@@ -1,8 +1,10 @@
 'use client';
 
-import { SettingsContextProvider } from '@/context/SettingsContext';
+import { AccountSettingsContextProvider } from '@/context/AccountSettingsContext';
+import { LocalSettingsContextProvider } from '@/context/LocalSettingsContext';
 import { TasksContextProvider } from '@/context/TasksContext';
 import { TimerContextProvider } from '@/context/TimerContext';
+import { TimerSettingsContextProvider } from '@/context/TimerSettingsContext';
 import { SessionProvider } from 'next-auth/react';
 import { FC, ReactNode } from 'react';
 
@@ -13,11 +15,17 @@ interface AppProvidersProps {
 const AppProviders: FC<AppProvidersProps> = ({ children }) => {
   return (
     <SessionProvider>
-      <SettingsContextProvider>
-        <TasksContextProvider>
-          <TimerContextProvider>{children}</TimerContextProvider>
-        </TasksContextProvider>
-      </SettingsContextProvider>
+      <LocalSettingsContextProvider>
+        <AccountSettingsContextProvider>
+          <TimerSettingsContextProvider>
+            <TasksContextProvider>
+              <TimerContextProvider>
+                <>{children}</>
+              </TimerContextProvider>
+            </TasksContextProvider>
+          </TimerSettingsContextProvider>
+        </AccountSettingsContextProvider>
+      </LocalSettingsContextProvider>
     </SessionProvider>
   );
 };

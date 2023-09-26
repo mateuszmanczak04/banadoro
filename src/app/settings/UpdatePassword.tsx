@@ -6,16 +6,16 @@ import { Button } from '../(common)/Button';
 import Input from '../(common)/Input';
 import Loading from '../loading';
 
-const ChangePassword = () => {
+const UpdatePassword = () => {
   const [newPassword, setNewPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [done, setDone] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!newPassword) return;
-    setIsLoading(true);
+    setLoading(true);
     setError('');
     setDone(false);
     try {
@@ -25,9 +25,13 @@ const ChangePassword = () => {
       setDone(true);
       setNewPassword('');
     } catch (error: any) {
-      setError(error.response.data.message);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -51,15 +55,15 @@ const ChangePassword = () => {
           variant='primary'
           type='submit'
           className='self-stretch'
-          disabled={isLoading || !newPassword}>
-          Change
+          disabled={loading || !newPassword}>
+          Update
         </Button>
       </div>
-      {isLoading && <Loading />}
+      {loading && <Loading />}
       {error && <p className='error'>{error}</p>}
-      {done && <p className='opacity-75'>Password changed.</p>}
+      {done && <p className='opacity-75'>Password updated.</p>}
     </form>
   );
 };
 
-export default ChangePassword;
+export default UpdatePassword;

@@ -15,8 +15,12 @@ const Ranking = () => {
     try {
       const res = await axios.get('/api/top-users');
       setTopUsers(res.data);
-    } catch (err: any) {
-      setError(err.response.data.message);
+    } catch (error: any) {
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }

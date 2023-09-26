@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { FC } from 'react';
 import { Button } from './Button';
 
-const Error: FC<{ message: string; retry: () => void }> = ({
+const Error: FC<{ message: string; retry?: () => void }> = ({
   message,
   retry,
 }) => {
@@ -20,12 +20,14 @@ const Error: FC<{ message: string; retry: () => void }> = ({
           height={100}
           className='mx-auto'
         />
-        <Button
-          variant='secondary'
-          className='mt-2 mx-auto w-40'
-          onClick={retry}>
-          Try again
-        </Button>
+        {retry && (
+          <Button
+            variant='secondary'
+            className='mt-2 mx-auto w-40'
+            onClick={retry}>
+            Try again
+          </Button>
+        )}
       </div>
     </div>
   );

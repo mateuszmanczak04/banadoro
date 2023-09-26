@@ -1,29 +1,43 @@
 'use client';
 
-import useSettingsContext from '@/hooks/useSettingsContext';
-import { useSession } from 'next-auth/react';
+import useAccountSettingsContext from '@/hooks/useAccountSettingsContext';
+import axios from 'axios';
 import { FormEvent, useState } from 'react';
 import { Button } from '../(common)/Button';
 import Input from '../(common)/Input';
 import Loading from '../loading';
 
 const PasswordHint = () => {
-  const { data: session } = useSession();
-  const {
-    handleSetPasswordHint,
-    passwordHintError: error,
-    passwordHint,
-    isPasswordHintLoading: isLoading,
-    isPasswordHintDone: done,
-  } = useSettingsContext();
-  const [newHint, setNewHint] = useState(passwordHint);
+  // state
+  const { passwordHint: initialPasswordHint, setPasswordHint } =
+    useAccountSettingsContext();
+  const [newHint, setNewHint] = useState(initialPasswordHint);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDone, setIsDone] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  // send PUT request to update user's password hint
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    handleSetPasswordHint(newHint);
+    setIsLoading(true);
+    setError('');
+    setIsDone(false);
+    try {
+      await axios.put('/api/auth/password-hint', {
+        hint: newHint,
+      });
+      setPasswordHint(newHint);
+      setIsDone(true);
+    } catch (error: any) {
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
-
-  if (!session) return null;
 
   return (
     <form
@@ -46,7 +60,7 @@ const PasswordHint = () => {
           variant='primary'
           type='submit'
           className='self-stretch'
-          disabled={isLoading}>
+          disabled={isLoading || newHint === initialPasswordHint}>
           Update
         </Button>
       </div>
@@ -55,7 +69,7 @@ const PasswordHint = () => {
       </small>
       {isLoading && <Loading />}
       {error && <p className='error'>{error}</p>}
-      {done && <p className='opacity-75'>Password hint updated.</p>}
+      {isDone && <p className='opacity-75'>Password hint updated.</p>}
     </form>
   );
 };

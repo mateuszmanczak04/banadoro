@@ -1,4 +1,4 @@
-import useSettingsContext from '@/hooks/useSettingsContext';
+import useTimerSettingsContext from '@/hooks/useTimerSettingsContext';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import {
@@ -61,7 +61,7 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
     useState<number>(initialState.currentSessionTimePassed);
   const [mode, setMode] = useState<Mode>(initialState.mode);
   const [intervalId, setIntervalId] = useState<any>();
-  const { autoStart, sessionTime, breakTime } = useSettingsContext();
+  const { autoStart, sessionTime, breakTime } = useTimerSettingsContext();
 
   const resetTotalTime = () => {
     setTotalTime(0);
@@ -91,7 +91,11 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
       });
       setTotalTime(totalTime);
     } catch (error: any) {
-      setError(error.response.data.message);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     }
   }, [session?.user]);
 
@@ -106,7 +110,11 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
       setPreviousDays(res.data.days);
       setTotalTime(res.data.totalTime);
     } catch (error: any) {
-      setError(error.response.data.message);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }

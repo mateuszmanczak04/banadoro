@@ -1,19 +1,24 @@
 'use client';
 
-import useSettingsContext from '@/hooks/useSettingsContext';
+import useLocalSettingsContext from '@/hooks/useLocalSettingsContext';
 import twClass from '@/lib/twClass';
 import {
   ArrowTopRightOnSquareIcon,
   ArrowRightOnRectangleIcon,
 } from '@heroicons/react/24/outline';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FC } from 'react';
 import { buttonVariants } from './Button';
+import Loading from './Loading';
 
 const AuthLink: FC<{ className?: string }> = ({ className = '' }) => {
-  const { hasAccount } = useSettingsContext();
+  const { status } = useSession();
+  const { hasAccount } = useLocalSettingsContext();
   const pathname = usePathname();
+
+  if (status === 'loading') return <Loading />;
 
   return (
     <Link

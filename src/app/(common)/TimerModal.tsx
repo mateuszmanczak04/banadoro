@@ -1,6 +1,5 @@
 'use client';
 
-import useSettingsContext from '@/hooks/useSettingsContext';
 import useTimerContext from '@/hooks/useTimerContext';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
@@ -12,6 +11,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import { useEffect, useState } from 'react';
+import useTimerSettingsContext from '@/hooks/useTimerSettingsContext';
 
 const TimerModal = () => {
   const {
@@ -23,7 +23,7 @@ const TimerModal = () => {
     setMode,
     setCurrentSessionTimePassed,
   } = useTimerContext();
-  const { sessionTime, breakTime } = useSettingsContext();
+  const { sessionTime, breakTime } = useTimerSettingsContext();
   const [isOpen, setIsOpen] = useState(false);
   const [openOnNext, setOpenOnNext] = useState(false);
   const pathname = usePathname();

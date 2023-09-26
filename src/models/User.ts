@@ -28,6 +28,21 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  autoStart: {
+    required: false,
+    type: Boolean,
+    default: false,
+  },
+  sessionTime: {
+    required: false,
+    type: Number,
+    default: 25 * 60,
+  },
+  breakTime: {
+    required: false,
+    type: Number,
+    default: 5 * 60,
+  },
 });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

@@ -63,7 +63,11 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
       const newTask = res.data.task;
       setTasks([...tasks, newTask]);
     } catch (error: any) {
-      setError(error.response.data.message);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -98,7 +102,11 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
         })
       );
     } catch (error: any) {
-      setError(error.response.data.message);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -116,12 +124,10 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
       const res = await axios.get('/api/tasks');
       setTasks(res.data.tasks);
     } catch (error: any) {
-      console.log(error);
-
       if (error.response) {
         setError(error.response.data.message);
       } else {
-        setError('An error occurred while fetching tasks.');
+        setError('An unknown error occurred.');
       }
     } finally {
       setIsLoading(false);
@@ -143,7 +149,11 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
       await axios.delete('/api/tasks?_id=' + taskId);
       setTasks(tasks.filter((task) => task._id !== taskId));
     } catch (error: any) {
-      setError(error.response.data.message);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }

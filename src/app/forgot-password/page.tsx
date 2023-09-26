@@ -22,7 +22,11 @@ const ForgotPasswordPage = () => {
       });
       setDone(true);
     } catch (error: any) {
-      setError(error.response.data.message);
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }
