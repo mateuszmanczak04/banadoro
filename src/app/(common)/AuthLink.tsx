@@ -22,8 +22,8 @@ const AuthLink: FC<{ className?: string }> = ({ className = '' }) => {
         buttonVariants({
           variant: 'primary',
         }),
-        pathname === '/signup' ||
-          (pathname === '/signin' && 'bg-primary-400 border-primary-300'),
+        (pathname === '/signup' || pathname === '/signin') &&
+          'bg-primary-400 border-primary-300',
         className
       )}>
       {hasAccount ? (
