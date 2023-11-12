@@ -1,15 +1,9 @@
-require("dotenv").config();
-const withPWA = require("next-pwa")({
-  dest: "public",
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === "development",
-});
+require('dotenv').config();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
+	reactStrictMode: true,
+	swcMinify: true,
 };
 
-module.exports = withPWA(nextConfig);
+module.exports = nextConfig;
