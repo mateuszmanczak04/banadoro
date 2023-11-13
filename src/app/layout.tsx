@@ -12,7 +12,7 @@ export const metadata = {
 	description: 'Turn on timer for studying, create tasks, compete with others!',
 	manifest: '/manifest.json',
 	icons: {
-		apple: '/icon512.png',
+		apple: '/images/icons/icon512.png',
 	},
 	themeColor: '#111827',
 };
@@ -20,7 +20,7 @@ export const metadata = {
 const RootLayout = ({ children }: Props) => {
 	return (
 		<html>
-			<body className="bg-gray-900 text-white scrollbar-none font-sans">
+			<body className='bg-gray-900 text-white scrollbar-none font-sans'>
 				<AppProviders>
 					<Layout>{children}</Layout>
 				</AppProviders>

@@ -1,4 +1,4 @@
-![Banadoro banner](public/banner.png)
+![Banadoro banner](public/images/banner.png)
 
 # Purpose
 
