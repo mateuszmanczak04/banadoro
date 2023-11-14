@@ -36,3 +36,9 @@ yarn-error.log*
 next-env.d.ts
 
 yarn.lock
+
+public/sw.js
+public/sw.js.map
+public/workbox-d511f347.js
+public/workbox-d511f347.js.map
+public/fallback-development.js
