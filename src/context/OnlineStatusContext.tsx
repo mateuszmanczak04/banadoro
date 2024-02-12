@@ -1,11 +1,6 @@
-import {
-	createContext,
-	FC,
-	ReactNode,
-	useEffect,
-	useState,
-	useSyncExternalStore,
-} from 'react';
+'use client';
+
+import { createContext, FC, ReactNode, useSyncExternalStore } from 'react';
 
 interface OnlineStatusContextProps {
 	online: boolean;
