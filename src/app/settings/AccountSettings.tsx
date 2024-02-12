@@ -9,29 +9,29 @@ import UpdatePassword from './UpdatePassword';
 import PasswordHint from './PasswordHint';
 
 const AccountSettings = () => {
-  const { data: session } = useSession();
-  const { loading, error } = useAccountSettingsContext();
+	const { data: session } = useSession();
+	const { loading, error } = useAccountSettingsContext();
 
-  if (!session) return null;
+	if (!session) return null;
 
-  if (loading)
-    return (
-      <div className='container flex flex-col items-center gap-1'>
-        <p>Loading account settings...</p>
-        <Loading />
-      </div>
-    );
+	if (loading)
+		return (
+			<div className='container flex flex-col items-center gap-1'>
+				<p>Loading account settings...</p>
+				<Loading />
+			</div>
+		);
 
-  if (error) return <Error message={error} />;
+	if (error) return <Error message={error} />;
 
-  return (
-    <div className='flex flex-col gap-4 w-full'>
-      <h3 className='font-extrabold text-3xl w-full'>Account</h3>
-      <UpdatePassword />
-      <PasswordHint />
-      <SignOutButton />
-    </div>
-  );
+	return (
+		<div className='flex flex-col gap-4 w-full'>
+			<h3 className='font-extrabold text-3xl w-full'>Account</h3>
+			<UpdatePassword />
+			<PasswordHint />
+			<SignOutButton />
+		</div>
+	);
 };
 
 export default AccountSettings;

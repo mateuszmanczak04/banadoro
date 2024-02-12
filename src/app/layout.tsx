@@ -10,7 +10,6 @@ interface Props {
 export const metadata = {
 	title: 'Banadoro - Pomodoro Timer',
 	description: 'Turn on timer for studying, create tasks, compete with others!',
-	manifest: '/manifest.json',
 	icons: {
 		apple: '/images/icons/icon512.png',
 	},

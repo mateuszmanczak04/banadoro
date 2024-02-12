@@ -1,27 +1,29 @@
 interface Task {
-  _id: string;
-  title: string;
-  checked: boolean;
+	_id?: string;
+	id: string;
+	title: string;
+	checked: boolean;
+	authorEmail: string;
 }
 
 interface User {
-  _id: string;
-  email?: string;
-  password?: string;
-  totalTime?: number;
-  username?: string;
+	_id: string;
+	email?: string;
+	password?: string;
+	totalTime?: number;
+	username?: string;
 }
 
 interface RankingTopUser {
-  _id: string;
-  totalTime: number;
-  username: string;
+	_id: string;
+	totalTime: number;
+	username: string;
 }
 
 interface Day {
-  date: string;
-  totalTime: number;
-  _id: string;
+	date: string;
+	totalTime: number;
+	_id: string;
 }
 
 type Mode = 'session' | 'break';

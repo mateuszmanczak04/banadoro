@@ -11,7 +11,7 @@ export const OnlineStatusContext = createContext<OnlineStatusContextProps>({
 export const OnlineStatusContextProvider: FC<{ children: ReactNode }> = ({
 	children,
 }) => {
-	const [onlineStatus, setOnlineStatus] = useState<boolean>(true);
+	const [onlineStatus, setOnlineStatus] = useState<boolean>(navigator.onLine);
 
 	useEffect(() => {
 		window.addEventListener('offline', () => {
@@ -32,7 +32,7 @@ export const OnlineStatusContextProvider: FC<{ children: ReactNode }> = ({
 	}, []);
 
 	return (
-		<OnlineStatusContext.Provider value={{ online: true }}>
+		<OnlineStatusContext.Provider value={{ online: onlineStatus }}>
 			{children}
 		</OnlineStatusContext.Provider>
 	);

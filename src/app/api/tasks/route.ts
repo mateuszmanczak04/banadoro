@@ -8,79 +8,89 @@ import { NextResponse } from 'next/server';
 
 // get all user tasks
 export const GET = errorMiddleware(
-  authMiddleware(async (req: CustomNextRequest) => {
-    await dbConnect();
+	authMiddleware(async (req: CustomNextRequest) => {
+		await dbConnect();
 
-    const tasks = await Task.find({ authorEmail: req.email });
+		const tasks: Task[] = await Task.find({ authorEmail: req.email });
 
-    return NextResponse.json({ tasks });
-  })
+		tasks.forEach(task => {
+			delete task._id;
+		});
+
+		return NextResponse.json({
+			tasks,
+		});
+	}),
 );
 
 // create a task
 export const POST = errorMiddleware(
-  authMiddleware(async (req: CustomNextRequest) => {
-    const { title } = await req.json();
+	authMiddleware(async (req: CustomNextRequest) => {
+		const { title, id, checked, authorEmail } = await req.json();
 
-    if (!title || title.trim().length === 0)
-      throw new CustomError('Invalid data.', 400);
+		if (!title || title.trim().length === 0)
+			throw new CustomError('Title must not be empty.', 400);
 
-    await dbConnect();
+		if (authorEmail !== req.email) throw new CustomError("Emails don't match");
 
-    const task = await Task.create({
-      title,
-      authorEmail: req.email,
-      checked: false,
-    });
+		await dbConnect();
 
-    return NextResponse.json({ task });
-  })
+		await Task.create({
+			id,
+			title,
+			authorEmail,
+			checked,
+		});
+
+		return NextResponse.json({});
+	}),
 );
 
 // toggle a task
 export const PUT = errorMiddleware(
-  authMiddleware(async (req: CustomNextRequest) => {
-    const { _id } = await req.json();
+	authMiddleware(async (req: CustomNextRequest) => {
+		const { id } = await req.json();
 
-    if (!_id) throw new CustomError('Missing _id.', 400);
+		if (!id) throw new CustomError('Missing id.', 400);
 
-    await dbConnect();
+		await dbConnect();
 
-    const task = await Task.findOne({ _id }).select({
-      checked: 1,
-      authorEmail: 1,
-    });
+		const task = await Task.findOne({ id }).select({
+			checked: 1,
+			authorEmail: 1,
+		});
 
-    if (!task) throw new CustomError('Task does not exist.', 404);
+		if (!task) throw new CustomError('Task does not exist.', 404);
 
-    if (task.authorEmail !== req.email)
-      throw new CustomError('You are not owner of this task.', 403);
+		if (task.authorEmail !== req.email)
+			throw new CustomError('You are not owner of this task.', 403);
 
-    await Task.findOneAndUpdate({ _id }, { checked: !task.checked });
+		await Task.findOneAndUpdate({ id }, { checked: !task.checked });
 
-    return NextResponse.json({});
-  })
+		return NextResponse.json({});
+	}),
 );
 
 // delete a task
 export const DELETE = errorMiddleware(
-  authMiddleware(async (req: CustomNextRequest) => {
-    const url = new URL(req.nextUrl.toString());
-    const _id = url.searchParams.get('_id');
+	authMiddleware(async (req: CustomNextRequest) => {
+		const url = new URL(req.nextUrl.toString());
+		const id = url.searchParams.get('id');
 
-    if (!_id) throw new CustomError('Missing task id.', 400);
+		if (!id) throw new CustomError('Missing task id.', 400);
 
-    await dbConnect();
+		await dbConnect();
 
-    const taskToDelete = await Task.findOne({ _id }).select({ authorEmail: 1 });
+		const taskToDelete = await Task.findOne({ id }).select({ authorEmail: 1 });
 
-    if (!taskToDelete) throw new CustomError('Task does not exist.', 404);
+		if (!taskToDelete) throw new CustomError('Task does not exist.', 404);
+		// if (!taskToDelete) return NextResponse.json({});
 
-    if (taskToDelete.authorEmail !== req.email)
-      throw new CustomError('You are not owner of this task.', 403);
+		if (taskToDelete.authorEmail !== req.email)
+			throw new CustomError('You are not owner of this task.', 403);
 
-    await Task.deleteOne({ _id });
+		await Task.deleteOne({ id });
 
-    return NextResponse.json({});
-  })
+		return NextResponse.json({});
+	}),
 );

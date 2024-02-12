@@ -1,3 +1,4 @@
+import useOnlineStatusContext from '@/hooks/useOnlineStatusContext';
 import useTimerSettingsContext from '@/hooks/useTimerSettingsContext';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
@@ -62,6 +63,7 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 	const [mode, setMode] = useState<Mode>(initialState.mode);
 	const [intervalId, setIntervalId] = useState<any>();
 	const { autoStart, sessionTime, breakTime } = useTimerSettingsContext();
+	const { online } = useOnlineStatusContext();
 
 	const resetTotalTime = () => {
 		setTotalTime(0);
@@ -69,6 +71,11 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 
 	const incrementUserTimeByAMinute = useCallback(async () => {
 		if (!session?.user) return;
+
+		if (!online) {
+			// cancel this request if user is offline
+			return;
+		}
 
 		setError('');
 
@@ -97,10 +104,15 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 				setError('An unknown error occurred.');
 			}
 		}
-	}, [session?.user]);
+	}, [session?.user, online]);
 
 	const fetchAllUserDays = useCallback(async () => {
 		if (!session?.user) return;
+
+		if (!online) {
+			// cancel this request if user is offline
+			return;
+		}
 
 		setIsLoading(true);
 		setError('');
@@ -118,7 +130,7 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 		} finally {
 			setIsLoading(false);
 		}
-	}, [session?.user]);
+	}, [session?.user, online]);
 
 	// audio notification
 	const playNotification = () => {

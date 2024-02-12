@@ -13,10 +13,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import AuthLink from './AuthLink';
 import { buttonVariants } from './Button';
+import useOnlineStatusContext from '@/hooks/useOnlineStatusContext';
 
 const Navigation = () => {
 	const { data: session } = useSession();
 	const pathname = usePathname();
+	const { online } = useOnlineStatusContext();
 
 	return (
 		<>
@@ -30,19 +32,21 @@ const Navigation = () => {
 						<span className='hidden sm:block'>Banadoro</span>
 					</Link>
 					<div className='flex gap-2 items-center'>
-						<Link
-							href='/ranking'
-							className={twClass(
-								buttonVariants({
-									variant: 'secondary',
-								}),
-								pathname === '/ranking' && 'bg-gray-600 border-gray-500',
-							)}>
-							<TrophyIcon className='w-6 h-6' />
-							<p className='hidden sm:block'>Ranking</p>
-						</Link>
+						{online && (
+							<Link
+								href='/ranking'
+								className={twClass(
+									buttonVariants({
+										variant: 'secondary',
+									}),
+									pathname === '/ranking' && 'bg-gray-600 border-gray-500',
+								)}>
+								<TrophyIcon className='w-6 h-6' />
+								<p className='hidden sm:block'>Ranking</p>
+							</Link>
+						)}
 
-						{session?.user && (
+						{session?.user && online && (
 							<Link
 								href='/stats'
 								className={twClass(
@@ -56,19 +60,21 @@ const Navigation = () => {
 							</Link>
 						)}
 
-						<Link
-							href='/settings'
-							className={twClass(
-								buttonVariants({
-									variant: 'secondary',
-								}),
-								pathname === '/settings' && 'bg-gray-600 border-gray-500',
-							)}>
-							<Cog6ToothIcon className='w-6 h-6' />
-							<p className='hidden sm:block'>Settings</p>
-						</Link>
+						{online && (
+							<Link
+								href='/settings'
+								className={twClass(
+									buttonVariants({
+										variant: 'secondary',
+									}),
+									pathname === '/settings' && 'bg-gray-600 border-gray-500',
+								)}>
+								<Cog6ToothIcon className='w-6 h-6' />
+								<p className='hidden sm:block'>Settings</p>
+							</Link>
+						)}
 
-						{!session?.user && <AuthLink />}
+						{!session?.user && online && <AuthLink />}
 					</div>
 				</div>
 			</div>
@@ -148,7 +154,9 @@ const Navigation = () => {
 						<HomeIcon className='h-8 w-8' />
 					</Link>
 
-					<AuthLink className='w-[calc(50%-1.25rem)] rounded-none' />
+					{online && (
+						<AuthLink className='w-[calc(50%-1.25rem)] rounded-none' />
+					)}
 				</div>
 			)}
 		</>

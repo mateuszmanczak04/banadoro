@@ -7,24 +7,22 @@ import CustomNextRequest from '@/types/CustomNextRequest';
 import { NextResponse } from 'next/server';
 
 export const PUT = errorMiddleware(
-  authMiddleware(async (req: CustomNextRequest) => {
-    const { autoStart } = await req.json();
+	authMiddleware(async (req: CustomNextRequest) => {
+		const { autoStart } = await req.json();
 
-    console.log('autoStart', autoStart);
+		if (typeof autoStart !== 'boolean')
+			throw new CustomError('Missing fields.', 400);
 
-    if (typeof autoStart !== 'boolean')
-      throw new CustomError('Missing fields.', 400);
+		await dbConnect();
 
-    await dbConnect();
+		const user = await User.findOneAndUpdate(
+			{ email: req.email },
+			{ autoStart },
+			{ new: true },
+		);
 
-    const user = await User.findOneAndUpdate(
-      { email: req.email },
-      { autoStart },
-      { new: true }
-    );
+		if (!user) throw new CustomError('User not found.', 404);
 
-    if (!user) throw new CustomError('User not found.', 404);
-
-    return NextResponse.json({});
-  })
+		return NextResponse.json({});
+	}),
 );
