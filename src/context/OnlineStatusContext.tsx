@@ -1,6 +1,4 @@
-'use client';
-
-import { createContext, FC, ReactNode, useSyncExternalStore } from 'react';
+import { createContext, FC, ReactNode, useEffect, useState } from 'react';
 
 interface OnlineStatusContextProps {
 	online: boolean;
@@ -13,20 +11,20 @@ export const OnlineStatusContext = createContext<OnlineStatusContextProps>({
 export const OnlineStatusContextProvider: FC<{ children: ReactNode }> = ({
 	children,
 }) => {
-	const online = useSyncExternalStore(subscribe, getSnapshot);
+	const [online, setOnline] = useState<boolean>(true); // Assuming online initially
 
-	function getSnapshot() {
-		return navigator.onLine;
-	}
+	useEffect(() => {
+		const handleOnline = () => setOnline(true);
+		const handleOffline = () => setOnline(false);
 
-	function subscribe(callback: any) {
-		window.addEventListener('online', callback);
-		window.addEventListener('offline', callback);
+		window.addEventListener('online', handleOnline);
+		window.addEventListener('offline', handleOffline);
+
 		return () => {
-			window.removeEventListener('online', callback);
-			window.removeEventListener('offline', callback);
+			window.removeEventListener('online', handleOnline);
+			window.removeEventListener('offline', handleOffline);
 		};
-	}
+	}, []);
 
 	return (
 		<OnlineStatusContext.Provider value={{ online }}>
