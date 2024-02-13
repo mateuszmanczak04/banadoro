@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import NextAuth from 'next-auth/next';
+import NextAuth, { getServerSession } from 'next-auth/next';
 
 export const authOptions: NextAuthOptions = {
 	providers: [
@@ -20,30 +20,26 @@ export const authOptions: NextAuthOptions = {
 
 				if (!email || !password) throw new Error('Missing field.');
 
-				try {
-					await dbConnect();
+				await dbConnect();
 
-					const user = await User.findOne({ email }).select({
-						password: 1,
-						username: 1,
-					});
+				const user = await User.findOne({ email }).select({
+					password: 1,
+					username: 1,
+				});
 
-					// check if user exists
-					if (!user) throw new Error('Invalid Credentials.');
+				// check if user exists
+				if (!user) throw new Error('Invalid Credentials.');
 
-					// check if passwords match
-					const passwordsMatch = await bcrypt.compare(password, user.password);
-					if (!passwordsMatch) throw new Error('Invalid credentials.');
+				// check if passwords match
+				const passwordsMatch = await bcrypt.compare(password, user.password);
+				if (!passwordsMatch) throw new Error('Invalid credentials.');
 
-					const result = {
-						name: user.username,
-						email,
-					};
+				const result = {
+					name: user.username,
+					email,
+				};
 
-					return result;
-				} catch (err) {
-					return null;
-				}
+				return result;
 			},
 		}),
 		GoogleProvider({
@@ -65,6 +61,8 @@ export const authOptions: NextAuthOptions = {
 		updateAge: 24 * 60 * 60, // 1 day
 	},
 	callbacks: {
+		// "user" is the response from "authorize" function in CredentialsProvider
+		// or Google user
 		async signIn({ user, account }) {
 			if (account?.provider === 'google') {
 				await dbConnect();
@@ -84,8 +82,13 @@ export const authOptions: NextAuthOptions = {
 			}
 			return true;
 		},
+		async session({ session }) {
+			if (session?.user) delete session.user.image;
+			return session;
+		},
 	},
 };
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
+export const getAuthSession = () => getServerSession(authOptions);
