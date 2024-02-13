@@ -143,7 +143,7 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 		if (
 			mode === 'session' &&
 			currentSessionTimePassed > 0 &&
-			currentSessionTimePassed % 60 === 0
+			currentSessionTimePassed % 5 === 0
 		) {
 			incrementUserTimeByAMinute();
 		}

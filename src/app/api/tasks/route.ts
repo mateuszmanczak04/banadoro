@@ -13,7 +13,7 @@ export const GET = errorMiddleware(
 		await dbConnect();
 
 		const tasks: Task[] = await Task.find({
-			userId: new mongoose.Types.ObjectId(req.token.sub),
+			userId: req.token.sub,
 		});
 
 		tasks.forEach(task => {
@@ -39,7 +39,7 @@ export const POST = errorMiddleware(
 		await Task.create({
 			id,
 			title,
-			userId: new mongoose.Types.ObjectId(req.token.sub),
+			userId: req.token.sub,
 			checked,
 		});
 
@@ -63,10 +63,7 @@ export const PUT = errorMiddleware(
 
 		if (!task) throw new CustomError('Task does not exist.', 404);
 
-		console.log('task', task);
-		console.log('token', req.token);
-
-		if (task.userId !== new mongoose.Types.ObjectId(req.token.sub))
+		if (task.userId !== req.token.sub)
 			throw new CustomError('You are not owner of this task.', 403);
 
 		await Task.findOneAndUpdate({ id }, { $set: { checked: !task.checked } });
@@ -87,7 +84,7 @@ export const DELETE = errorMiddleware(
 
 		await Task.deleteOne({
 			id,
-			userId: new mongoose.Types.ObjectId(req.token.sub),
+			userId: req.token.sub,
 		});
 
 		return NextResponse.json({});

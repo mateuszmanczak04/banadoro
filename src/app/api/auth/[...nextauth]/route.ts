@@ -77,7 +77,6 @@ export const authOptions: NextAuthOptions = {
 					email: user.email,
 					username: user.name,
 					imgUrl: user.image,
-					totalTime: 0,
 				});
 			}
 			return true;
