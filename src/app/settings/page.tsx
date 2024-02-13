@@ -1,5 +1,4 @@
 import OfflineWrapper from '../(common)/OfflineWrapper';
-import SignOutButton from '../(common)/SignOutButton';
 import AccountSettings from './AccountSettings';
 import TimerSettings from './TimerSettings';
 

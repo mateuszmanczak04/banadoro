@@ -1,8 +1,8 @@
 import SignUpForm from '@/app/signup/SignUpForm';
-import { getAuthSession } from '@/lib/auth';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import OfflineWrapper from '../(common)/OfflineWrapper';
+import { getAuthSession } from '../api/auth/[...nextauth]/route';
 
 const page = async () => {
 	const session = await getAuthSession();
