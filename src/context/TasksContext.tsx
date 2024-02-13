@@ -54,12 +54,12 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
 
 		if (!online) {
 			// cancel this request if user is offline
-			const db = await openDB('banadoro-app', 1);
-			const tasksStore = db.createObjectStore('tasks', { keyPath: 'id' });
-			await tasksStore
-				.put(newTask)
-				.then(() => console.log('Task stored successfully!'))
-				.catch(error => console.error('Error storing task: ', error));
+			// const db = await openDB('banadoro-app', 1);
+			// const tasksStore = db.createObjectStore('tasks', { keyPath: 'id' });
+			// await tasksStore
+			// 	.put(newTask)
+			// 	.then(() => console.log('Task stored successfully!'))
+			// 	.catch(error => console.error('Error storing task: ', error));
 			return;
 		}
 
