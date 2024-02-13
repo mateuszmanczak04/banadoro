@@ -63,10 +63,18 @@ export const PUT = errorMiddleware(
 
 		if (!task) throw new CustomError('Task does not exist.', 404);
 
-		if (task.userId !== req.token.sub)
-			throw new CustomError('You are not owner of this task.', 403);
+		console.log(task, req.token);
 
-		await Task.findOneAndUpdate({ id }, { $set: { checked: !task.checked } });
+		// if (
+		// 	task.userId !== req.token.sub &&
+		// 	task.userId !== new mongoose.Types.ObjectId(req.token.sub)
+		// )
+		// 	throw new CustomError('You are not owner of this task.', 403);
+
+		await Task.findOneAndUpdate(
+			{ id, userId: req.token.sub },
+			{ $set: { checked: !task.checked } },
+		);
 
 		return NextResponse.json({});
 	}),
