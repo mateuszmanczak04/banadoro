@@ -2,6 +2,9 @@ import mongoose from 'mongoose';
 
 const TaskSchema = new mongoose.Schema({
 	id: {
+		// "id" is an id generated on the client
+		// which is later sent to the backend to allow
+		// offline functionalities
 		unique: true,
 		required: true,
 		type: String,
@@ -15,8 +18,8 @@ const TaskSchema = new mongoose.Schema({
 		required: true,
 		default: false,
 	},
-	authorEmail: {
-		type: String,
+	userId: {
+		type: mongoose.Schema.Types.ObjectId,
 		required: true,
 	},
 });

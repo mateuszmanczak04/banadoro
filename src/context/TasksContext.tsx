@@ -1,6 +1,7 @@
 import useLocalStorage from '@/hooks/useLocalStorage';
 import useOnlineStatusContext from '@/hooks/useOnlineStatusContext';
 import axios from 'axios';
+import { openDB } from 'idb';
 import { useSession } from 'next-auth/react';
 import { createContext, FC, ReactNode, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -42,7 +43,6 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
 		const newTask: Task = {
 			title,
 			checked: false,
-			authorEmail: session?.user?.email || '',
 			id: uuidv4(),
 		};
 
@@ -54,6 +54,12 @@ export const TasksContextProvider: FC<{ children: ReactNode }> = ({
 
 		if (!online) {
 			// cancel this request if user is offline
+			const db = await openDB('banadoro-app', 1);
+			const tasksStore = db.createObjectStore('tasks', { keyPath: 'id' });
+			await tasksStore
+				.put(newTask)
+				.then(() => console.log('Task stored successfully!'))
+				.catch(error => console.error('Error storing task: ', error));
 			return;
 		}
 

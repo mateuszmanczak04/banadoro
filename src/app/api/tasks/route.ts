@@ -4,6 +4,7 @@ import dbConnect from '@/lib/dbConnect';
 import errorMiddleware from '@/lib/errorMiddleware';
 import Task from '@/models/Task';
 import CustomNextRequest from '@/types/CustomNextRequest';
+import mongoose from 'mongoose';
 import { NextResponse } from 'next/server';
 
 // get all user tasks
@@ -11,7 +12,9 @@ export const GET = errorMiddleware(
 	authMiddleware(async (req: CustomNextRequest) => {
 		await dbConnect();
 
-		const tasks: Task[] = await Task.find({ authorEmail: req.email });
+		const tasks: Task[] = await Task.find({
+			userId: new mongoose.Types.ObjectId(req.token.sub),
+		});
 
 		tasks.forEach(task => {
 			delete task._id;
@@ -26,19 +29,17 @@ export const GET = errorMiddleware(
 // create a task
 export const POST = errorMiddleware(
 	authMiddleware(async (req: CustomNextRequest) => {
-		const { title, id, checked, authorEmail } = await req.json();
+		const { title, id, checked } = await req.json();
 
 		if (!title || title.trim().length === 0)
 			throw new CustomError('Title must not be empty.', 400);
-
-		if (authorEmail !== req.email) throw new CustomError("Emails don't match");
 
 		await dbConnect();
 
 		await Task.create({
 			id,
 			title,
-			authorEmail,
+			userId: new mongoose.Types.ObjectId(req.token.sub),
 			checked,
 		});
 
@@ -57,15 +58,15 @@ export const PUT = errorMiddleware(
 
 		const task = await Task.findOne({ id }).select({
 			checked: 1,
-			authorEmail: 1,
+			userId: 1,
 		});
 
 		if (!task) throw new CustomError('Task does not exist.', 404);
 
-		if (task.authorEmail !== req.email)
+		if (task.userId !== req.token.sub)
 			throw new CustomError('You are not owner of this task.', 403);
 
-		await Task.findOneAndUpdate({ id }, { checked: !task.checked });
+		await Task.findOneAndUpdate({ id }, { $set: { checked: !task.checked } });
 
 		return NextResponse.json({});
 	}),
@@ -81,15 +82,10 @@ export const DELETE = errorMiddleware(
 
 		await dbConnect();
 
-		const taskToDelete = await Task.findOne({ id }).select({ authorEmail: 1 });
-
-		if (!taskToDelete) throw new CustomError('Task does not exist.', 404);
-		// if (!taskToDelete) return NextResponse.json({});
-
-		if (taskToDelete.authorEmail !== req.email)
-			throw new CustomError('You are not owner of this task.', 403);
-
-		await Task.deleteOne({ id });
+		await Task.deleteOne({
+			id,
+			userId: new mongoose.Types.ObjectId(req.token.sub),
+		});
 
 		return NextResponse.json({});
 	}),

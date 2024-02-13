@@ -3,7 +3,6 @@ interface Task {
 	id: string;
 	title: string;
 	checked: boolean;
-	authorEmail: string;
 }
 
 interface User {
