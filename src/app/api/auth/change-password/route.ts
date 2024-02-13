@@ -7,18 +7,18 @@ import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
 export const PUT = errorMiddleware(
-  authMiddleware(async (req: CustomNextRequest) => {
-    const { password } = await req.json();
+	authMiddleware(async (req: CustomNextRequest) => {
+		const { password } = await req.json();
 
-    if (!password) throw new CustomError('Missing Fields.', 400);
+		if (!password) throw new CustomError('Missing Fields.', 400);
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+		const hashedPassword = await bcrypt.hash(password, 10);
 
-    await User.findOneAndUpdate(
-      { email: req.email },
-      { password: hashedPassword }
-    );
+		await User.findOneAndUpdate(
+			{ _id: req.token.sub },
+			{ password: hashedPassword },
+		);
 
-    return NextResponse.json({ message: 'Password updated.' });
-  })
+		return NextResponse.json({ message: 'Password updated.' });
+	}),
 );

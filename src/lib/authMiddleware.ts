@@ -7,10 +7,8 @@ const authMiddleware = (handler: (req: CustomNextRequest) => void) => {
 	return async (req: CustomNextRequest) => {
 		const token = await getToken({ req });
 
-		console.log('token', token);
-
-		if (!token) {
-			throw new CustomError('Unauthorized.', 401);
+		if (!token || !token.sub) {
+			throw new CustomError('Invalid token.', 401);
 		}
 
 		req.token = token;

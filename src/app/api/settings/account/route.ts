@@ -7,20 +7,20 @@ import CustomNextRequest from '@/types/CustomNextRequest';
 import { NextResponse } from 'next/server';
 
 export const GET = errorMiddleware(
-  authMiddleware(async (req: CustomNextRequest) => {
-    await dbConnect();
+	authMiddleware(async (req: CustomNextRequest) => {
+		await dbConnect();
 
-    // Create an artificial delay with a Promise for 2 seconds
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+		// Create an artificial delay with a Promise for 2 seconds
+		await new Promise(resolve => setTimeout(resolve, 2000));
 
-    const user = await User.findOne({ email: req.email }).select({
-      passwordHint: 1,
-    });
+		const user = await User.findOne({ _id: req.token.sub }).select({
+			passwordHint: 1,
+		});
 
-    if (!user) throw new CustomError('User not found.', 404);
+		if (!user) throw new CustomError('User not found.', 404);
 
-    return NextResponse.json({
-      passwordHint: user?.passwordHint || '',
-    });
-  })
+		return NextResponse.json({
+			passwordHint: user?.passwordHint || '',
+		});
+	}),
 );

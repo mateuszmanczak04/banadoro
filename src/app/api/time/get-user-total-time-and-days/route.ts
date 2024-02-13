@@ -6,18 +6,18 @@ import CustomNextRequest from '@/types/CustomNextRequest';
 import { NextResponse } from 'next/server';
 
 export const GET = errorMiddleware(
-  authMiddleware(async (req: CustomNextRequest) => {
-    await dbConnect();
+	authMiddleware(async (req: CustomNextRequest) => {
+		await dbConnect();
 
-    const days = await Day.find({ user: req.email })
-      .select('totalTime date')
-      .sort({ date: 1 });
+		const days = await Day.find({ userId: req.token.sub })
+			.select('totalTime date')
+			.sort({ date: 1 });
 
-    const totalTime = days.reduce((acc, day) => acc + day.totalTime, 0);
+		const totalTime = days.reduce((acc, day) => acc + day.totalTime, 0);
 
-    return NextResponse.json({
-      days,
-      totalTime,
-    });
-  })
+		return NextResponse.json({
+			days,
+			totalTime,
+		});
+	}),
 );

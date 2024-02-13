@@ -16,7 +16,7 @@ export const PUT = errorMiddleware(
 		await dbConnect();
 
 		const user = await User.findOneAndUpdate(
-			{ email: req.email },
+			{ _id: req.token.sub },
 			{ autoStart },
 			{ new: true },
 		);
