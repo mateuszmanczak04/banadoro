@@ -29,7 +29,7 @@ const AccountSettings = () => {
 			<h3 className='font-extrabold text-3xl w-full'>Account</h3>
 			<UpdatePassword />
 			<PasswordHint />
-			<SignOutButton />
+			<SignOutButton route={window.location.href} />
 		</div>
 	);
 };
