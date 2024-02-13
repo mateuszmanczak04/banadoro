@@ -63,6 +63,9 @@ export const PUT = errorMiddleware(
 
 		if (!task) throw new CustomError('Task does not exist.', 404);
 
+		console.log('task', task);
+		console.log('token', req.token);
+
 		if (task.userId !== new mongoose.Types.ObjectId(req.token.sub))
 			throw new CustomError('You are not owner of this task.', 403);
 
