@@ -34,12 +34,11 @@ export const authOptions: NextAuthOptions = {
 				const passwordsMatch = await bcrypt.compare(password, user.password);
 				if (!passwordsMatch) throw new Error('Invalid credentials.');
 
-				const result = {
+				return {
 					name: user.username,
 					email,
+					id: user._id, // "id" returned here becomes ".sub" in the token
 				};
-
-				return result;
 			},
 		}),
 		GoogleProvider({
@@ -60,6 +59,7 @@ export const authOptions: NextAuthOptions = {
 		maxAge: 7 * 24 * 60 * 60, // 1 week
 		updateAge: 24 * 60 * 60, // 1 day
 	},
+
 	callbacks: {
 		// "user" is the response from "authorize" function in CredentialsProvider
 		// or Google user
@@ -85,6 +85,20 @@ export const authOptions: NextAuthOptions = {
 		async session({ session }) {
 			if (session?.user) delete session.user.image;
 			return session;
+		},
+		async jwt({ token }) {
+			try {
+				await dbConnect();
+				const user = await User.findOne({ email: token.email }).select({});
+				if (user) {
+					// replace google user id with mongo user id
+					token.sub = user._id;
+				}
+			} catch (err) {
+			} finally {
+				delete token.picture;
+				return token;
+			}
 		},
 	},
 };
