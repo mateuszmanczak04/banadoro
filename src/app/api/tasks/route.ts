@@ -63,9 +63,6 @@ export const PUT = errorMiddleware(
 
 		if (!task) throw new CustomError('Task does not exist.', 404);
 
-		console.log('task in PUT task', task);
-		console.log('token in PUT task', req.token);
-
 		if (task.userId !== new mongoose.Types.ObjectId(req.token.sub))
 			throw new CustomError('You are not owner of this task.', 403);
 
@@ -84,8 +81,6 @@ export const DELETE = errorMiddleware(
 		if (!id) throw new CustomError('Missing task id.', 400);
 
 		await dbConnect();
-
-		console.log('token in DELETE task', req.token);
 
 		await Task.deleteOne({
 			id,
