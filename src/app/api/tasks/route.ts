@@ -63,8 +63,6 @@ export const PUT = errorMiddleware(
 
 		if (!task) throw new CustomError('Task does not exist.', 404);
 
-		console.log(task, req.token);
-
 		// if (
 		// 	task.userId !== req.token.sub &&
 		// 	task.userId !== new mongoose.Types.ObjectId(req.token.sub)
