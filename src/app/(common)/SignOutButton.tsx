@@ -4,7 +4,6 @@ import useLocalSettingsContext from '@/hooks/useLocalSettingsContext';
 import useOnlineStatusContext from '@/hooks/useOnlineStatusContext';
 import useStatsContext from '@/hooks/useStatsContext';
 import useTasksContext from '@/hooks/useTasksContext';
-import useTimerContext from '@/hooks/useTimerContext';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
