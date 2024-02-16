@@ -12,6 +12,7 @@ import {
 
 import { useEffect, useState } from 'react';
 import useTimerSettingsContext from '@/hooks/useTimerSettingsContext';
+import getClockContent from '@/lib/getClockContent';
 
 const TimerModal = () => {
 	const {
@@ -53,9 +54,7 @@ const TimerModal = () => {
 		(mode === 'session' ? sessionTime : breakTime) - currentSessionTimePassed;
 	const time = timeInSeconds >= 0 ? timeInSeconds : 0;
 
-	const clockContent = `${Math.floor(time / 60)}:${(
-		'00' + (time % 60).toString()
-	).slice(-2)}`;
+	const clockContent = getClockContent(time);
 
 	return (
 		<div
