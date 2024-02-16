@@ -1,5 +1,7 @@
 import useOnlineStatusContext from '@/hooks/useOnlineStatusContext';
+import useStatsContext from '@/hooks/useStatsContext';
 import useTimerSettingsContext from '@/hooks/useTimerSettingsContext';
+import getClockContent from '@/lib/getClockContent';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import {
@@ -8,42 +10,19 @@ import {
 	ReactNode,
 	useCallback,
 	useEffect,
-	useMemo,
 	useRef,
 	useState,
 } from 'react';
 
 interface TimerContextProps {
-	resetTotalTime: () => void;
-	fetchAllUserDays: () => Promise<void> | void;
-	totalTime: number;
-	error: string;
-	isLoading: boolean;
-	previousDays: Day[];
-	mode: Mode;
-	setMode: (mode: Mode) => void;
-	currentSessionTimePassed: number;
-	setCurrentSessionTimePassed: (time: number) => void;
-	handlePause: () => void;
-	isTimerRunning: boolean;
-	handleRun: () => void;
+	timeLeft: number;
+	play: () => void;
+	pause: () => void;
+	reset: () => void;
+	running: boolean;
 }
 
-const initialState: TimerContextProps = {
-	totalTime: 0,
-	error: '',
-	isLoading: false,
-	previousDays: [],
-	resetTotalTime: () => {},
-	fetchAllUserDays: () => {},
-	mode: 'session',
-	setMode: () => {},
-	currentSessionTimePassed: 0,
-	setCurrentSessionTimePassed: () => {},
-	handlePause: () => {},
-	isTimerRunning: false,
-	handleRun: () => {},
-};
+const initialState: TimerContextProps = {} as TimerContextProps;
 
 export const TimerContext = createContext<TimerContextProps>(initialState);
 
@@ -51,51 +30,68 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 	children,
 }) => {
 	const { data: session } = useSession();
-	const { autoStart, sessionTime, breakTime } = useTimerSettingsContext();
+	const {
+		autoStart: settingsAutoStart,
+		sessionTime: settingsSessionTime,
+		breakTime: settingsBreakTime,
+		mode,
+		setMode,
+	} = useTimerSettingsContext();
+	const { setPreviousDays, setTotalTime } = useStatsContext();
 	const { online } = useOnlineStatusContext();
 
-	const [totalTime, setTotalTime] = useState(initialState.totalTime);
-	const [error, setError] = useState(initialState.error);
-	const [isLoading, setIsLoading] = useState(initialState.isLoading);
-	const [previousDays, setPreviousDays] = useState(initialState.previousDays);
-	const [isTimerRunning, setIsTimerRunning] = useState<boolean>(
-		initialState.isTimerRunning,
-	);
-	const [currentSessionTimePassed, setCurrentSessionTimePassed] =
-		useState<number>(initialState.currentSessionTimePassed);
-	const [mode, setMode] = useState<Mode>(initialState.mode);
+	const timerId = useRef<ReturnType<typeof setInterval> | null>(null);
+	const running = useRef(false);
+	const autoStart = useRef(settingsAutoStart);
+	const timerMode = useRef<Mode>('session');
+	const timePlayed = useRef(0); // current session time played
+	const timePaused = useRef(0); // current session time paused
+	const startTime = useRef<number | null>(null);
+	const lastPausedTime = useRef<number | null>(null);
+	const sessionTime = useRef(settingsSessionTime);
+	const breakTime = useRef(settingsBreakTime);
 
-	const resetTotalTime = useCallback(() => {
-		setTotalTime(0);
+	const [returnState, setReturnState] = useState({
+		timeLeft: settingsSessionTime,
+		running: false,
+	});
+	const [error, setError] = useState('');
+
+	// todo - add autoStart option
+	// todo - fix bug that sometimes it jumps by 2 seconds
+
+	// update time which is used to be displayed on UI
+	const updateTimeLeft = useCallback(() => {
+		const newTimeLeft = Math.floor(
+			(timerMode.current === 'session'
+				? sessionTime.current - timePlayed.current
+				: breakTime.current - timePlayed.current) / 1000,
+		);
+		setReturnState(prev => ({
+			...prev,
+			timeLeft: newTimeLeft,
+		}));
 	}, []);
 
-	const fetchAllUserDays = useCallback(async () => {
-		if (!session?.user) return;
+	// calculate the time passed during current session based on Date.now()
+	const setValidTime = useCallback(() => {
+		if (startTime.current === null) return;
+		timePlayed.current = Date.now() - startTime.current - timePaused.current;
+		updateTimeLeft();
+	}, [updateTimeLeft]);
 
-		if (!online) {
-			// cancel this request if user is offline
-			return;
+	const updateDocumentTitle = useCallback(() => {
+		if (timerMode.current === 'session') {
+			const timeLeft = sessionTime.current - timePlayed.current;
+			document.title = `Pomodoro: ${getClockContent(
+				Math.floor(timeLeft / 1000),
+			)}`;
+		} else {
+			const timeLeft = breakTime.current - timePlayed.current;
+			document.title = `Break: ${getClockContent(Math.floor(timeLeft / 1000))}`;
 		}
+	}, []);
 
-		setIsLoading(true);
-		setError('');
-
-		try {
-			const res = await axios.get('/api/time/get-user-total-time-and-days');
-			setPreviousDays(res.data.days);
-			setTotalTime(res.data.totalTime);
-		} catch (error: any) {
-			if (error.response) {
-				setError(error.response.data.message);
-			} else {
-				setError('An unknown error occurred.');
-			}
-		} finally {
-			setIsLoading(false);
-		}
-	}, [session?.user, online]);
-
-	// audio notification after finished session
 	const playNotification = useCallback(() => {
 		let audio = new Audio('/audio/bell.wav');
 		audio.play();
@@ -103,8 +99,6 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 
 	// send a request to the API to increment user's time by a minute
 	const incrementUserTimeByAMinute = useCallback(async () => {
-		// console.log('increment user time by a minute');
-
 		if (!session?.user) return;
 
 		if (!online) {
@@ -139,194 +133,111 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 				setError('An unknown error occurred.');
 			}
 		}
-	}, [online, session?.user]);
+	}, [online, session?.user, setPreviousDays, setTotalTime]);
 
-	const timer = useMemo(() => {
-		let timerId: ReturnType<typeof setInterval> | null = null;
-		let totalTimePlayed = 0; // in seconds
-		let totalTimePaused = 0; // in milliseconds
-		let startTime: number | null = null; // in milliseconds (Date.now())
-		let lastPauseTime: number | null = null; // in milliseconds (Date.now())
-		let running = false;
-		let sessionDuration: number | null = null;
-		let breakDuration: number | null = null;
+	const pause = useCallback(() => {
+		if (!running) {
+			console.warn('Timer is already paused.');
+			return;
+		}
+		running.current = false;
+		setReturnState(prev => ({ ...prev, running: false }));
+		lastPausedTime.current = Date.now();
+		if (timerId.current) {
+			clearInterval(timerId.current);
+			timerId.current = null;
+		}
+	}, []);
 
-		// console.log('timer is re-rendered', totalTimePlayed, lastPauseTime);
+	const reset = useCallback(() => {
+		pause(); // clearInterval, running=false, timerId=null
+		startTime.current = null;
+		lastPausedTime.current = null;
+		timePaused.current = 0;
+		timePlayed.current = 0;
+		setValidTime();
+		updateTimeLeft();
+	}, [pause, setValidTime, updateTimeLeft]);
 
-		const reset = () => {
-			pause(); // clearInterval, running=false, timerId=null
-			startTime = null;
-			lastPauseTime = null;
-			totalTimePaused = 0;
-			totalTimePlayed = 0;
-			setCurrentSessionTimePassed(0);
-		};
+	const increment = useCallback(() => {
+		if (startTime.current === null) return;
 
-		const setValidTime = () => {
-			if (startTime === null) return;
-			totalTimePlayed = Math.floor(
-				(Date.now() - startTime - totalTimePaused) / 1000,
-			);
-		};
+		setValidTime();
+		updateDocumentTitle();
 
-		// const setDocumentTitle = () => {
-		// 	let clockContent = `${Math.floor(
-		// 		((mode === 'session' ? sessionDuration! : breakDuration!) -
-		// 			totalTimePlayed) /
-		// 			60,
-		// 	)}:${(
-		// 		'00' +
-		// 		(
-		// 			((mode === 'session' ? sessionDuration! : breakDuration!) -
-		// 				totalTimePlayed) %
-		// 			60
-		// 		).toString()
-		// 	).slice(-2)}`;
-		// 	if (running) {
-		// 		if (mode === 'session') {
-		// 			clockContent = `Study now - ${clockContent}`;
-		// 		} else {
-		// 			clockContent = `Time for a break - ${clockContent}`;
-		// 		}
-		// 	} else {
-		// 		clockContent = `Paused - ${clockContent}`;
-		// 	}
-		// 	document.title = clockContent;
-		// };
-
-		const increment = () => {
-			if (startTime === null) return;
-
-			setValidTime();
-			setCurrentSessionTimePassed(totalTimePlayed);
-
-			if (mode === 'session') {
-				if (totalTimePlayed % 60 === 0) {
-					incrementUserTimeByAMinute();
-				}
-				if (totalTimePlayed >= sessionDuration!) {
-					reset();
-					playNotification();
-					setMode('break');
-				}
-			} else if (mode === 'break' && totalTimePlayed >= breakDuration!) {
+		if (timerMode.current === 'session') {
+			if (timePlayed.current % 60 === 0) {
+				incrementUserTimeByAMinute();
+			}
+			if (timePlayed.current >= sessionTime.current) {
 				reset();
 				playNotification();
-				setMode('session');
+				setMode('break');
+				updateDocumentTitle();
 			}
+		} else if (
+			timerMode.current === 'break' &&
+			timePlayed.current >= breakTime.current
+		) {
+			reset();
+			playNotification();
+			setMode('session');
+			updateDocumentTitle();
+		}
+	}, [
+		incrementUserTimeByAMinute,
+		playNotification,
+		updateDocumentTitle,
+		reset,
+		setMode,
+		setValidTime,
+	]);
 
-			// console.group('iteration of incremential');
-			// console.log('total time played:', totalTimePlayed);
-			// console.log('total time paused:', totalTimePaused);
-			// console.log('start time:', startTime);
-			// console.log('lastPauseTime:', lastPauseTime);
-			// console.log('running:', running);
-			// console.log('sessionTime:', sessionDuration);
-			// console.log('breakTime:', breakDuration);
-			// console.log('---------------');
-			// console.groupEnd();
-		};
+	const play = useCallback(() => {
+		if (running.current) {
+			console.warn('Timer is already running.');
+			return;
+		}
+		if (startTime.current === null) {
+			startTime.current = Date.now();
+		}
+		running.current = true;
+		setReturnState(prev => ({ ...prev, running: true }));
+		// increase totalTimePaused with the duration of non playing
+		if (lastPausedTime.current !== null) {
+			timePaused.current += Date.now() - lastPausedTime.current;
+		}
+		timerId.current = setInterval(() => {
+			increment();
+		}, 1000);
+	}, [running, increment]);
 
-		const play = () => {
-			if (running) {
-				// console.warn('Timer is already running.');
-				return;
-			}
-			if (startTime === null) {
-				startTime = Date.now();
-			}
-			setIsTimerRunning(true);
-			running = true;
-			// increase totalTimePaused with the duration of non playing
-			if (lastPauseTime !== null) {
-				totalTimePaused += Date.now() - lastPauseTime;
-			}
-			timerId = setInterval(() => {
-				increment();
-			}, 1000);
-		};
-
-		const pause = () => {
-			if (!running) {
-				// console.warn('Timer is already paused.');
-				return;
-			}
-			setIsTimerRunning(false);
-			running = false;
-			lastPauseTime = Date.now();
-			if (timerId) {
-				clearInterval(timerId);
-			}
-			timerId = null;
-		};
-
-		const setSessionDuration = (duration: number) => {
-			sessionDuration = duration;
-		};
-
-		const setBreakDuration = (duration: number) => {
-			breakDuration = duration;
-		};
-
-		return {
-			increment,
-			play,
-			pause,
-			setSessionDuration,
-			setBreakDuration,
-		};
-	}, [mode, playNotification, incrementUserTimeByAMinute]);
-
-	// end session and break after exceeding time
-	// useEffect(() => {
-	// 	if (mode === 'session' && currentSessionTimePassed === sessionTime) {
-	// 		if (!autoStart) handlePause();
-	// 		setMode('break');
-	// 		setCurrentSessionTimePassed(0);
-	// 		playNotification();
-	// 		return;
-	// 	} else if (mode === 'break' && currentSessionTimePassed === breakTime) {
-	// 		setCurrentSessionTimePassed(0);
-	// 		if (!autoStart) handlePause();
-	// 		setMode('session');
-	// 		playNotification();
-	// 		return;
-	// 	}
-	// }, [
-	// 	currentSessionTimePassed,
-	// 	handlePause,
-	// 	mode,
-	// 	sessionTime,
-	// 	breakTime,
-	// 	autoStart,
-	// ]);
-
-	// fetch all user days if he is signed in on the app start
+	// sync session/break duration with settings
 	useEffect(() => {
-		fetchAllUserDays();
-	}, [fetchAllUserDays, session?.user]);
+		sessionTime.current = settingsSessionTime;
+		breakTime.current = settingsBreakTime;
+		updateTimeLeft();
+	}, [settingsSessionTime, settingsBreakTime, updateTimeLeft]);
 
+	// sync mode with settings
 	useEffect(() => {
-		timer.setSessionDuration(sessionTime);
-		timer.setBreakDuration(breakTime);
-	}, [sessionTime, breakTime, timer]);
+		timerMode.current = mode;
+		reset();
+	}, [mode, reset]);
+
+	// sync auto start with settings
+	useEffect(() => {
+		autoStart.current = settingsAutoStart;
+	}, [settingsAutoStart]);
 
 	return (
 		<TimerContext.Provider
 			value={{
-				resetTotalTime,
-				fetchAllUserDays,
-				totalTime,
-				previousDays,
-				error,
-				isLoading,
-				mode,
-				setMode,
-				currentSessionTimePassed,
-				setCurrentSessionTimePassed,
-				isTimerRunning,
-				handleRun: timer.play,
-				handlePause: timer.pause,
+				play,
+				pause,
+				reset,
+				running: returnState.running,
+				timeLeft: returnState.timeLeft,
 			}}>
 			{children}
 		</TimerContext.Provider>

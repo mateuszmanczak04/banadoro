@@ -1,9 +1,6 @@
-import Loading from '@/app/loading';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import useOnlineStatusContext from '@/hooks/useOnlineStatusContext';
 import axios from 'axios';
-import { has } from 'lodash';
-import { set } from 'mongoose';
 import { useSession } from 'next-auth/react';
 import {
 	createContext,
@@ -23,6 +20,8 @@ interface TimerSettingsContextProps {
 	setBreakTime: (time: number) => void;
 	loading: boolean;
 	error: string;
+	mode: Mode;
+	setMode: (newMode: Mode) => void;
 }
 
 export const TimerSettingsContext = createContext<TimerSettingsContextProps>(
@@ -47,12 +46,13 @@ export const TimerSettingsContextProvider: FC<{ children: ReactNode }> = ({
 	);
 	const [sessionTime, setSessionTime] = useLocalStorage<number>(
 		'sessionTime',
-		25 * 60,
+		25 * 60000,
 	);
 	const [breakTime, setBreakTime] = useLocalStorage<number>(
 		'breakTime',
-		5 * 60,
+		5 * 60000,
 	);
+	const [mode, setMode] = useLocalStorage<Mode>('mode', 'session');
 
 	const init = useCallback(async () => {
 		if (sessionStatus === 'loading') return;
@@ -112,6 +112,8 @@ export const TimerSettingsContextProvider: FC<{ children: ReactNode }> = ({
 				setBreakTime,
 				loading,
 				error,
+				mode,
+				setMode,
 			}}>
 			{children}
 		</TimerSettingsContext.Provider>

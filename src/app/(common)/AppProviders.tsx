@@ -8,6 +8,7 @@ import { TimerSettingsContextProvider } from '@/context/TimerSettingsContext';
 import { SessionProvider } from 'next-auth/react';
 import { FC, ReactNode } from 'react';
 import { OnlineStatusContextProvider } from '@/context/OnlineStatusContext';
+import { StatsContextProvider } from '@/context/StatsContext';
 
 interface AppProvidersProps {
 	children: ReactNode;
@@ -19,13 +20,15 @@ const AppProviders: FC<AppProvidersProps> = ({ children }) => {
 			<SessionProvider>
 				<LocalSettingsContextProvider>
 					<AccountSettingsContextProvider>
-						<TimerSettingsContextProvider>
-							<TasksContextProvider>
-								<TimerContextProvider>
-									<>{children}</>
-								</TimerContextProvider>
-							</TasksContextProvider>
-						</TimerSettingsContextProvider>
+						<StatsContextProvider>
+							<TimerSettingsContextProvider>
+								<TasksContextProvider>
+									<TimerContextProvider>
+										<>{children}</>
+									</TimerContextProvider>
+								</TasksContextProvider>
+							</TimerSettingsContextProvider>
+						</StatsContextProvider>
 					</AccountSettingsContextProvider>
 				</LocalSettingsContextProvider>
 			</SessionProvider>

@@ -15,16 +15,8 @@ import useTimerSettingsContext from '@/hooks/useTimerSettingsContext';
 import getClockContent from '@/lib/getClockContent';
 
 const TimerModal = () => {
-	const {
-		currentSessionTimePassed,
-		mode,
-		handleRun,
-		handlePause,
-		isTimerRunning,
-		setMode,
-		setCurrentSessionTimePassed,
-	} = useTimerContext();
-	const { sessionTime, breakTime } = useTimerSettingsContext();
+	const { timeLeft, play, pause, running, reset } = useTimerContext();
+	const { mode, setMode } = useTimerSettingsContext();
 	const [isOpen, setIsOpen] = useState(false);
 	const [openOnNext, setOpenOnNext] = useState(false);
 	const pathname = usePathname();
@@ -43,18 +35,14 @@ const TimerModal = () => {
 			setIsOpen(false);
 			setOpenOnNext(true);
 		} else {
-			if (openOnNext && isTimerRunning) {
+			if (openOnNext && running) {
 				setIsOpen(true);
 				setOpenOnNext(false);
 			}
 		}
-	}, [pathname, openOnNext, isTimerRunning]);
+	}, [pathname, openOnNext, running]);
 
-	const timeInSeconds =
-		(mode === 'session' ? sessionTime : breakTime) - currentSessionTimePassed;
-	const time = timeInSeconds >= 0 ? timeInSeconds : 0;
-
-	const clockContent = getClockContent(time);
+	const clockContent = getClockContent(timeLeft);
 
 	return (
 		<div
@@ -63,7 +51,7 @@ const TimerModal = () => {
 				mode === 'session'
 					? 'bg-red-500 text-white'
 					: 'bg-green-500 text-white',
-				isTimerRunning && isOpen && 'opacity-75 hover:opacity-100',
+				running && isOpen && 'opacity-75 hover:opacity-100',
 				!isOpen && 'opacity-0 pointer-events-none',
 			)}>
 			{/* closing icon */}
@@ -79,15 +67,15 @@ const TimerModal = () => {
 			</p>
 			{/* controls */}
 			<div className='mt-2 flex items-center gap-2'>
-				{isTimerRunning ? (
+				{running ? (
 					<PauseIcon
 						className='w-8 h-8 box-content p-2 cursor-pointer bg-white bg-opacity-20 rounded-md hover:bg-opacity-30 transition'
-						onClick={handlePause}
+						onClick={pause}
 					/>
 				) : (
 					<PlayIcon
 						className='w-8 h-8 box-content p-2 cursor-pointer bg-white bg-opacity-20 rounded-md hover:bg-opacity-30 transition'
-						onClick={handleRun}
+						onClick={play}
 					/>
 				)}
 				{/* stop current session and change mode */}
@@ -99,8 +87,7 @@ const TimerModal = () => {
 						} else {
 							setMode('session');
 						}
-						handlePause();
-						setCurrentSessionTimePassed(0);
+						reset();
 					}}
 				/>
 			</div>

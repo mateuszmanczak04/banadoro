@@ -18,10 +18,10 @@ const UpdateTimers = ({}) => {
 	const { online } = useOnlineStatusContext();
 
 	const [sessionTimeInMinutes, setSessionTimeInMinutes] = useState<string>(
-		(sessionTime / 60).toString(),
+		(sessionTime / 60000).toString(),
 	);
 	const [breakTimeInMinutes, setBreakTimeInMinutes] = useState<string>(
-		(breakTime / 60).toString(),
+		(breakTime / 60000).toString(),
 	);
 
 	const handleSave = useCallback(
@@ -29,8 +29,8 @@ const UpdateTimers = ({}) => {
 			e.preventDefault();
 			// user not signed in
 			if (!session) {
-				setSessionTime(parseInt(sessionTimeInMinutes) * 60);
-				setBreakTime(parseInt(breakTimeInMinutes) * 60);
+				setSessionTime(parseInt(sessionTimeInMinutes) * 60000);
+				setBreakTime(parseInt(breakTimeInMinutes) * 60000);
 				return;
 			}
 
@@ -44,11 +44,11 @@ const UpdateTimers = ({}) => {
 			setError('');
 			try {
 				await axios.put('/api/settings/timer/timers', {
-					sessionTime: parseInt(sessionTimeInMinutes) * 60,
-					breakTime: parseInt(breakTimeInMinutes) * 60,
+					sessionTime: parseInt(sessionTimeInMinutes) * 60000,
+					breakTime: parseInt(breakTimeInMinutes) * 60000,
 				});
-				setSessionTime(parseInt(sessionTimeInMinutes) * 60);
-				setBreakTime(parseInt(breakTimeInMinutes) * 60);
+				setSessionTime(parseInt(sessionTimeInMinutes) * 60000);
+				setBreakTime(parseInt(breakTimeInMinutes) * 60000);
 			} catch (error: any) {
 				setError(error.response.data.message);
 			} finally {

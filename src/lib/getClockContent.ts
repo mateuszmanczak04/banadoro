@@ -1,6 +1,7 @@
 const getClockContent = (seconds: number) => {
-	return `${Math.floor(seconds / 60)}:${(
-		'00' + (seconds % 60).toString()
+	const nonNegativeSeconds = seconds >= 0 ? seconds : 0;
+	return `${Math.floor(nonNegativeSeconds / 60)}:${(
+		'00' + (nonNegativeSeconds % 60).toString()
 	).slice(-2)}`;
 };
 
