@@ -142,12 +142,13 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 		}
 		running.current = false;
 		setReturnState(prev => ({ ...prev, running: false }));
+		updateDocumentTitle();
 		lastPausedTime.current = Date.now();
 		if (timerId.current) {
 			clearInterval(timerId.current);
 			timerId.current = null;
 		}
-	}, []);
+	}, [updateDocumentTitle]);
 
 	const reset = useCallback(() => {
 		pause(); // clearInterval, running=false, timerId=null
@@ -203,6 +204,7 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 		}
 		running.current = true;
 		setReturnState(prev => ({ ...prev, running: true }));
+		updateDocumentTitle();
 		// increase totalTimePaused with the duration of non playing
 		if (lastPausedTime.current !== null) {
 			timePaused.current += Date.now() - lastPausedTime.current;
@@ -210,7 +212,7 @@ export const TimerContextProvider: FC<{ children: ReactNode }> = ({
 		timerId.current = setInterval(() => {
 			increment();
 		}, 1000);
-	}, [running, increment]);
+	}, [running, increment, updateDocumentTitle]);
 
 	// sync session/break duration with settings
 	useEffect(() => {
