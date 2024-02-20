@@ -12,6 +12,12 @@ export const PUT = errorMiddleware(
 
 		if (!password) throw new CustomError('Missing Fields.', 400);
 
+		if (password.length < 6)
+			throw new CustomError(
+				'Password must contain at least 6 characters.',
+				400,
+			);
+
 		const hashedPassword = await bcrypt.hash(password, 10);
 
 		await User.findOneAndUpdate(
