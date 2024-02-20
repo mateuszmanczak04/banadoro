@@ -30,7 +30,7 @@ const SignInForm = () => {
 
 		try {
 			const result = await signIn('credentials', {
-				email,
+				email: email.trim(),
 				password,
 				callbackUrl: '/',
 				redirect: false,

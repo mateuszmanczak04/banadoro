@@ -32,14 +32,14 @@ const SignUpForm = () => {
 		try {
 			// create an account
 			await axios.post('/api/auth/signup', {
-				email,
+				email: email.trim(),
 				username,
 				password,
 			});
 
 			// login to the account
 			await signIn('credentials', {
-				email,
+				email: email.trim(),
 				password,
 				callbackUrl: '/',
 				redirect: false,
