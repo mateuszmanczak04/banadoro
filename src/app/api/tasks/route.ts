@@ -88,11 +88,23 @@ export const DELETE = errorMiddleware(
 
 		await dbConnect();
 
+		const task = await Task.findOne({ id }).select({ id: 1, userId: 1 });
+
+		console.log(task);
+
+		if (!task) {
+			return NextResponse.json({}, { status: 204 });
+		}
+
+		if (task.userId.toString() !== req.token.sub) {
+			return NextResponse.json({}, { status: 404 });
+		}
+
 		await Task.deleteOne({
 			id,
 			userId: req.token.sub,
 		});
 
-		return NextResponse.json({});
+		return NextResponse.json({}, { status: 200 });
 	}),
 );
