@@ -58,7 +58,7 @@ const TimerModal = () => {
 				onClick={() => setIsOpen(false)}
 			/>
 			{/* timer */}
-			<p className='text-xl font-extrabold'>{clockContent}</p>
+			<p className='text-xl font-extrabold font-mono'>{clockContent}</p>
 			{/* mode */}
 			<p className='opacity-75 text-sm'>
 				{mode === 'session' ? 'Focus now' : 'Chill out'}
