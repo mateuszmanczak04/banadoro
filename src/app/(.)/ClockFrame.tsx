@@ -1,13 +1,11 @@
 'use client';
 
-import useTimerSettingsContext from '@/hooks/useTimerSettingsContext';
 import useTimerContext from '@/hooks/useTimerContext';
 import { Button } from '../(common)/Button';
 import Counter from './Counter';
 
 const ClockFrame = () => {
-	const { timeLeft, reset, pause, running, play } = useTimerContext();
-	const { mode, setMode } = useTimerSettingsContext();
+	const { timeLeft, pause, running, play, mode, setMode } = useTimerContext();
 
 	// changing modes
 	const handleSetModeSession = () => {

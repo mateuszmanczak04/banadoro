@@ -11,12 +11,10 @@ import {
 } from '@heroicons/react/24/outline';
 
 import { useEffect, useState } from 'react';
-import useTimerSettingsContext from '@/hooks/useTimerSettingsContext';
 import getClockContent from '@/lib/getClockContent';
 
 const TimerModal = () => {
-	const { timeLeft, play, pause, running, reset } = useTimerContext();
-	const { mode, setMode } = useTimerSettingsContext();
+	const { timeLeft, play, pause, running, mode, setMode } = useTimerContext();
 	const [isOpen, setIsOpen] = useState(false);
 	const [openOnNext, setOpenOnNext] = useState(false);
 	const pathname = usePathname();
@@ -87,7 +85,6 @@ const TimerModal = () => {
 						} else {
 							setMode('session');
 						}
-						reset();
 					}}
 				/>
 			</div>

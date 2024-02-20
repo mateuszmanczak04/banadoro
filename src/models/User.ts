@@ -32,11 +32,11 @@ const UserSchema = new mongoose.Schema({
 	},
 	sessionTime: {
 		type: Number,
-		default: 25 * 60,
+		default: 25 * 60 * 1000,
 	},
 	breakTime: {
 		type: Number,
-		default: 5 * 60,
+		default: 5 * 60 * 1000,
 	},
 });
 

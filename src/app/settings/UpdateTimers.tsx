@@ -54,8 +54,6 @@ const UpdateTimers = ({}) => {
 			} finally {
 				setLoading(false);
 			}
-
-			close();
 		},
 		[
 			breakTimeInMinutes,
