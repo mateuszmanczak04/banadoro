@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import TimerModal from './TimerModal';
 import Navigation from './Navigation';
 import { useSession } from 'next-auth/react';
@@ -14,6 +14,19 @@ interface Props {
 const Layout = ({ children }: Props) => {
 	const { status } = useSession();
 	const { online } = useOnlineStatusContext();
+
+	useEffect(() => {
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker
+				.register('/sw.js')
+				.then(registration => {
+					console.log('Service worker registered, scope:', registration.scope);
+				})
+				.catch(error => {
+					console.error('Service worker registration failed:', error);
+				});
+		}
+	}, []);
 
 	if (status === 'loading')
 		return (

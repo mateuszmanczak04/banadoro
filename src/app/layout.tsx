@@ -11,9 +11,11 @@ export const metadata = {
 	title: 'Banadoro - Pomodoro Timer',
 	description: 'Turn on timer for studying, create tasks, compete with others!',
 	icons: {
-		apple: '/images/icons/icon512.png',
+		apple: '/images/icons/icon-512x512.png',
 	},
 	themeColor: '#111827',
+	appleWebApp: true,
+	manifest: '/manifest.webmanifest',
 };
 
 const RootLayout = ({ children }: Props) => {

@@ -37,6 +37,4 @@ next-env.d.ts
 
 yarn.lock
 
-public/sw.js
-public/workbox-*
-public/fallback-*
+
