@@ -1,4 +1,11 @@
-import { createContext, FC, ReactNode, useEffect, useState } from 'react';
+import {
+	createContext,
+	FC,
+	ReactNode,
+	useEffect,
+	useState,
+	useSyncExternalStore,
+} from 'react';
 
 interface OnlineStatusContextProps {
 	online: boolean;
@@ -11,20 +18,20 @@ export const OnlineStatusContext = createContext<OnlineStatusContextProps>({
 export const OnlineStatusContextProvider: FC<{ children: ReactNode }> = ({
 	children,
 }) => {
-	const [online, setOnline] = useState<boolean>(true); // Assuming online initially
+	const online = useSyncExternalStore(subscribe, getSnapshot);
 
-	useEffect(() => {
-		const handleOnline = () => setOnline(true);
-		const handleOffline = () => setOnline(false);
+	function getSnapshot() {
+		return navigator.onLine;
+	}
 
-		window.addEventListener('online', handleOnline);
-		window.addEventListener('offline', handleOffline);
-
+	function subscribe(callback: () => void) {
+		window.addEventListener('online', callback);
+		window.addEventListener('offline', callback);
 		return () => {
-			window.removeEventListener('online', handleOnline);
-			window.removeEventListener('offline', handleOffline);
+			window.removeEventListener('online', callback);
+			window.removeEventListener('offline', callback);
 		};
-	}, []);
+	}
 
 	return (
 		<OnlineStatusContext.Provider value={{ online }}>
