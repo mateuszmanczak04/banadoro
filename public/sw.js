@@ -10,7 +10,7 @@ self.addEventListener('install', event => {
 				'/signin',
 				'/signup',
 				'/ranking',
-				// Add other routes here
+				'/images/logo.svg',
 			]);
 		}),
 	);
