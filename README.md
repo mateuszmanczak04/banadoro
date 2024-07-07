@@ -14,10 +14,6 @@ A private project created just for learning new things and showing skills to rec
 - MongoDB
 - Typescript
 
-# Website link
-
-<https://www.banadoro.mateuszmanczak.pl/>
-
 # Contributors
 
 - Only me - Mateusz Mańczak
